@@ -88,9 +88,18 @@ body {
     fill: transparent;
     stroke: currentcolor;
     stroke-width: var(--icon-weight);
-      direction: ltr;
     /*display: none;*/
 }
+html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon .cog-icon, html .cog-input--icon .cog-icon g, :root:root:root:root:root .cog-picker .cog-icon, :root:root:root:root:root .cog-picker .cog-icon g, :root:root:root:root:root .cog-input--icon .cog-icon, :root:root:root:root:root .cog-input--icon .cog-icon g {
+
+    stroke: var(--input__color, var(--color));
+    stroke-width: calc(var(--icon-weight)*1.5px);
+    direction: rtl !important;
+    text-align: left;
+    margin-right: unset;
+    display: none;
+}
+    
 html .cog-cognito .el-select-dropdown__list li, html .cog-cognito .el-autocomplete-suggestion__list li, :root:root:root:root:root .cog-cognito .el-select-dropdown__list li, :root:root:root:root:root .cog-cognito .el-autocomplete-suggestion__list li {
     position: relative;
     padding: calc(var(--gutter)/4) calc(var(--gutter)/2);
