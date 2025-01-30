@@ -265,12 +265,12 @@ html .cog-html *:last-child, :root:root:root:root:root .cog-html *:last-child {
 }
 html .cog-loader__cog, 
 :root:root:root:root:root .cog-loader__cog {
-    width: 100%;
-    height: min(200px, 25vw);
-    background-color: blue;
-    mix-blend-mode: multiply;
-    -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='20' stroke='blue' stroke-width='5' fill='none' stroke-linecap='round' stroke-dasharray='90 30'/%3E%3C/svg%3E") center center no-repeat;
-    animation: spin 1s linear infinite;
+    width: 100px;
+    height: 100px;
+    border: 5px solid rgba(0, 0, 255, 0.2); /* لون الخلفية (أزرق فاتح شفاف) */
+    border-top-color: blue; /* لون الجزء المتحرك */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
 }
 
 /* إضافة أنيميشن دوران */
