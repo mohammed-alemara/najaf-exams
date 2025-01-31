@@ -44,31 +44,32 @@ Cognito.overrideText("string-length-between","المدخل غير صحيح");
 
    <style>
 floating-contact {
-  position: fixed;  /* يبقى ثابتًا أثناء التمرير */
-  bottom: 20px;  /* يبعد عن أسفل الصفحة */
-  right: 20px;  /* يتموضع في الزاوية اليمنى */
-  background-color: #007bff; /* لون أزرق جميل */
+  position: fixed;  /* تجعل العنصر ثابتًا أثناء التمرير */
+  bottom: 20px;  /* المسافة من أسفل الصفحة */
+  right: 20px;  /* المسافة من اليمين */
+  background-color: #007bff; /* اللون الأزرق */
   color: white;
   padding: 10px 15px;
-  border-radius: 25px; /* يجعل الزر دائريًا */
+  border-radius: 25px; /* حواف دائرية */
   text-decoration: none;
   font-weight: bold;
   display: flex;
   align-items: center;
   gap: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة ظل أنيق */
-  transition: transform 0.3s ease-in-out, background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة ظل حول الزر */
+  transition: transform 0.3s ease-in-out, background-color 0.3s; /* تأثير عند التفاعل */
 }
 
 floating-contact img {
-  width: 24px; /* حجم الأيقونة */
-  height: 24px;
+  width: 24px;  /* حجم الأيقونة */
+  height: 24px; /* حجم الأيقونة */
 }
 
 floating-contact:hover {
-  transform: scale(1.1); /* تكبير الزر عند تمرير الماوس */
-  background-color: #0056b3; /* لون داكن عند التفاعل */
+  transform: scale(1.1); /* تكبير الزر عند التمرير فوقه */
+  background-color: #0056b3; /* تغيير اللون عند التفاعل */
 }
+
 </style>
 
 
