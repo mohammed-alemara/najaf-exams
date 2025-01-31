@@ -34,6 +34,44 @@ Cognito.overrideText("string-length-between","المدخل غير صحيح");
     </a>
   </p>
 </footer>
+
+<a href="mailto:mmh.mart@gmail.com" id="floating-contact" class="contact-link">
+  <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" alt="icon" class="contact-icon"> 
+  تواصل معنا
+</a>
+
+   <style>
+floating-contact {
+  position: fixed;  /* يبقى ثابتًا أثناء التمرير */
+  bottom: 20px;  /* يبعد عن أسفل الصفحة */
+  right: 20px;  /* يتموضع في الزاوية اليمنى */
+  background-color: #007bff; /* لون أزرق جميل */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 25px; /* يجعل الزر دائريًا */
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة ظل أنيق */
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
+}
+
+floating-contact img {
+  width: 24px; /* حجم الأيقونة */
+  height: 24px;
+}
+
+floating-contact:hover {
+  transform: scale(1.1); /* تكبير الزر عند تمرير الماوس */
+  background-color: #0056b3; /* لون داكن عند التفاعل */
+}
+</style>
+
+
+
+  
   <style>
     
      .footer-text {
