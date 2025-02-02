@@ -37,22 +37,47 @@ document.write(unescape('%20%20%3C%73%63%72%69%70%74%3E%0A%43%6F%67%6E%69%74%6F%
   </p>
 </footer>
 
-   <!-- وسائل التواصل الاجتماعي -->
+  <!-- وسائل التواصل الاجتماعي -->
   <div class="social-links">
-    <a href="https://www.facebook.com/yourpage" target="_blank" class="social-icon">
-      <i class="fab fa-facebook"></i>
+    <a href="https://www.facebook.com/yourpage" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
     </a>
-    <a href="https://t.me/yourchannel" target="_blank" class="social-icon">
-      <i class="fab fa-telegram"></i>
+    <a href="https://t.me/yourchannel" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
     </a>
-    <a href="mailto:mmh.mart@gmail.com" class="social-icon">
-      <i class="fas fa-envelope"></i>
+    <a href="mailto:mmh.mart@gmail.com">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Gmail">
     </a>
   </div>
 </footer>
 
-<!-- استدعاء Font Awesome للأيقونات -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- تنسيق CSS -->
+<style>
+  footer {
+    text-align: center; /* توسيط جميع العناصر */
+    padding: 20px;
+    background-color: #f8f8f8;
+  }
+
+  .social-links {
+    margin-top: 15px;
+  }
+
+  .social-links a {
+    display: inline-block;
+    margin: 0 10px; /* مسافة بين الأيقونات */
+  }
+
+  .social-links img {
+    width: 40px; /* حجم الأيقونة */
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .social-links img:hover {
+    transform: scale(1.2); /* تأثير عند تمرير الماوس */
+  }
+</style>
 
 
   
