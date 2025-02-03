@@ -222,13 +222,29 @@ html .cog-html *:last-child, :root:root:root:root:root .cog-html *:last-child {
     margin-right: 3em !important;
 }
 
-    html .cog-cognito hr, :root:root:root:root:root .cog-cognito hr {
-    content: "هذا النص يظهر أسفل الخط";
+/* devloped by dwown buton */
+     html .cog-cognito hr, :root:root:root:root:root .cog-cognito hr {
+    border: 0;
+    /* border-bottom: var(--border-width) hsla(var(--background-hsl), 0.6) var(--input__border-style); */
+}
+
+    html .cog-cognito hr, :root:root:root:root:root .cog-cognito hr:after {
+    content: "";
     display: block;
     text-align: center;
     font-size: 16px;
     color: #333;
-    margin-top: 10px;
+    margin-top: 5px;
+      font-size: smaller;
+      font-family:  "Cairo", serif;
+}
+
+    html .cog-form__container, :root:root:root:root:root .cog-form__container {
+    max-width: var(--form__width);
+    background-color: var(--form__background-color);
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 0em;
 }
 
 :root .cog-cognito {
