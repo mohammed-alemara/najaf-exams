@@ -3,14 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    fetch("index.html") // تحميل الصفحة المطلوبة
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("content").innerHTML = data; // إدراج المحتوى داخل div
-        })
-        .catch(error => console.error("خطأ في تحميل الصفحة:", error));
-</script>
   <title>صفحة حول</title>
   <style>
     body {
@@ -85,6 +77,14 @@
   </style>
 </head>
 <body>
+  <script>
+    fetch("index.html") // تحميل الصفحة المطلوبة
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("content").innerHTML = data; // إدراج المحتوى داخل div
+        })
+        .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+</script>
   <header>
     <img src="logo%20(1).png" alt="الشعار">
     <h1>مرحبًا بكم في صفحة حول</h1>
