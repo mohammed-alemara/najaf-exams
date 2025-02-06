@@ -12,7 +12,14 @@
         <!-- سيتم تحميل محتوى الصفحة هنا -->
     </div>
 
-    <?php include 'index.html'; ?>
+    <script>
+        fetch("index.html") // تحميل الصفحة المطلوبة
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("content").innerHTML = data; // إدراج المحتوى داخل div
+            })
+            .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+    </script>
 
 </body>
 </html>
