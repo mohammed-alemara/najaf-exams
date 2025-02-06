@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    fetch("index.html") // تحميل الصفحة المطلوبة
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("content").innerHTML = data; // إدراج المحتوى داخل div
+        })
+        .catch(error => console.error("خطأ في تحميل الصفحة:", error));
+</script>
   <title>صفحة حول</title>
   <style>
     body {
