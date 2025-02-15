@@ -10,27 +10,62 @@
             direction: rtl;
             text-align: right;
             background-color: #f4f4f4;
+            background-size: cover;
             margin: 0;
             padding: 0;
+        }
+        .loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loader {
+            width: 100px;
+            height: 100px;
+            background-color: #154360;
+            -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         .container {
             width: 80%;
             margin: auto;
             overflow: hidden;
+            display: none;
         }
         header {
-        background: #333;
-        color: #fff;
-        padding: 20px;
-        display: flex;
-       align-items: center;
-       justify-content: right;
-       }
-       .logo {
-        width: 50px;
-        height: 50px;
-       margin-left: 15px;
-       }
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        .header-title h1 {
+            margin: 5px 0;
+            display: block;
+        }
         .service {
             background: #fff;
             margin: 20px 0;
@@ -49,17 +84,31 @@
             text-decoration: underline;
         }
     </style>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                document.querySelector(".loading-screen").style.display = "none";
+                document.querySelector(".container").style.display = "block";
+            }, 2000);
+        };
+    </script>
 </head>
 <body>
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
     <header>
-          <img src="images/Logo big.png" alt="شعار وزارة التربية" class="logo">
-          <h1>الخدمات الإلكترونية - وزارة التربية العراقية</h1>
+        <img src="images/Logo big.png" alt="شعار وزارة التربية" class="logo">
+        <div class="header-title">
+            <h1>الخدمات الإلكترونية</h1>
+            <h1>وزارة التربية العراقية</h1>
+        </div>
     </header>
     <div class="container">
         <div class="service">
             <h2>نظام نتائج الامتحانات</h2>
             <p>يمكنك الاطلاع على نتائج الامتحانات لجميع المراحل الدراسية.</p>
-            <a href="#">عرض النتائج</a>
+            <a href="temhedi.html">عرض النتائج</a>
         </div>
         <div class="service">
             <h2>نظام التقديم للوظائف التعليمية</h2>
