@@ -5,8 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الخدمات الإلكترونية - وزارة التربية العراقية</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+    .cairo-<uniquifier> {
+  font-family: "Cairo", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0;
+}
+@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
+.aref-ruqaa-regular {
+  font-family: "Aref Ruqaa", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.aref-ruqaa-bold {
+  font-family: "Aref Ruqaa", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
         body {
-            font-family: Arial, sans-serif;
+            font-family:  "Cairo", serif;
             direction: rtl;
             text-align: right;
             background-color: #f4f4f4;
@@ -44,7 +66,7 @@
             display: none;
         }
         header {
-            background: #333;
+            background: rgb(195, 226, 255);
             color: #fff;
             padding: 20px;
             text-align: center;
@@ -83,6 +105,25 @@
         .service a:hover {
             text-decoration: underline;
         }
+        .footer-text {
+      text-align: center;
+      margin: 0em;
+      color: #333;
+      font-size: 10px;
+    }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 10px;
+  }
+
+  .contact-icon {
+    width: 20px; 
+    height: 20px;
+    margin-left: 10px;
+  }
     </style>
     <script>
         window.onload = function() {
@@ -126,5 +167,15 @@
             <a href="#">طلب وثيقة</a>
         </div>
     </div>
+    <footer>
+        <p class="footer-text">
+          <a>جميع الحقوق محفوظة © 2025| للمديرية العامة للتربية في محافظة النجف الاشرف</a>
+          <br>
+          <a href="mailto:mmh.mart@gmail.com" class="contact-link">
+            <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" alt="icon" class="contact-icon"> 
+            تواصل معنا
+          </a>
+        </p>
+      </footer>
 </body>
 </html>
