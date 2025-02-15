@@ -1,28 +1,81 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>صفحة حول</title>
-  <link rel="stylesheet" href="html.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخدمات الإلكترونية - وزارة التربية العراقية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+        background: #333;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+       align-items: center;
+       justify-content: right;
+       }
+       .logo {
+        width: 50px;
+        height: 50px;
+       margin-left: 15px;
+       }
+        .service {
+            background: #fff;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .service h2 {
+            color: #333;
+        }
+        .service a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .service a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div>
-    <h2>هذه صفحة HTML مضمنة!</h2>
-    <p>تم تحميل هذا المحتوى من ملف خارجي باستخدام JavaScript.</p>
-</div>
-  <header>
-    <img src="logo%20(1).png" alt="fffffffffffffff">
-    <h1>مرحبًا بكم في صفحة حول</h1>
-  </header>
-  <p>نحن سعداء بزيارتكم! هنا يمكنكم اختيار القسم الذي ترغبون في استكشافه. اختر ما يناسبك من الخيارات أدناه:</p>
-  <div class="buttons">
-    <a href="text.html">المرحلة الابتدائية</a>
-    <a href="middle.html">المرحلة المتوسطة</a>
-    <a href="secondary.html">المرحلة الإعدادية</a>
-  </div>
-  <footer>
-    <p>© 2025 جميع الحقوق محفوظة. <a href="index.html">العودة إلى الصفحة الرئيسية</a></p>
-  </footer>
+    <header>
+          <img src="images/Logo big.png" alt="شعار وزارة التربية" class="logo">
+          <h1>الخدمات الإلكترونية - وزارة التربية العراقية</h1>
+    </header>
+    <div class="container">
+        <div class="service">
+            <h2>نظام نتائج الامتحانات</h2>
+            <p>يمكنك الاطلاع على نتائج الامتحانات لجميع المراحل الدراسية.</p>
+            <a href="#">عرض النتائج</a>
+        </div>
+        <div class="service">
+            <h2>نظام التقديم للوظائف التعليمية</h2>
+            <p>التقديم الإلكتروني للوظائف التعليمية في وزارة التربية.</p>
+            <a href="#">التقديم الآن</a>
+        </div>
+        <div class="service">
+            <h2>نظام الاستعلام عن المدارس</h2>
+            <p>البحث عن المدارس وعرض بياناتها وتوزيعها الجغرافي.</p>
+            <a href="#">البحث عن مدرسة</a>
+        </div>
+        <div class="service">
+            <h2>نظام إصدار الوثائق الدراسية</h2>
+            <p>تقديم طلب للحصول على وثائق دراسية إلكترونيًا.</p>
+            <a href="#">طلب وثيقة</a>
+        </div>
+    </div>
 </body>
 </html>
