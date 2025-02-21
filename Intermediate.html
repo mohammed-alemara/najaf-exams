@@ -1,208 +1,28 @@
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1024, user-scalable=no">
   <title>التقديم للامتحانات الخارجية</title>
-
+  <style>
+    body {
+      min-width: 1024px; /* يفرض عرض الحد الأدنى للصفحة */
+      overflow-x: auto; /* يمنع المشاكل في التمرير */
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+  </style>
 </head>
 <body>
 
 <div id="form1">
-<iframe src="https://ee.kobotoolbox.org/i/RqtcXXdn" width="100%" height="100%" style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; border: none;"></iframe>
-  <script>
-Cognito.overrideText("fileupload-dropzone-message","");
-</script>
+  <iframe src="https://ee.kobotoolbox.org/i/RqtcXXdn"></iframe>
 </div>
 
 <footer>
   <p class="footer-text">by Muhammad Al-Emara</p>
 </footer>
-<style>
-      .footer-text {
 
-}
-</style>
 </body>
-  <style>
-    
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-    .cairo-<uniquifier> {
-  font-family: "Cairo", serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "slnt" 0;
-}
-@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
-.aref-ruqaa-regular {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 400;
-  font-style: normal;
-}
 
-.aref-ruqaa-bold {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-/*#################################################*/
-body {
-      font-family:  "Aref Ruqaa", serif;
-      direction: rtl;
-
-      margin: 1 auto;
-    }
-    #form1 {
-      direction: rtl;
-      margin: 1 auto;
-      border: 2px solid #ccc;
-      padding: 1px;
-      border-radius: 4px;
-      background-color: #f9f9f9;
-      max-width: 100%;
-      /*max-height:100% */
-      font-family: "Cairo", serif;
-    }
-
-
-    .footer-text {
-      text-align: center;
-      margin-top: 20px;
-      color: #333;
-    }
-    html .cog-icon, :root:root:root:root:root .cog-icon {
-    width: 1.7em;
-    height: 1.7em;
-    vertical-align: middle;
-    font-size: 1em;
-    fill: transparent;
-    stroke: currentcolor;
-    stroke-width: var(--icon-weight);
-    display: none;
-}
-html .cog-cognito .el-select-dropdown__list li, html .cog-cognito .el-autocomplete-suggestion__list li, :root:root:root:root:root .cog-cognito .el-select-dropdown__list li, :root:root:root:root:root .cog-cognito .el-autocomplete-suggestion__list li {
-    position: relative;
-    padding: calc(var(--gutter)/4) calc(var(--gutter)/2);
-    cursor: default;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 10px !important;
-    direction: rtr;
-    font-family: 'Cairo' !important;
-}
-.el-select-dropdown__wrap.el-scrollbar__wrap {
-    direction: ltr;
-}
-    .cog-text{
-      direction: rtl;
-    }
-html .cog-label, :root:root:root:root:root .cog-label {
-    display: block;
-    padding-top: calc(var(--gutter)/4);
-    color: hsl(206,100%,55%);
-    font-family: 'Cairo';
-    font-size: var(--label__font-size, inherit);
-    font-weight: var(--label__font-weight, normal);
-}
-    /*label input*/
-html .cog-html *:last-child, :root:root:root:root:root .cog-html *:last-child {
-    margin-bottom: 0;
-    font-family: 'Cairo';
-    /*color: hsl(2, 70%, 47%);*/
-}
-    .el-input__inner, .el-textarea__inner, .el-radio__inner, .el-checkbox__inner, .cog-signature__pad{
-    font-family: 'Cairo' !important;
-    color: hsl(2, 70%, 47%) !important;
-    }
-
-    /*  marginal list  */
-    :root:root:root .cog-cognito--styled.cog-cognito--protect-css li {
-    display: list-item;
-    margin: 1em;
-}
-    /*check box*/
-    html .cog-cognito--styled .is-checked .el-checkbox__inner, :root:root:root:root:root .cog-cognito--styled .is-checked .el-checkbox__inner {
-    background-color: var(--highlight);
-    border: 0;
-    box-shadow: none;
-    transform: scale(var(--checkable__scale)) scale(var(--checkable-checked__scale)) scale(0.47);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 0.6em;
-    width: 2em;
-    height: 2em;
-    font-size: 1em;
-}
-    html .cog-cognito--styled .cog-header h1, :root:root:root:root:root .cog-cognito--styled .cog-header h1 {
-    font-family: 'Aref Ruqaa';
-    font-size: var(--header__font-size, inherit);
-    font-weight: var(--header__font-weight, normal);
-}
-    
-:root .cog-cognito {
-  /*  E.g Error message color  */
-  --negative: #f66;
-  
-  /*  E.g. Error message text color  */
-  --negative-reverse: white;
-  
-  /* E.g. focus indication color, calendar selection color    */
-  --highlight: #41B883;
-  
-  /* The color of text on top of the highlight color  */
-  --highlight-reverse: white;
-  
-  /* How much white space between elements */
-  --gutter: 10px;
-  
-  /* How rounded the corners of things in general. It trickles down to specific elements which can be explicitly overridden if you want. 0 is sharp corners. */
-  --border-radius: 5px;
-  
-  /* How thick icon strokes are. */
-  --icon-weight: 3;
-  
-  /* How fast transitions happen. 2 seconds is quite slow. */
-  --speed: 0s;
-  
-  /* The submit button, or next button are primary buttons. */
-  --button-primary__border-radius: 25px;
-  --button-primary__background-color: #34495E;
-  --button-primary__border-color: #34495E;
-  
-  /* Other things like upload buttons are considered secondary */
-  --button-secondary__border-radius: 0;
-  --button-secondary__background-color: #41B883;
-  --button-secondary__color: white;
-  --button-secondary__border-color: #41B883;
-  
-  /* text input styles */
-  --input__background-color: #eee;
-  --input__border-width: 2px;
-  --input__border-color: #cbd1cb;
-  
-  /* vertical and horizontal space of a text input */
-  --input__padding-v: 12px;
-  --input__padding-h: 15px;
-  
-  --toggle__border-radius: 40px;
-}
-    html .cog-abuse ul, :root:root:root:root:root .cog-abuse ul {
-    display: block;
-    margin: 0;
-    padding: 10px 0 0;
-    font-size: 11px;
-    text-align: center;
-    display: none !important;
-}
-    html .cog-branding--minimal, html .cog-branding--minimal *, :root:root:root:root:root .cog-branding--minimal, :root:root:root:root:root .cog-branding--minimal * {
-    position: static !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: scale(1) translateX(0) translateY(0) !important;
-    display: none !important;
-}
-  </style>
