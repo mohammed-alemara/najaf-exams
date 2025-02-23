@@ -3,29 +3,18 @@
   <meta name="viewport" content="width=1024, user-scalable=yes">
   <title>التقديم للامتحانات الخارجية</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden; /* منع التمرير الخارجي */
-      background-color: #f0f0f0; /* لون خلفية احتياطي */
+    body {
+      min-width: 1024px; /* يفرض عرض الحد الأدنى للصفحة */
+      margin: 0; /* يزيل الهوامش الافتراضية */
+      
     }
-
-    #iframe-container {
+    iframe {
       width: 100vw;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border: none;
+      
     }
 
-    iframe {
-      width: 100vw; /* فرض عرض ثابت لسطح المكتب */
-      height: 100vh; /* الامتداد إلى كامل الشاشة */
-      border: none;
-      overflow: hidden;
-    }
   </style>
 </head>
 <body>
