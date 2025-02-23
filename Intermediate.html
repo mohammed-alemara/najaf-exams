@@ -8,15 +8,23 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden; /* منع التمرير الزائد */
+      overflow: hidden; /* منع التمرير الخارجي */
+      background-color: #f0f0f0; /* لون خلفية احتياطي */
+    }
+
+    #iframe-container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     iframe {
-      width: 1024px;
-      height: 100vh;
-      min-height: 100%;
+      width: 100vw; /* فرض عرض ثابت لسطح المكتب */
+      height: 100vh; /* الامتداد إلى كامل الشاشة */
       border: none;
-      display: block;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -25,5 +33,7 @@
 <div id="form1">
   <iframe src="https://ee.kobotoolbox.org/i/RqtcXXdn"></iframe>
 </div>
+
+
 </body>
 
