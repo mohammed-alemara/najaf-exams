@@ -5,12 +5,14 @@
   <style>
     body {
       min-width: 1024px; /* يفرض عرض الحد الأدنى للصفحة */
-      overflow-x: auto; /* يمنع المشاكل في التمرير */
+      margin: 0; /* يزيل الهوامش الافتراضية */
+      overflow: hidden; /* يمنع التمرير العمودي والأفقي */
     }
     iframe {
       width: 100vw;
       height: 100vh;
       border: none;
+      overflow: hidden; /* يمنع التمرير داخل الإطار */
     }
   </style>
 </head>
@@ -25,9 +27,4 @@
 </footer>
 
 </body>
-<style>
-img {
-    vertical-align: middle;
-    display: none;
-}
-</style>
+
