@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بواية قسم الامتحانات</title>
 
-    <!-- خطوط Cairo -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
         .cairo-<uniquifier> {
@@ -16,7 +15,6 @@
             font-variation-settings: "slnt" 0;
         }
 
-        /* خطوط Aref Ruqaa */
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
         .aref-ruqaa-regular {
             font-family: "Aref Ruqaa", serif;
@@ -29,7 +27,6 @@
             font-style: normal;
         }
 
-        /* تحميل خط سلطان */
         @font-face {
             font-family: 'sultan';
             src: url('https://alfont.com/wp-content/fonts/naskh-arabic-fonts//alfont_com_%D8%B3%D9%84%D8%B7%D8%A7%D9%86-%D8%A8%D9%84%D8%A7%D9%83.ttf') format('truetype');
@@ -42,12 +39,12 @@
             direction: rtl;
             text-align: right;
             background-color: #f4f4f4;
+            background-size: cover;
             margin: 0;
             padding: 0;
             height: 100%;
         }
 
-        /* شاشة الانتظار */
         .loading-screen {
             position: fixed;
             width: 100%;
@@ -65,6 +62,7 @@
             background-color: #154360;
             -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
             -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
             animation: spin 8s linear infinite;
         }
 
@@ -73,7 +71,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* الحاوية العامة */
         .container {
             width: 80%;
             margin: auto;
@@ -96,8 +93,15 @@
             margin-bottom: 10px;
         }
 
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
         .header-title h1 {
             margin: 5px 0;
+            display: block;
             color: #333;
         }
 
@@ -109,32 +113,62 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .btn,
-        .btn-secondary {
+        .btn {
             display: inline-block;
             padding: 10px 20px;
             font-size: 16px;
             color: #fff !important;
+            background-color: #007BFF;
             border: none;
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .btn {
-            background-color: #007BFF;
-        }
         .btn:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background-color: #28a745;
+        .btn:active {
+            background-color: #004085;
+            transform: translateY(1px);
         }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff !important;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
         .btn-secondary:hover {
             background-color: #218838;
             transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            background-color: #1e7e34;
+            transform: translateY(1px);
+        }
+
+        .service h2 {
+            color: #333;
+            font-size: 18px;
+        }
+
+        .service a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .service a:hover {
+            text-decoration: underline;
         }
 
         .footer-text {
@@ -142,6 +176,7 @@
             bottom: 0;
             width: 100%;
             text-align: center;
+            margin: 0;
             color: #333;
             font-size: 10px;
             background-color: rgb(195, 226, 255);
@@ -173,6 +208,7 @@
 </head>
 
 <body>
+
     <div class="loading-screen">
         <div class="loader"></div>
     </div>
@@ -187,4 +223,26 @@
 
         <div class="service">
             <h2>التقديم على الامتحانات الخارجية</h2>
-            <p style="text-align: ju
+
+            <p style="text-align: justify;">
+                التقديم على الامتحانات الخارجية لجميع التلاميذ والطلبة غير المنتظمين بالدوام، الذين تركوا المقاعد الدراسية ولا يحق لهم الدوام في المدارس النظامية وللمراحل الدراسية كافة وفق ضوابط محددة تعلن من قبل اللجنة الدائمة للامتحانات العامة.
+            </p>
+
+            <a href="temhedi.html" class="btn">التقديم</a>
+            <a href="instructions.html" class="btn-secondary">الضوابط والتعليمات</a>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text">
+            <a>جميع الحقوق محفوظة © 2025 | للمديرية العامة للتربية في محافظة النجف الاشرف</a><br>
+            <a>مطور الموقع: م.م محمد مصطفى الامارة</a><br>
+            <a href="mailto:mmh.mart@gmail.com" class="contact-link">
+                <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" alt="icon" class="contact-icon">
+                الإبلاغ عن مشكلة فنية.
+            </a>
+        </p>
+    </footer>
+
+</body>
+</html>
