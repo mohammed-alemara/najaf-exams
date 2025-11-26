@@ -3,48 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بواية قسم الامتحانات</title>
+    <title>بوابة قسم الامتحانات</title>
+
+    <!-- خطوط Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-    .cairo-<uniquifier> {
-  font-family: "Cairo", serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "slnt" 0;
-}
-@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
-.aref-ruqaa-regular {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.aref-ruqaa-bold {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-/* تحميل الخط من رابطه */
-@font-face {
-  font-family: 'sultan';
-  src: url('https://alfont.com/wp-content/fonts/naskh-arabic-fonts//alfont_com_%D8%B3%D9%84%D8%B7%D8%A7%D9%86-%D8%A8%D9%84%D8%A7%D9%83.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
         body {
-            font-family:  "Cairo", serif;
+            font-family: "Cairo", serif;
             direction: rtl;
-            text-align: right;
-            background-color: #f4f4f4;
-            background-size: cover;
+            background-color: #eef2f7;
             margin: 0;
             padding: 0;
-            height: 100%;
         }
+
+        /* شاشة التحميل */
         .loading-screen {
             position: fixed;
             width: 100%;
@@ -55,139 +29,115 @@
             align-items: center;
             z-index: 1000;
         }
+
         .loader {
-            width: 100px;
-            height: 100px;
-            background-color: #154360;
-            -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
-            -webkit-mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            animation: spin 8s linear infinite;
+            width: 90px;
+            height: 90px;
+            border: 5px solid #d6e4ff;
+            border-top-color: #0056b3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            display: none;
-        }
+
+        /* رأس الصفحة */
         header {
-            background: rgb(195, 226, 255);
+            background: linear-gradient(45deg, #0056b3, #007bff);
             color: #fff;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
+
         .logo {
-            /*width: 50px;*/
-            height: 50px;
+            height: 70px;
             margin-bottom: 10px;
         }
-        .header-title {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            display: none;
         }
-        .header-title h1 {
-            margin: 5px 0;
-            display: block;
-            color: #333;
+
+        h2 {
+            color: #222;
+            font-weight: 700;
         }
+
         .service {
             background: #fff;
-            margin: 20px 0;
             padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform .2s ease;
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn, .btn-secondary {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 15px;
+            color: #fff !important;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #fff !important;
-        background-color: #007BFF;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .btn:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
-    .btn:active {
-        background-color: #004085;
-        transform: translateY(1px);
-    
-    }
-    .btn-secondary {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #fff !important;
-        background-color: #28a745;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .btn-secondary:hover {
-        background-color: #218838;
-        transform: translateY(-2px);
-    }
-    .btn-secondary:active {
-        background-color: #1e7e34;
-        transform: translateY(1px);
-    }
-        .service h2 {
-            color: #333;
-            font-size: 18px;
-        }
-        .service a {
-            color: #007BFF;
             text-decoration: none;
+            margin-top: 10px;
+            transition: 0.3s ease;
         }
-        .service a:hover {
-            text-decoration: underline;
+
+        .btn { background-color: #007bff; }
+        .btn:hover { background-color: #0056b3; }
+
+        .btn-secondary { background-color: #28a745; }
+        .btn-secondary:hover { background-color: #1e7e34; }
+
+        footer {
+            background: #0056b3;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            margin-top: 30px;
         }
-        .footer-text {
-            position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  color: #333;
-  font-size: 10px;
-  background-color: rgb(195, 226, 255);
-  padding: 10px 0;
-}
 
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    font-size: 10px;
-  }
+        .contact-link {
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
 
-  .contact-icon {
-    width: 20px; 
-    height: 20px;
-    margin-left: 10px;
-  }
-  
+        .contact-icon {
+            width: 20px;
+            margin-left: 5px;
+        }
+
+        /* تحسينات التوافق مع الهاتف */
+        @media (max-width: 600px) {
+            .service {
+                padding: 15px;
+            }
+            .btn, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
+
     <script>
         window.onload = function() {
             setTimeout(function() {
                 document.querySelector(".loading-screen").style.display = "none";
                 document.querySelector(".container").style.display = "block";
-            }, 2000);
+            }, 1500);
         };
     </script>
 </head>
@@ -195,34 +145,35 @@
     <div class="loading-screen">
         <div class="loader"></div>
     </div>
+
     <header>
         <img src="images/Logo1.png" alt="شعار وزارة التربية" class="logo">
-        <div class="header-title">
-            
-        </div>
+        <h1 style="margin:0; font-family: 'Aref Ruqaa', serif;">قسم الامتحانات - النجف الأشرف</h1>
     </header>
+
     <div class="container">
-        <h2>أهلاً بكم في البوابة الإلكترونية الخاصة بقسم الامتحانات.</h2>
+        <h2>مرحباً بكم في البوابة الإلكترونية الخاصة بقسم الامتحانات.</h2>
+
         <div class="service">
             <h2>التقديم على الامتحانات الخارجية</h2>
             <p style="text-align: justify;">
-                التقديم على الامتحانات الخارجية لجميع التلاميذ والطلبة غير المنتظمين بالدوام، الذين تركوا المقاعد الدراسية ولا يحق لهم الدوام في المدارس النظامية وللمراحل الدراسية كافة وفق ضوابط محددة تعلن من قبل اللجنة الدائمة للامتحانات العامة.
-              </p>
+                التقديم على الامتحانات الخارجية لجميع التلاميذ والطلبة غير المنتظمين بالدوام، الذين تركوا الدراسة ولا يحق لهم الدوام في المدارس النظامية، وذلك لجميع المراحل وفق الضوابط المحددة.
+            </p>
+
             <a href="temhedi.html" class="btn">التقديم</a>
             <a href="instructions.html" class="btn-secondary">الضوابط والتعليمات</a>
         </div>
     </div>
+
     <footer>
-        <p class="footer-text">
-          <a>جميع الحقوق محفوظة © 2025 | للمديرية العامة للتربية في محافظة النجف الاشرف</a>
-          <br>
-          <a>مطور الموقع: م.م محمد مصطفى الامارة</a>
-          <br>
-          <a href="mailto:mmh.mart@gmail.com" class="contact-link">
-            <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" alt="icon" class="contact-icon"> 
-            الإبلاغ عن مشكلة فنية.
-          </a>
+        <p>
+            جميع الحقوق محفوظة © 2025 | المديرية العامة للتربية في محافظة النجف الأشرف<br>
+            مطور الموقع: م.م محمد مصطفى الأمارة<br><br>
+            <a href="mailto:mmh.mart@gmail.com" class="contact-link">
+                <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" class="contact-icon"> الإبلاغ عن مشكلة فنية
+            </a>
         </p>
-      </footer>
+    </footer>
+
 </body>
 </html>
