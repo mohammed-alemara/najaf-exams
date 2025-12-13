@@ -22,7 +22,7 @@ body {
             align-items: center;
             z-index: 1000;
         }
-  .loader {
+        .loader {
             width: 100px;
             height: 100px;
             background-color: #154360;
