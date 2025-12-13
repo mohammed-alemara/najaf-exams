@@ -1,26 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024, user-scalable=yes">
-  <title>التقديم للامتحانات الخارجية</title>
-  <style>
-    body {
-      min-width: 1024px; /* يفرض عرض الحد الأدنى للصفحة */
-      margin: 0; /* يزيل الهوامش الافتراضية */
-      
-    }
-    iframe {
-      width: 100vw;
-      height: 100vh;
-      border: none;
-      
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة قسم الامتحانات</title>
+
+<!-- الخطوط -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* إعدادات عامة */
+body {
+    font-family: "Cairo", sans-serif;
+    direction: rtl;
+    margin: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* شاشة التحميل */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #154360;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* الهيدر */
+header {
+    background-color: #154360;
+    color: #ffffff;
+    padding: 15px 0;
+    text-align: center;
+}
+
+header img {
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* المحتوى */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: none;
+}
+
+.container h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* البطاقات الحكومية */
+.service {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-right: 6px solid #154360;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.service h3 {
+    margin-top: 0;
+    font-size: 17px;
+    color: #154360;
+}
+
+.service p {
+    font-size: 14px;
+    line-height: 1.9;
+    text-align: justify;
+}
+
+/* الأزرار الحكومية */
+.actions {
+    margin-top: 15px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-left: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #154360;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0e2f4a;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* الفوتر */
+footer {
+    background-color: #e9ecef;
+    padding: 15px 0;
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+footer a {
+    color: #154360;
+    text-decoration: none;
+}
+
+/* استجابة الشاشات */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 16px;
     }
 
-  </style>
+    .service {
+        padding: 20px;
+    }
+}
+</style>
+
+<script>
+window.onload = function () {
+    setTimeout(function () {
+        document.querySelector(".loading-screen").style.display = "none";
+        document.querySelector(".container").style.display = "block";
+    }, 1500);
+};
+</script>
+
 </head>
 <body>
 
-<div id="form1">
-  <iframe src="https://ee.kobotoolbox.org/i/RqtcXXdn"></iframe>
+<!-- شاشة التحميل -->
+<div class="loading-screen">
+    <div class="loader"></div>
 </div>
-</body>
 
+<!-- الهيدر -->
+<header>
+    <img src="images/Logo1.png" alt="شعار وزارة التربية">
+    <h1>المديرية العامة للتربية في محافظة النجف الأشرف</h1>
+</header>
+
+<!-- المحتوى -->
+<div class="container">
+    <h2>مرحبًا بكم في البوابة الإلكترونية لقسم الامتحانات</h2>
+
+    <div class="service">
+        <h3>التقديم على الامتحانات الخارجية</h3>
+        <p>
+            تتيح هذه الخدمة إمكانية التقديم على الامتحانات الخارجية للتلاميذ والطلبة غير المنتظمين
+            بالدوام، والذين تركوا المقاعد الدراسية ولا يحق لهم الدوام في المدارس النظامية،
+            ولجميع المراحل الدراسية، وفق ضوابط وتعليمات تصدر عن اللجنة الدائمة للامتحانات العامة.
+        </p>
+
+        <div class="actions">
+            <a href="temhedi.html" class="btn btn-primary">التقديم</a>
+            <a href="instructions.html" class="btn btn-secondary">الضوابط والتعليمات</a>
+        </div>
+    </div>
+</div>
+
+<!-- الفوتر -->
+<footer>
+    <div>© 2025 – جميع الحقوق محفوظة للمديرية العامة للتربية في محافظة النجف الأشرف</div>
+    <div>مطور الموقع: م.م محمد مصطفى الإمارة</div>
+    <div>
+        <a href="mailto:mmh.mart@gmail.com">الإبلاغ عن مشكلة فنية</a>
+    </div>
+</footer>
+
+</body>
+</html>
