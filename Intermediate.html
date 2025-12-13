@@ -5,208 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بوابة قسم الامتحانات</title>
 
+<!-- ربط ملف CSS -->
+<link rel="stylesheet" href="css/style.css">
+
+<!-- الخط -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-/* ================== إعدادات عامة ================== */
-body {
-    font-family: "Cairo", sans-serif;
-    direction: rtl;
-    margin: 0;
-    background-color: #f5f7fa;
-    color: #333;
-}
-
-/* ================== شاشة التحميل ================== */
-.loading-screen {
-    position: fixed;
-    inset: 0;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.loader {
-    width: 60px;
-    height: 60px;
-    border: 6px solid #e0e0e0;
-    border-top: 6px solid #154360;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-/* ================== الهيدر ================== */
-header {
-    background-color: #154360;
-    color: #ffffff;
-    padding: 15px 0;
-    text-align: center;
-}
-
-header img {
-    height: 60px;
-    margin-bottom: 8px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-/* ================== المحتوى ================== */
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 30px auto;
-    display: none;
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* ================== البطاقات ================== */
-.service {
-    background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    border-right: 6px solid #154360;
-    padding: 25px;
-    margin-bottom: 25px;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: cardEnter 0.8s ease forwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-@keyframes cardEnter {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* تحويم البطاقة */
-.service:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.service h3 {
-    margin-top: 0;
-    font-size: 17px;
-    color: #154360;
-}
-
-.service p {
-    font-size: 14px;
-    line-height: 1.9;
-    text-align: justify;
-}
-
-/* ================== الأزرار ================== */
-.actions {
-    margin-top: 15px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 8px 22px;
-    font-size: 14px;
-    text-decoration: none;
-    border-radius: 3px;
-    margin-left: 10px;
-    transition: 
-        background-color 0.25s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-/* زر رئيسي */
-.btn-primary {
-    background-color: #154360;
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    background-color: #0e2f4a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(21,67,96,0.25);
-}
-
-.btn-primary:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-/* زر ثانوي */
-.btn-secondary {
-    background-color: #6c757d;
-    color: #ffffff;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.btn-secondary:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-/* ================== الفوتر ================== */
-footer {
-    background-color: #e9ecef;
-    padding: 15px 0;
-    font-size: 12px;
-    text-align: center;
-    border-top: 1px solid #ccc;
-}
-
-footer a {
-    color: #154360;
-    text-decoration: none;
-}
-
-/* ================== استجابة الشاشات ================== */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 16px;
-    }
-}
-</style>
-
-<script>
-window.onload = function () {
-    setTimeout(function () {
-        document.querySelector(".loading-screen").style.display = "none";
-        document.querySelector(".container").style.display = "block";
-    }, 1200);
-};
-</script>
-
 </head>
+
 <body>
 
+<!-- شاشة التحميل -->
 <div class="loading-screen">
     <div class="loader"></div>
+    <svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+    <circle fill="none" stroke="#fff" stroke-width="6" stroke-miterlimit="15" stroke-dasharray="14.2472,14.2472" cx="50" cy="50" r="47" >
+      <animateTransform 
+         attributeName="transform" 
+         attributeType="XML" 
+         type="rotate"
+         dur="5s" 
+         from="0 50 50"
+         to="360 50 50" 
+         repeatCount="indefinite" />
+  </circle>
+  <circle fill="none" stroke="#fff" stroke-width="1" stroke-miterlimit="10" stroke-dasharray="10,10" cx="50" cy="50" r="39">
+      <animateTransform 
+         attributeName="transform" 
+         attributeType="XML" 
+         type="rotate"
+         dur="5s" 
+         from="0 50 50"
+         to="-360 50 50" 
+         repeatCount="indefinite" />
+  </circle>
+  <g fill="#fff">
+  <rect x="30" y="35" width="5" height="30">
+    <animateTransform 
+       attributeName="transform" 
+       dur="1s" 
+       type="translate" 
+       values="0 5 ; 0 -5; 0 5" 
+       repeatCount="indefinite" 
+       begin="0.1"/>
+  </rect>
+  <rect x="40" y="35" width="5" height="30" >
+    <animateTransform 
+       attributeName="transform" 
+       dur="1s" 
+       type="translate" 
+       values="0 5 ; 0 -5; 0 5" 
+       repeatCount="indefinite" 
+       begin="0.2"/>
+  </rect>
+  <rect x="50" y="35" width="5" height="30" >
+    <animateTransform 
+       attributeName="transform" 
+       dur="1s" 
+       type="translate" 
+       values="0 5 ; 0 -5; 0 5" 
+       repeatCount="indefinite" 
+       begin="0.3"/>
+  </rect>
+  <rect x="60" y="35" width="5" height="30" >
+    <animateTransform 
+       attributeName="transform" 
+       dur="1s" 
+       type="translate" 
+       values="0 5 ; 0 -5; 0 5"  
+       repeatCount="indefinite" 
+       begin="0.4"/>
+  </rect>
+  <rect x="70" y="35" width="5" height="30" >
+    <animateTransform 
+       attributeName="transform" 
+       dur="1s" 
+       type="translate" 
+       values="0 5 ; 0 -5; 0 5" 
+       repeatCount="indefinite" 
+       begin="0.5"/>
+  </rect>
+  </g>
+</svg>
 </div>
 
+<!-- الهيدر -->
 <header>
     <img src="images/Logo1.png" alt="شعار وزارة التربية">
     <h1>المديرية العامة للتربية في محافظة النجف الأشرف</h1>
 </header>
 
+<!-- المحتوى -->
 <div class="container">
     <h2>مرحبًا بكم في البوابة الإلكترونية لقسم الامتحانات</h2>
 
@@ -224,6 +112,7 @@ window.onload = function () {
     </div>
 </div>
 
+<!-- الفوتر -->
 <footer>
     <div>© 2025 – جميع الحقوق محفوظة للمديرية العامة للتربية في محافظة النجف الأشرف</div>
     <div>مطور الموقع: م.م محمد مصطفى الإمارة</div>
@@ -232,5 +121,7 @@ window.onload = function () {
     </div>
 </footer>
 
+<!-- ربط ملف JavaScript -->
+<script src="js/main.js"></script>
 </body>
 </html>
