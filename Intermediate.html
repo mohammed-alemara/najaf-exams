@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بوابة قسم الامتحانات</title>
 
-<!-- الخطوط -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* إعدادات عامة */
+/* ================== إعدادات عامة ================== */
 body {
     font-family: "Cairo", sans-serif;
     direction: rtl;
@@ -18,7 +17,7 @@ body {
     color: #333;
 }
 
-/* شاشة التحميل */
+/* ================== شاشة التحميل ================== */
 .loading-screen {
     position: fixed;
     inset: 0;
@@ -42,7 +41,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* الهيدر */
+/* ================== الهيدر ================== */
 header {
     background-color: #154360;
     color: #ffffff;
@@ -52,7 +51,7 @@ header {
 
 header img {
     height: 60px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 header h1 {
@@ -61,26 +60,44 @@ header h1 {
     font-weight: 700;
 }
 
-/* المحتوى */
+/* ================== المحتوى ================== */
 .container {
     width: 90%;
     max-width: 1100px;
     margin: 30px auto;
     display: none;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
-.container h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* البطاقات الحكومية */
+/* ================== البطاقات ================== */
 .service {
     background-color: #ffffff;
     border: 1px solid #dcdcdc;
     border-right: 6px solid #154360;
     padding: 25px;
     margin-bottom: 25px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: cardEnter 0.8s ease forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes cardEnter {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* تحويم البطاقة */
+.service:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .service h3 {
@@ -95,21 +112,25 @@ header h1 {
     text-align: justify;
 }
 
-/* الأزرار الحكومية */
+/* ================== الأزرار ================== */
 .actions {
     margin-top: 15px;
 }
 
 .btn {
     display: inline-block;
-    padding: 8px 20px;
+    padding: 8px 22px;
     font-size: 14px;
     text-decoration: none;
     border-radius: 3px;
     margin-left: 10px;
-    transition: background-color 0.2s ease;
+    transition: 
+        background-color 0.25s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
+/* زر رئيسي */
 .btn-primary {
     background-color: #154360;
     color: #ffffff;
@@ -117,8 +138,16 @@ header h1 {
 
 .btn-primary:hover {
     background-color: #0e2f4a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(21,67,96,0.25);
 }
 
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* زر ثانوي */
 .btn-secondary {
     background-color: #6c757d;
     color: #ffffff;
@@ -126,9 +155,16 @@ header h1 {
 
 .btn-secondary:hover {
     background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* الفوتر */
+.btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ================== الفوتر ================== */
 footer {
     background-color: #e9ecef;
     padding: 15px 0;
@@ -142,14 +178,10 @@ footer a {
     text-decoration: none;
 }
 
-/* استجابة الشاشات */
+/* ================== استجابة الشاشات ================== */
 @media (max-width: 768px) {
     header h1 {
         font-size: 16px;
-    }
-
-    .service {
-        padding: 20px;
     }
 }
 </style>
@@ -159,25 +191,22 @@ window.onload = function () {
     setTimeout(function () {
         document.querySelector(".loading-screen").style.display = "none";
         document.querySelector(".container").style.display = "block";
-    }, 1500);
+    }, 1200);
 };
 </script>
 
 </head>
 <body>
 
-<!-- شاشة التحميل -->
 <div class="loading-screen">
     <div class="loader"></div>
 </div>
 
-<!-- الهيدر -->
 <header>
     <img src="images/Logo1.png" alt="شعار وزارة التربية">
     <h1>المديرية العامة للتربية في محافظة النجف الأشرف</h1>
 </header>
 
-<!-- المحتوى -->
 <div class="container">
     <h2>مرحبًا بكم في البوابة الإلكترونية لقسم الامتحانات</h2>
 
@@ -185,8 +214,7 @@ window.onload = function () {
         <h3>التقديم على الامتحانات الخارجية</h3>
         <p>
             تتيح هذه الخدمة إمكانية التقديم على الامتحانات الخارجية للتلاميذ والطلبة غير المنتظمين
-            بالدوام، والذين تركوا المقاعد الدراسية ولا يحق لهم الدوام في المدارس النظامية،
-            ولجميع المراحل الدراسية، وفق ضوابط وتعليمات تصدر عن اللجنة الدائمة للامتحانات العامة.
+            بالدوام، وفق ضوابط وتعليمات تصدر عن اللجنة الدائمة للامتحانات العامة.
         </p>
 
         <div class="actions">
@@ -196,7 +224,6 @@ window.onload = function () {
     </div>
 </div>
 
-<!-- الفوتر -->
 <footer>
     <div>© 2025 – جميع الحقوق محفوظة للمديرية العامة للتربية في محافظة النجف الأشرف</div>
     <div>مطور الموقع: م.م محمد مصطفى الإمارة</div>
