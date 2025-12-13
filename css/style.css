@@ -9,21 +9,22 @@ body {
 /* شاشة التحميل */
 .loading-screen {
     position: fixed;
-    inset: 0;
+    width: 100%;
+    height: 100%;
     background: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .loader {
-    width: 60px;
-    height: 60px;
-    border: 6px solid #e0e0e0;
-    border-top: 6px solid #154360;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+    width: 100px;
+    height: 100px;
+    background-color: #154360;
+    -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
+    -webkit-mask-size: contain;
+    animation: spin 8s linear infinite;
 }
 
 @keyframes spin {
@@ -40,13 +41,6 @@ header {
 
 header img {
     height: 60px;
-    margin-bottom: 8px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
 }
 
 /* المحتوى */
@@ -63,9 +57,9 @@ header h1 {
     to { opacity: 1; }
 }
 
-/* البطاقة */
+/* البطاقات */
 .service {
-    background-color: #ffffff;
+    background: #ffffff;
     border: 1px solid #dcdcdc;
     border-right: 6px solid #154360;
     padding: 25px;
@@ -88,58 +82,28 @@ header h1 {
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-.service h3 {
-    color: #154360;
-    margin-top: 0;
-}
-
-.service p {
-    font-size: 14px;
-    line-height: 1.9;
-    text-align: justify;
-}
-
 /* الأزرار */
-.actions {
-    margin-top: 15px;
-}
-
 .btn {
-    display: inline-block;
     padding: 8px 22px;
-    font-size: 14px;
     text-decoration: none;
     border-radius: 3px;
     margin-left: 10px;
-    transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primary {
-    background-color: #154360;
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    background-color: #0e2f4a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(21,67,96,0.25);
+    background: #154360;
+    color: #fff;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    color: #ffffff;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    transform: translateY(-2px);
+    background: #6c757d;
+    color: #fff;
 }
 
 /* الفوتر */
 footer {
-    background-color: #e9ecef;
-    padding: 15px 0;
+    background: #e9ecef;
+    padding: 15px;
     font-size: 12px;
     text-align: center;
-    border-top: 1px solid #ccc;
 }
