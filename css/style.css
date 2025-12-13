@@ -1,0 +1,145 @@
+body {
+    font-family: "Cairo", sans-serif;
+    direction: rtl;
+    margin: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* شاشة التحميل */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #154360;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* الهيدر */
+header {
+    background-color: #154360;
+    color: #ffffff;
+    padding: 15px 0;
+    text-align: center;
+}
+
+header img {
+    height: 60px;
+    margin-bottom: 8px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* المحتوى */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: none;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* البطاقة */
+.service {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-right: 6px solid #154360;
+    padding: 25px;
+    margin-bottom: 25px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: cardEnter 0.8s ease forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes cardEnter {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.service:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.service h3 {
+    color: #154360;
+    margin-top: 0;
+}
+
+.service p {
+    font-size: 14px;
+    line-height: 1.9;
+    text-align: justify;
+}
+
+/* الأزرار */
+.actions {
+    margin-top: 15px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 22px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-left: 10px;
+    transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary {
+    background-color: #154360;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0e2f4a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(21,67,96,0.25);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* الفوتر */
+footer {
+    background-color: #e9ecef;
+    padding: 15px 0;
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
