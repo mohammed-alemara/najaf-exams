@@ -31,6 +31,12 @@ body {
             -webkit-mask-repeat: no-repeat;
             animation: spin 8s linear infinite;
         }
+svg{
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display:inline-block;
+}
 
 @keyframes spin {
     100% { transform: rotate(360deg); }
