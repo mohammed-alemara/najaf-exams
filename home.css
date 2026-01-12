@@ -1,0 +1,109 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: "Cairo", sans-serif;
+    direction: rtl;
+    margin: 0;
+    background: linear-gradient(to bottom, #eef5ff, #ffffff);
+    color: #333;
+}
+
+/* ===== Loading Screen (دائرة التحميل الأصلية) ===== */
+.loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.loader {
+    width: 100px;
+    height: 100px;
+    background-color: #007BFF; /* لون متناسق مع التصميم */
+    -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center/contain no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    animation: spin 8s linear infinite;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #154360;
+    animation: pulse 1.5s ease-in-out infinite;
+    text-align: center;
+}
+
+@keyframes pulse { 0% {opacity:0.4;} 50% {opacity:1;} 100% {opacity:0.4;} }
+
+/* ===== Header ===== */
+header {
+    background: linear-gradient(135deg, #c3e2ff, #eaf4ff);
+    text-align: center;
+    padding: 20px;
+}
+
+.logo { height: 60px; margin-bottom: 10px; }
+header h1 { margin: 0; color: #154360; }
+
+/* ===== Container ===== */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+    display: none;
+}
+
+.container h2 { text-align: center; margin-bottom: 40px; color: #154360; }
+
+/* ===== Service Card ===== */
+.service {
+    padding: 35px;
+    border-radius: 20px;
+    margin-bottom: 35px;
+    position: relative;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.08);
+    animation: fadeUp 0.9s ease forwards;
+}
+
+@keyframes fadeUp { from {opacity:0; transform:translateY(50px);} to {opacity:1; transform:translateY(0);} }
+
+.service::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7px;
+    height: 100%;
+}
+
+.service h3 { margin-top: 0; color: #154360; }
+.service h3::after {
+    content: "";
+    width: 65px; height: 3px; display: block; margin-top: 12px; border-radius: 6px; background: currentColor;
+}
+.service p { line-height: 2; margin: 22px 0; text-align: justify; }
+
+/* ===== Service Colors ===== */
+.service-blue { background: linear-gradient(145deg, #ffffff, #edf4ff); }
+.service-blue::before { background: linear-gradient(to bottom, #007BFF, #00c6ff); }
+
+.service-orange { background: linear-gradient(145deg, #fff7ed, #fff1d6); }
+.service-orange::before { background: linear-gradient(to bottom, #ff9800, #ffc107); }
+
+/* ===== Buttons ===== */
+.buttons { display: flex; gap: 15px; }
+.btn { padding: 13px 30px; border-radius: 35px; text-decoration: none; font-weight: 600; color: #fff; transition: transform 0.3s ease; }
+.btn:hover { transform: translateY(-3px); }
+.btn-primary { background: linear-gradient(135deg, #007BFF, #00c6ff); }
+.btn-secondary { background: linear-gradient(135deg, #28a745, #6fdc8c); }
+.btn-warning { background: linear-gradient(135deg, #ff9800, #ffc107); }
+
+/* ===== Footer ===== */
+footer { background: #c3e2ff; text-align: center; padding: 15px; font-size: 12px; color: #154360; margin-top: 70px; }
