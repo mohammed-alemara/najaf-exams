@@ -99,7 +99,7 @@ header h1 { margin: 0; color: #154360; }
 
 /* ===== Buttons ===== */
 .buttons { display: flex; gap: 15px; }
-.btn { padding: 13px 30px; border-radius: 35px; text-decoration: none; font-weight: 600; color: #fff; transition: transform 0.3s ease; }
+.btn { padding: 10px 15px; border-radius: 35px; text-decoration: none; font-weight: 600; color: #fff; transition: transform 0.3s ease; }
 .btn:hover { transform: translateY(-3px); }
 .btn-primary { background: linear-gradient(135deg, #007BFF, #00c6ff); }
 .btn-secondary { background: linear-gradient(135deg, #28a745, #6fdc8c); }
