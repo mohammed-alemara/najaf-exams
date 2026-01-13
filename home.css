@@ -105,5 +105,12 @@ header h1 { margin: 0; color: #154360; }
 .btn-secondary { background: linear-gradient(135deg, #28a745, #6fdc8c); }
 .btn-warning { background: linear-gradient(135deg, #ff9800, #ffc107); }
 
-/* ===== Footer ===== */
-footer { background: #c3e2ff; text-align: center; padding: 15px; font-size: 12px; color: #154360; margin-top: 70px; }
+/* ===================== Footer ===================== */
+footer {
+    background: #c3e2ff;
+    text-align: center;
+    padding: 15px;
+    font-size: 12px;
+    color: var(--text-color);
+    margin-top: 70px;
+}
