@@ -1,318 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام التقديم للامتحانات الخارجية</title>
- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة قسم الامتحانات</title>
 
-<meta property="og:title" content="منظومة التقديم على الامتحان التمهيدي">
-<meta property="og:description" content="منظومة التقديم على الامتحان التمهيدي">
-<meta property="og:image:alt" content="منظومة التقديم على الامتحان التمهيدي">
-
-<meta property="og:image" content="https://tamhedi.pages.dev/logo.jpg">
-<meta property="og:url" content="https://tamhedi.pages.dev/logo">
-<meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
 </head>
 
- 
 <body>
 
-<div id="form1">
-<script src="https://www.cognitoforms.com/f/seamless.js" data-key="BMNhygja0U--ygdIwFi4XQ" data-form="31"></script>
-<script>
-document.write(unescape('%20%20%3C%73%63%72%69%70%74%3E%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%66%69%6C%65%75%70%6C%6F%61%64%2D%64%72%6F%70%7A%6F%6E%65%2D%6D%65%73%73%61%67%65%22%2C%22%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%66%69%6C%65%75%70%6C%6F%61%64%2D%64%65%66%61%75%6C%74%2D%75%70%6C%6F%61%64%2D%62%75%74%74%6F%6E%2D%74%65%78%74%22%2C%22%1%1%9%20%7%4%5%8%1%9%20%7%4%4%E%5%A%9%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%66%69%6C%65%75%70%6C%6F%61%64%2D%75%70%6C%6F%61%64%2D%69%6E%70%72%6F%67%72%65%73%73%2D%6D%65%73%73%61%67%65%22%2C%22%C%7%1%A%20%1%1%9%20%7%4%5%4%1%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%66%69%6C%65%75%70%6C%6F%61%64%2D%65%78%63%6C%75%64%65%64%2D%66%69%6C%65%2D%74%79%70%65%2D%6D%65%73%73%61%67%65%22%2C%22%6%8%9%20%7%4%5%4%1%20%A%A%1%20%5%F%9%8%5%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%66%69%6C%65%75%70%6C%6F%61%64%2D%69%6E%76%61%6C%69%64%2D%66%69%6C%65%2D%74%79%70%65%2D%6D%65%73%73%61%67%65%22%2C%22%A%C%8%20%7%6%20%A%3%8%6%20%6%8%9%20%7%4%5%4%1%20%7B%61%6C%6C%6F%77%65%64%54%79%70%65%73%7D%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%72%65%71%75%69%72%65%64%22%2C%22%D%2%4%20%7B%70%72%6F%70%65%72%74%79%7D%5%7%4%8%8%20%22%29%3B%0A%43%6F%67%6E%69%74%6F%2E%6F%76%65%72%72%69%64%65%54%65%78%74%28%22%73%74%72%69%6E%67%2D%6C%65%6E%67%74%68%2D%62%65%74%77%65%65%6E%22%2C%22%7%4%5%F%E%4%20%A%A%1%20%5%D%A%D%22%29%3B%0A%3C%2F%73%63%72%69%70%74%3E'));
-</script>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">جاري الاتصال يرجى الانتظار...</div>
+    </div>
 
-</div>
+    <!-- Header -->
+    <header>
+        <img src="images/Logo1.png" alt="شعار وزارة التربية" class="logo">
+    </header>
 
+    <!-- Content -->
+    <div class="container">
+        <h2></h2>
+
+        <!-- Service 1 -->
+        <div class="service service-blue">
+            <h3>التقديم على الامتحانات الخارجية</h3>
+            <p>
+                التقديم على الامتحانات الخارجية لجميع التلاميذ والطلبة غير المنتظمين
+                بالدوام، الذين تركوا المقاعد الدراسية ولا يحق لهم الدوام في المدارس
+                النظامية، ولجميع المراحل الدراسية وفق ضوابط اللجنة الدائمة للامتحانات العامة.
+            </p>
+
+            <div class="buttons">
+                <a href="temhedi.html" class="btn btn-primary">التقديم</a>
+                <a href="instructions.html" class="btn btn-secondary">الضوابط والتعليمات</a>
+            </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service service-orange">
+            <h3>الاستعلام عن المركز الامتحاني</h3>
+            <p>
+                تتيح هذه الخدمة للطلبة معرفة المركز الامتحاني الخاص بهم من خلال إدخال
+                البيانات المطلوبة، وذلك لتسهيل الوصول إلى موقع الامتحان قبل موعده المحدد.
+            </p>
+
+            <div class="buttons">
+                <a href="center-search.html" class="btn btn-warning">الاستعلام</a>
+            </div>
+        </div>
+
+    </div>
+
+<!-- Footer -->
 <footer>
-  <p class="footer-text">
-    <a>جميع الحقوق محفوظة © 2025| للمديرية العامة للتربية في محافظة النجف الاشرف</a>
-    <br>
-    <a href="mailto:mmh.mart@gmail.com" class="contact-link">
-      <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/refs/heads/master/Assets/Hi.gif" alt="icon" class="contact-icon"> 
-      تواصل معنا
-    </a>
-  </p>
+    <div>جميع الحقوق محفوظة © 2025| للمديرية العامة للتربية في محافظة النجف الاشرف</div>
+    <div>تطوير: م.م محمد مصطفى الأمارة</div>
+    <div><a href="mailto:mmh.mart@gmail.com">الإبلاغ عن مشكلة فنية</a></div>
 </footer>
 
-
-
-  
-  <style>
-    .footer-text {
-      text-align: center;
-      margin: 0em;
-      color: #333;
-      font-size: 10px;
-    }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    font-size: 10px;
-  }
-
-  .contact-icon {
-    width: 20px; 
-    height: 20px;
-    margin-left: 10px;
-  }
-</style>
+<script src="home.js"></script>
 </body>
-  <style>
-    
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-    .cairo-<uniquifier> {
-  font-family: "Cairo", serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "slnt" 0;
-}
-@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap');
-.aref-ruqaa-regular {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 400;
-  font-style: normal;
-}
+</html>
 
-.aref-ruqaa-bold {
-  font-family: "Aref Ruqaa", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-
-    body {
-      font-family:  "Cairo", serif;
-      direction: rtl;
-
-      margin: 1 auto;
-    }
-    #form1 {
-      direction: rtl;
-      margin: 1 auto;
-      border: 2px solid #ccc;
-      padding: 1px;
-      border-radius: 4px;
-      background-color: white;
-      max-width: 100%;
-      /*max-height:100% */
-      font-family: "Cairo", serif;
-    }
-
-    html .cog-cognito--styled .cog-button__icon svg, :root:root:root:root:root .cog-cognito--styled .cog-button__icon svg {
-    width: 1.7em;
-    height: 1.7em;
-    font-size: .8em;
-    stroke-width: calc(var(--icon-weight)*1.1px);
-    display: none;
-}
-    html .cog-cognito--styled .cog-button__icon, html .cog-cognito--styled .cog-button__text, :root:root:root:root:root .cog-cognito--styled .cog-button__icon, :root:root:root:root:root .cog-cognito--styled .cog-button__text {
-    padding: calc(var(--input__padding-v)*.25) calc(var(--input__padding-h)*.1);
-    font-family: 'Cairo';
-}
-    html .cog-icon, :root:root:root:root:root .cog-icon {
-    width: 1.7em;
-    height: 1.7em;
-    vertical-align: middle;
-    font-size: 1em;
-    fill: transparent;
-    stroke: currentcolor;
-    stroke-width: var(--icon-weight);
-    padding-right: 3em;
-    /*display: none;*/
-}
-html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon .cog-icon, html .cog-input--icon .cog-icon g, :root:root:root:root:root .cog-picker .cog-icon, :root:root:root:root:root .cog-picker .cog-icon g, :root:root:root:root:root .cog-input--icon .cog-icon, :root:root:root:root:root .cog-input--icon .cog-icon g {
-
-    stroke: var(--input__color, var(--color));
-    stroke-width: calc(var(--icon-weight)*1.5px);
-    direction: rtl !important;
-    text-align: left;
-    margin-right: unset;
-    display: none;
-}
-    
-html .cog-cognito .el-select-dropdown__list li, html .cog-cognito .el-autocomplete-suggestion__list li, :root:root:root:root:root .cog-cognito .el-select-dropdown__list li, :root:root:root:root:root .cog-cognito .el-autocomplete-suggestion__list li {
-    position: relative;
-    padding: calc(var(--gutter)/4) calc(var(--gutter)/2);
-    cursor: default;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 10px !important;
-    direction: rtr;
-    font-family: 'Cairo' !important;
-}
-.el-select-dropdown__wrap.el-scrollbar__wrap {
-    direction: ltr;
-}
-    .cog-text{
-      direction: rtl;
-    }
-html .cog-label, :root:root:root:root:root .cog-label {
-    display: block;
-    padding-top: calc(var(--gutter)/4);
-    color: hsl(206,100%,55%);
-    font-family: 'Cairo';
-    font-size: var(--label__font-size, inherit);
-    font-weight: var(--label__font-weight, normal);
-}
-    /*label input*/
-html .cog-html *:last-child, :root:root:root:root:root .cog-html *:last-child {
-    margin-bottom: 0;
-    font-family: 'Cairo';
-    /*color: hsl(2, 70%, 47%);*/
-}
-    .el-input__inner, .el-textarea__inner, .el-radio__inner, .el-checkbox__inner, .cog-signature__pad{
-    font-family: 'Cairo' !important;
-    color: hsl(2, 70%, 47%) !important;
-    }
-
-    /*  marginal list  */
-    :root:root:root .cog-cognito--styled.cog-cognito--protect-css li {
-    display: list-item;
-    margin: 1em;
-}
-    /*check box*/
-    html .cog-cognito--styled .is-checked .el-checkbox__inner, :root:root:root:root:root .cog-cognito--styled .is-checked .el-checkbox__inner {
-    background-color: var(--highlight);
-    border: 0;
-    box-shadow: none;
-    transform: scale(var(--checkable__scale)) scale(var(--checkable-checked__scale)) scale(0.47);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 0.6em;
-    width: 2em;
-    height: 2em;
-    font-size: 1em;
-}
-    html .cog-cognito--styled .cog-header h1, :root:root:root:root:root .cog-cognito--styled .cog-header h1 {
-    font-family: 'Aref Ruqaa';
-    font-size: 12pt;
-    font-weight: var(--header__font-weight, normal);
-      margin-right: 5px;
-}
-    html .cog-cognito--styled h4, :root:root:root:root:root .cog-cognito--styled h4 {
-    font-size: max(var(--heading__base-size)*.64,var(--label__font-size) + 2px);
-    font-family: 'Aref Ruqaa';
-    margin-bottom: 0em;
-}
-    /*placeholder text */
-    html .cog-cognito--styled .cog-picker .el-input__inner, html .cog-cognito--styled .cog-input--icon .el-input__inner, :root:root:root:root:root .cog-cognito--styled .cog-picker .el-input__inner, :root:root:root:root:root .cog-cognito--styled .cog-input--icon .el-input__inner {
-    /* padding-right: calc(1em + var(--input__padding-h)); */
-    /* direction: rtl; */
-      padding-right: 5px;
-}
-    	tml .cog-checkable .el-radio__label, html .cog-checkable .el-checkbox__label, :root:root:root:root:root .cog-checkable .el-radio__label, :root:root:root:root:root .cog-checkable .el-checkbox__label {
-    padding: 2px 0;
-    padding-left: calc(var(--font-size) + var(--checkable__scale)*6px);
-    word-break: break-word;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-    margin-right: 3em !important;
-}
-    html .cog-cognito--styled .cog-heading, :root:root:root:root:root .cog-cognito--styled .cog-heading {
-    margin-top: 1em;
-    margin-bottom: 0;
-}
-    html .cog-cognito hr, :root:root:root:root:root .cog-cognito hr {
-    border: 0;
-    /* border-bottom: var(--border-width) hsla(var(--background-hsl), 0.6) var(--input__border-style); */
-}
-:root .cog-cognito {
-  /*  E.g Error message color  */
-  --negative: #f66;
-  
-  /*  E.g. Error message text color  */
-  --negative-reverse: white;
-  
-  /* E.g. focus indication color, calendar selection color    */
-  --highlight: #41B883;
-  
-  /* The color of text on top of the highlight color  */
-  --highlight-reverse: white;
-  
-  /* How much white space between elements */
-  --gutter: 10px;
-  
-  /* How rounded the corners of things in general. It trickles down to specific elements which can be explicitly overridden if you want. 0 is sharp corners. */
-  --border-radius: 5px;
-  
-  /* How thick icon strokes are. */
-  --icon-weight: 1;
-  --icon-direction: rtl;
-  
-  /* How fast transitions happen. 2 seconds is quite slow. */
-  --speed: 0s;
-  
-  /* The submit button, or next button are primary buttons. */
-  --button-primary__border-radius: 25px;
-  --button-primary__background-color: #34495E;
-  --button-primary__border-color: #34495E;
-  
-  /* Other things like upload buttons are considered secondary */
-  --button-secondary__border-radius: 0;
-  --button-secondary__background-color: #41B883;
-  --button-secondary__color: white;
-  --button-secondary__border-color: #41B883;
-  
-  /* text input styles */
-  --input__background-color: #eee;
-  --input__border-width: 2px;
-  --input__border-color: #cbd1cb;
-  
-  /* vertical and horizontal space of a text input */
-  --input__padding-v: 12px;
-  --input__padding-h: 15px;
-  
-  --toggle__border-radius: 40px;
-}
-    html .cog-abuse ul, :root:root:root:root:root .cog-abuse ul {
-    display: block;
-    margin: 0;
-    padding: 10px 0 0;
-    font-size: 11px;
-    text-align: center;
-    display: none !important;
-}
-    html .cog-branding--minimal, html .cog-branding--minimal *, :root:root:root:root:root .cog-branding--minimal, :root:root:root:root:root .cog-branding--minimal * {
-    position: static !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: scale(1) translateX(0) translateY(0) !important;
-    display: none !important;
-}
-        /* control size logo */
-    html .cog-header img, :root:root:root:root:root .cog-header img {
-    display: inline-block;
-    width: 50px;
-}
-
-html .cog-loader__cog, 
-:root:root:root:root:root .cog-loader__cog {
-    width: 100%;
-    height: min(100px, 25vw);
-    background-color: #154360;
-      -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
-      -webkit-mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      animation: spin 8s linear infinite;
-    }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-    html .cog-html *:last-child, :root:root:root:root:root .cog-html *:last-child {
-    margin-bottom: 0;
-    font-family: 'Cairo';
-    color: blue !important;
-    text-decoration: none ;
-    font-size: small;
-}
-  </style>
