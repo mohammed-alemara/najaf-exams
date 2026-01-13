@@ -47,9 +47,10 @@ header {
     background: linear-gradient(135deg, #c3e2ff, #eaf4ff);
     text-align: center;
     padding: 20px;
+    padding-block: 12px;
 }
 
-.logo { height: 60px; margin-bottom: 10px; }
+.logo { height: 60px; margin-bottom: 0px; }
 header h1 { margin: 0; color: #154360; }
 
 /* ===== Container ===== */
