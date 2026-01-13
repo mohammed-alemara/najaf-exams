@@ -108,10 +108,8 @@ header h1 { margin: 0; color: #154360; }
 
 /* ===================== Footer ===================== */
 footer {
-    background: #c3e2ff;
+    background: linear-gradient(135deg, #c3e2ff, #eaf4ff);
     text-align: center;
-    padding: 15px;
-    font-size: 12px;
-    color: var(--text-color);
-    margin-top: 70px;
+    padding: 0px;
+    padding-block: 12px;
 }
