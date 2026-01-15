@@ -16,6 +16,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  
 }   
 
 
@@ -23,12 +24,13 @@ body {
   font-weight: bolder !important;
   font-family: "cairo"!important;
   font-size: 14px;
+  color:#007BFF !important;
 }
 
 .cog-choice{
   font-size: 14px !important;
   font-family: "cairo";
-  color: blue !important;
+  color:cornflowerblue!important;
   font-weight: bold !important;
 }
 .cog-header h1{
@@ -55,14 +57,14 @@ html .cog-header--center:not(.cog-header--row), :root:root:root:root:root .cog-h
     border-radius: 5px;
     font-weight: bold;
     font-family: "cairo";
+    color: darkred;
       
 }
 .cog-html *:last-child{
     margin-bottom: 0;
     font-family: 'cairo';
-    font-style: italic;
-    font-weight: bold;
-    color: darkgreen;
+    color: black;
+    font-size: 14px;
 }
 .cog-header img {
     display: inline-block;
@@ -91,6 +93,18 @@ html .cog-loader__cog,
     transform: scale(1) translateX(0) translateY(0) !important;
     display: none !important;
 }
+
+.cog-form__container{
+
+    background-color: var(--form__background-color);
+    margin-right: auto;
+    margin-left: auto;
+    /* padding-bottom: var(--form__margins--responsive); */
+ }
+.cog-abuse.cog-wrapper{
+  display: none;
+}
+
 .cog-abuse ul {
     display: block;
     margin: 0;
@@ -109,7 +123,7 @@ html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon 
     display: none;
 }
 .cog-form{
-    background: linear-gradient(to bottom, #eef5ff, #ffffff);
+    /*background: linear-gradient(to bottom, #eef5ff, #ffffff);*/
 }
 
 :root .cog-cognito {
