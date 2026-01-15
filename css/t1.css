@@ -1,192 +1,23 @@
-/* =========================
-   Global Settings
-========================= */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Aref+Ruqaa:wght@400;700&display=swap');
-
-* {
-  box-sizing: border-box;
+/* arabic */
+@font-face {
+  font-family: "cairo";
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  direction: rtl;
-  font-family: "Cairo", serif;
-  background-color: #ffffff;
+.cog-label{
+  font-weight: bolder !important;
 }
 
-/* =========================
-   Main Container
-========================= */
-#form1 {
-  max-width: 100%;
-  background-color: #fff;
-  padding: 0;
-  margin: 0 auto;
+.cog-choice{
+  font-size: 14px !important;
+  font-family: "cairo";
+  color: blue !important;
+  font-weight: bold !important;
 }
-
-/* =========================
-   Footer
-========================= */
-.footer-text {
-  text-align: center;
-  color: #333;
-  font-size: 10px;
-  width: 100%;
+h1{
+  display: none;
 }
-
-.contact-link {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  font-size: 10px;
-}
-
-.contact-icon {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-}
-
-/* =========================
-   Cognito Global Overrides
-========================= */
-:root .cog-cognito {
-  --negative: #f66;
-  --negative-reverse: #fff;
-  --highlight: #41B883;
-  --highlight-reverse: #fff;
-  --gutter: 10px;
-  --border-radius: 5px;
-  --icon-weight: 1;
-  --speed: 0s;
-
-  --button-primary__border-radius: 25px;
-  --button-primary__background-color: #34495E;
-  --button-primary__border-color: #34495E;
-
-  --button-secondary__background-color: #41B883;
-  --button-secondary__border-color: #41B883;
-  --button-secondary__color: #fff;
-
-  --input__background-color: #eee;
-  --input__border-width: 2px;
-  --input__border-color: #cbd1cb;
-  --input__padding-v: 12px;
-  --input__padding-h: 15px;
-}
-
-/* =========================
-   Text & Labels
-========================= */
-.cog-label {
-  font-family: "Cairo";
-  color: hsl(206, 100%, 55%);
-}
-
-.cog-text,
-.cog-html,
-.el-input__inner,
-.el-textarea__inner,
-.el-radio__label,
-.el-checkbox__label {
-  font-family: "Cairo" !important;
-}
-
-/* =========================
-   Inputs
-========================= */
-.el-input__inner,
-.el-textarea__inner {
-  color: hsl(2, 70%, 47%) !important;
-}
-
-.el-select-dropdown__list li {
-  margin-right: 10px !important;
-  direction: rtl;
-}
-
-/* =========================
-   Headers
-========================= */
-.cog-header h1 {
-  font-family: "Aref Ruqaa";
-  font-size: 12pt;
-  margin-right: 5px;
-}
-
-/* =========================
-   Icons & Buttons
-========================= */
-.cog-button__icon,
-.cog-icon,
-.cog-i-download {
-  display: none !important;
-}
-
-.cog-button__text {
-  font-family: "Cairo";
-}
-
-/* =========================
-   Checkbox & Radio
-========================= */
-.is-checked .el-checkbox__inner {
-  background-color: var(--highlight);
-  transform: scale(0.47);
-  width: 2em;
-  height: 2em;
-}
-
-/* =========================
-   Dropdown Fix (RTL)
-========================= */
-.el-select-dropdown__wrap {
-  direction: ltr;
-}
-
-/* =========================
-   Horizontal Rules
-========================= */
-.cog-cognito hr {
-  border: none;
-  border-bottom: 1px solid #ccc;
-}
-
-/* =========================
-   Branding Removal
-========================= */
-.cog-branding--minimal,
-.cog-abuse {
-  display: none !important;
-}
-
-/* =========================
-   Logo Size
-========================= */
-.cog-header img {
-  height: 50px;
-}
-
-/* =========================
-   Loader Animation
-========================= */
-html .cog-loader__cog, 
-:root:root:root:root:root .cog-loader__cog {
-    width: 100%;
-    height: min(100px, 25vw);
-    background-color: #007BFF;
-      -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23fff' d='M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='1s' from='0 50 50' to='-360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill='%23fff' d='M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z'%3E%3CanimateTransform attributeName='transform' attributeType='XML' type='rotate' dur='2s' from='0 50 50' to='360 50 50' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center center no-repeat;
-      -webkit-mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      animation: spin 8s linear infinite;
-    }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-
