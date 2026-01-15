@@ -8,9 +8,21 @@
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 
+ 
+body {
+  direction: rtl;
+  margin: 1 auto;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}   
+
+
 .cog-label{
   font-weight: bolder !important;
   font-family: "cairo"!important;
+  font-size: 14px;
 }
 
 .cog-choice{
@@ -24,12 +36,16 @@
   
 }
 
-.cog-header{
+.cog-header--center{
 background: linear-gradient(135deg, #c3e2ff, #eaf4ff);
-    text-align: center;
-    padding: 20px;
-    padding-block: 12px;
 }
+
+html .cog-header--center:not(.cog-header--row), :root:root:root:root:root .cog-header--center:not(.cog-header--row) {
+    text-align: center;
+    padding: 12px;
+}
+
+
 .el-input__inner{
     width: 100%;
     text-align: right;
@@ -92,3 +108,64 @@ html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon 
     margin-right: unset;
     display: none;
 }
+.cog-form{
+    background: linear-gradient(to bottom, #eef5ff, #ffffff);
+}
+
+:root .cog-cognito {
+  /*  E.g Error message color  */
+  --negative: #f66;
+  
+  /*  E.g. Error message text color  */
+  --negative-reverse: white;
+  
+  /* E.g. focus indication color, calendar selection color    */
+  --highlight: #41B883;
+  
+  /* The color of text on top of the highlight color  */
+  --highlight-reverse: white;
+  
+  /* How much white space between elements */
+  --gutter: 10px;
+  
+  /* How rounded the corners of things in general. It trickles down to specific elements which can be explicitly overridden if you want. 0 is sharp corners. */
+  --border-radius: 5px;
+  
+  /* How thick icon strokes are. */
+  --icon-weight: 1;
+  --icon-direction: rtl;
+  
+  /* How fast transitions happen. 2 seconds is quite slow. */
+  --speed: 0s;
+  
+  /* The submit button, or next button are primary buttons. */
+  --button-primary__border-radius: 25px;
+  --button-primary__background-color: #34495E;
+  --button-primary__border-color: #34495E;
+  
+  /* Other things like upload buttons are considered secondary */
+  --button-secondary__border-radius: 0;
+  --button-secondary__background-color: #41B883;
+  --button-secondary__color: white;
+  --button-secondary__border-color: #41B883;
+  
+  /* text input styles */
+  --input__background-color: #eee;
+  --input__border-width: 2px;
+  --input__border-color: #cbd1cb;
+  
+  /* vertical and horizontal space of a text input */
+  --input__padding-v: 12px;
+  --input__padding-h: 15px;
+  
+  --toggle__border-radius: 40px;
+}
+
+.cog-button--primary{
+    cursor: pointer;
+    background: darkgreen;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 10px;
+ }
