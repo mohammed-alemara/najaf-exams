@@ -83,3 +83,12 @@ html .cog-loader__cog,
     text-align: center;
     display: none !important;
 }
+html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon .cog-icon, html .cog-input--icon .cog-icon g, :root:root:root:root:root .cog-picker .cog-icon, :root:root:root:root:root .cog-picker .cog-icon g, :root:root:root:root:root .cog-input--icon .cog-icon, :root:root:root:root:root .cog-input--icon .cog-icon g {
+
+    stroke: var(--input__color, var(--color));
+    stroke-width: calc(var(--icon-weight)*1.5px);
+    direction: rtl !important;
+    text-align: left;
+    margin-right: unset;
+    display: none;
+}
