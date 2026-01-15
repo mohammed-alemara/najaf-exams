@@ -162,10 +162,9 @@ html .cog-picker .cog-icon, html .cog-picker .cog-icon g, html .cog-input--icon 
 }
 
 .cog-button--primary{
-    cursor: pointer;
-    background: darkgreen;
-    color: white;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 10px;
+cursor: pointer;
+background: linear-gradient(135deg, #007BFF, #00c6ff); 
+display: flex; gap: 15px;
+padding: 10px 15px; border-radius: 35px; text-decoration: none; font-weight: 600; color: #fff; transition: transform 0.3s ease;
+
  }
