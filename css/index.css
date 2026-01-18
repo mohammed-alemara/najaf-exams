@@ -114,5 +114,6 @@ footer {
     background: linear-gradient(135deg, #c3e2ff, #eaf4ff);
     text-align: center;
     padding: 0px;
-    padding-block: 12px;
+    /*padding-block: 12px;*/
+    font-size: 12px;
 }
