@@ -23,7 +23,7 @@ body {
 .cog-label{
   font-weight: bolder !important;
   font-family: "cairo"!important;
-  font-size: 14px;
+  font-size: 12px !important;
   color:#007BFF !important;
 }
 
