@@ -1,265 +1,451 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
 <title>نموذج رسمي للطباعة</title>
 
-<!-- خط Cairo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- مكتبة QR -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 <style>
 
-body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
+*{
+box-sizing:border-box;
 }
 
-.form-container {
-    background: #fff;
-    padding: 25px;
-    max-width: 900px;
-    margin: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h2 {
-    text-align: center;
-    font-weight: 700;
-}
-
-.form-row {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-    gap: 10px;
-}
-
-.form-row label {
-    width: 180px;
-    font-weight: 600;
+body{
+font-family:'Cairo',sans-serif;
+background:#f4f4f4;
+padding:20px;
 }
 
 .form-row input,
-.form-row textarea {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Cairo', sans-serif;
+.form-row textarea,
+.form-row select{
+flex:1;
+padding:8px;
+border:1px solid #ccc;
+border-radius:4px;
+font-family:'Cairo',sans-serif;
 }
 
-.buttons {
-    margin-top: 20px;
-    text-align: center;
+/* الحاوية */
+
+.form-container{
+background:white;
+padding:25px;
+max-width:850px;
+margin:auto;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
+h2{
+text-align:center;
+font-weight:700;
+margin-bottom:20px;
 }
 
-.print-btn {
-    background-color: #28a745;
-    color: white;
+/* الحقول */
+
+.form-row{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:12px;
 }
 
-.reset-btn {
-    background-color: #dc3545;
-    color: white;
+.form-row label{
+width:180px;
+font-weight:600;
+}
+
+.form-row input,
+.form-row textarea{
+flex:1;
+padding:8px;
+border:1px solid #ccc;
+border-radius:4px;
+font-family:'Cairo',sans-serif;
+}
+
+/* الأزرار */
+
+.buttons{
+margin-top:20px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+font-family:'Cairo',sans-serif;
+}
+
+.print-btn{
+background:#28a745;
+color:white;
+}
+
+.reset-btn{
+background:#dc3545;
+color:white;
 }
 
 /* رأس الطباعة */
-.print-header {
-    display: none;
+
+.print-header{
+display:none;
 }
 
-/* QR مخفي في الشاشة */
-#printQR {
-    display: none;
-    text-align: center;
-    margin-top: 30px;
+/* QR */
+
+#printQR{
+display:none;
+text-align:center;
+margin-top:20px;
 }
 
-/* إعدادات الطباعة */
-@page {
-    size: A4 landscape;
-    margin: 5mm; /* تقليل الهوامش لأدنى حد آمن للطابعات */
+/* جدول الأعمار */
+
+.age-table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
 }
 
-@media print {
-
-    html, body {
-        width: 297mm;
-        height: 210mm;
-        margin: 0;
-        padding: 0;
-        background: white;
-        font-family: 'Cairo', sans-serif;
-    }
-
-    .buttons {
-        display: none;
-    }
-
-    .form-container {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 10mm 15mm;
-        border: none;
-        box-shadow: none;
-    }
-
-    /* الرأس */
-    .print-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        padding-bottom: 12px;
-        margin-bottom: 25px;
-    }
-
-    /* الخط الفاصل يمتد بعرض الورقة بالكامل */
-    .print-header::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: -15mm;
-        left: -15mm;
-        height: 3px;
-        background: #000;
-    }
-
-    .header-right {
-        text-align: right;
-        font-size: 20pt;
-        font-weight: 700;
-        line-height: 1.6;
-    }
-
-    .header-left img {
-        height: 90px;
-    }
-
-    #printQR {
-        display: block;
-        margin-top: 30px;
-        text-align: center;
-    }
+.age-table th,
+.age-table td{
+border:1px solid black;
+padding:6px;
+text-align:center;
 }
+
+.age-table input{
+width:60px;
+text-align:center;
+}
+
+/* إعداد الطباعة */
+
+@page{
+size:A4 portrait;
+margin:12mm;
+}
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.form-container{
+max-width:100%;
+padding:0;
+box-shadow:none;
+border:none;
+}
+
+/* إخفاء الأزرار */
+
+.buttons{
+display:none;
+}
+
+/* الرأس */
+
+.print-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+border-bottom:2px solid black;
+padding-bottom:10px;
+}
+
+.header-right{
+font-size:18pt;
+font-weight:700;
+line-height:1.6;
+}
+
+.header-left img{
+height:75px;
+}
+
+/* تحويل flex إلى block لمنع تجاوز العرض */
+
+.form-row{
+display:block;
+margin-bottom:10px;
+}
+
+.form-row label{
+display:block;
+margin-bottom:3px;
+}
+
+.form-row input,
+.form-row textarea{
+width:100%;
+}
+
+/* الجدول */
+
+.age-table{
+table-layout:fixed;
+}
+
+.age-table input{
+width:100%;
+border:none;
+}
+
+/* QR */
+
+#printQR{
+display:block;
+margin-top:20px;
+}
+
 }
 
 </style>
+
 </head>
+
 <body>
 
 <div class="form-container">
 
-    <!-- رأس يظهر فقط في الطباعة -->
-    <div class="print-header">
-        <div class="header-right">
-            <div>جمهورية العراق</div>
-            <div>وزارة التربية</div>
-        </div>
+<div class="print-header">
 
-        <div class="header-left">
-            <img src="images/logo.jpg" alt="شعار وزارة التربية">
-        </div>
-    </div>
+<div class="header-right">
+<div>جمهورية العراق</div>
+<div>وزارة التربية</div>
+</div>
 
-    <h2>نموذج إدخال بيانات</h2>
+<div class="header-left">
+<img src="images/logo.jpg">
+</div>
 
-    <form id="myForm">
+</div>
 
-        <div class="form-row">
-            <label>الاسم الكامل:</label>
-            <input type="text" id="name" required>
-        </div>
+<h2>نموذج إدخال بيانات</h2>
 
-        <div class="form-row">
-            <label>البريد الإلكتروني:</label>
-            <input type="email" id="email" required>
-        </div>
+<form id="myForm">
 
-        <div class="form-row">
-            <label>رقم الهاتف:</label>
-            <input type="tel" id="phone" required>
-        </div>
+<div class="form-row">
+<label>الاسم الكامل</label>
+<input type="text" id="name" required>
+</div>
 
-        <div class="form-row">
-            <label>ملاحظات:</label>
-            <textarea id="notes" rows="3" required></textarea>
-        </div>
+<div class="form-row">
+<label>البريد الإلكتروني</label>
+<input type="email" id="email" required>
+</div>
 
-        <!-- QR يظهر فقط في الطباعة -->
-        <div id="printQR">
-            <canvas id="qrCanvas"></canvas>
-        </div>
+<div class="form-row">
+<label>رقم الهاتف</label>
+<input type="tel" id="phone" required>
+</div>
 
-        <div class="buttons">
-            <button type="button" class="print-btn" onclick="validateAndPrint()">طباعة</button>
-            <button type="reset" class="reset-btn">إعادة تعيين</button>
-        </div>
+<div class="form-row">
+<label>ملاحظات</label>
+<textarea id="notes" rows="3" required></textarea>
+</div>
 
-    </form>
+<div class="form-row">
+<label>المدرسة</label>
+
+<select id="school" required>
+
+<option value="">اختر المدرسة</option>
+
+<option value="مدرسة الرافدين">مدرسة الرافدين</option>
+
+<option value="مدرسة الزهراء">مدرسة الزهراء</option>
+
+<option value="مدرسة النور">مدرسة النور</option>
+
+<option value="مدرسة المستقبل">مدرسة المستقبل</option>
+
+</select>
+
+</div>
+
+<h3 style="margin-top:20px">إحصائية التلامذة المستجدين</h3>
+
+<table class="age-table">
+
+<thead>
+<tr>
+<th>العمر</th>
+<th>بنون</th>
+<th>بنات</th>
+<th>المجموع</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>5 سنوات</td>
+<td><input type="number" id="b5" min="0"></td>
+<td><input type="number" id="g5" min="0"></td>
+<td id="t5">0</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td><input type="number" id="b6" min="0"></td>
+<td><input type="number" id="g6" min="0"></td>
+<td id="t6">0</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td><input type="number" id="b7" min="0"></td>
+<td><input type="number" id="g7" min="0"></td>
+<td id="t7">0</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td><input type="number" id="b8" min="0"></td>
+<td><input type="number" id="g8" min="0"></td>
+<td id="t8">0</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td><input type="number" id="b9" min="0"></td>
+<td><input type="number" id="g9" min="0"></td>
+<td id="t9">0</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td><input type="number" id="b10" min="0"></td>
+<td><input type="number" id="g10" min="0"></td>
+<td id="t10">0</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div id="printQR">
+<canvas id="qrCanvas"></canvas>
+</div>
+
+<div class="buttons">
+
+<button type="button" class="print-btn" onclick="validateAndPrint()">طباعة</button>
+
+<button type="reset" class="reset-btn">إعادة تعيين</button>
+
+</div>
+
+</form>
 
 </div>
 
 <script>
 
-function generateQR() {
+/* حساب المجاميع */
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const notes = document.getElementById("notes").value.trim();
+function calculateTotals(){
 
-    const uniqueID = Date.now();
+for(let age=5;age<=10;age++){
 
-    const data = JSON.stringify({
-        الاسم: name,
-        البريد: email,
-        الهاتف: phone,
-        ملاحظات: notes,
-        رقم_فريد: uniqueID
-    });
+let boys=parseInt(document.getElementById("b"+age).value)||0;
 
-    const canvas = document.getElementById("qrCanvas");
+let girls=parseInt(document.getElementById("g"+age).value)||0;
 
-    QRCode.toCanvas(canvas, data, {
-        width: 180,
-        margin: 1,
-        errorCorrectionLevel: 'H'
-    });
+document.getElementById("t"+age).innerText=boys+girls;
+
 }
 
-function validateAndPrint() {
+}
 
-    const form = document.getElementById("myForm");
+document.querySelectorAll(".age-table input").forEach(input=>{
+input.addEventListener("input",calculateTotals);
+});
 
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
+/* توليد QR */
 
-    generateQR();
+function generateQR(){
 
-    document.fonts.ready.then(() => {
-        setTimeout(() => {
-            window.print();
-        }, 200);
-    });
+const name=document.getElementById("name").value.trim();
+const email=document.getElementById("email").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const notes=document.getElementById("notes").value.trim();
+
+const uniqueID=Date.now();
+
+const ages={};
+
+for(let age=5;age<=10;age++){
+
+ages[age]={
+
+boys:document.getElementById("b"+age).value||0,
+girls:document.getElementById("g"+age).value||0
+
+};
+
+}
+
+const data=JSON.stringify({
+
+name:name,
+email:email,
+phone:phone,
+notes:notes,
+ages:ages,
+id:uniqueID
+
+});
+
+const canvas=document.getElementById("qrCanvas");
+
+QRCode.toCanvas(canvas,data,{
+width:170,
+margin:1,
+errorCorrectionLevel:'H'
+});
+
+}
+
+/* التحقق والطباعة */
+
+function validateAndPrint(){
+
+const form=document.getElementById("myForm");
+
+if(!form.checkValidity()){
+
+form.reportValidity();
+return;
+
+}
+
+generateQR();
+
+setTimeout(()=>{
+window.print();
+},300);
+
 }
 
 </script>
