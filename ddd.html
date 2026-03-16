@@ -2,57 +2,77 @@
 <html>
 
 <head>
-
 <style>
-
-body{
-font-family:Arial;
-background:#f2f2f2;
-padding:40px;
+body {
+  font-family: Arial;
+  background: #f2f2f2;
+  padding: 40px;
 }
 
-.container{
-width:500px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:8px;
+.container {
+  width: 500px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
 }
 
-input{
-padding:8px;
-margin:5px;
+input {
+  padding: 8px;
+  margin: 5px;
 }
 
-button{
-padding:8px 12px;
-margin:5px;
-cursor:pointer;
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  cursor: pointer;
 }
 
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
 }
 
-td,th{
-border:1px solid #ddd;
-padding:8px;
-text-align:center;
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
-.delete{
-background:#dc3545;
-color:white;
-border:none;
-padding:5px 8px;
-cursor:pointer;
-border-radius:4px;
+.delete {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
+/* دائرة التحميل */
+#loading {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #2c7be5;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
-
 </head>
 
 <body>
@@ -76,98 +96,103 @@ border-radius:4px;
 
 <button onclick="sendAll()">Send To Google Sheets</button>
 
+<!-- دائرة التحميل -->
+<div id="loading">
+  <div class="loader"></div>
+</div>
+
 </div>
 
 <script>
-
 const API="https://script.google.com/macros/s/AKfycbxCCsSo7Cr9ZXMNRs2k7N7ZUW6fFGO8v0zXstbjQiVqxJ7qD8Qa5MPunnuTEO1VdSG1/exec"; // ضع رابط Google Apps Script هنا
-let sending=false; // لمنع الضغط المتكرر
+let sending=false;
 
 function addRow(){
+  let name=document.getElementById("name").value.trim();
+  let job=document.getElementById("job").value.trim();
 
-let name=document.getElementById("name").value.trim();
-let job=document.getElementById("job").value.trim();
+  if(name==="" || job===""){
+    alert("Name and Job cannot be empty");
+    return;
+  }
 
-if(name==="" || job===""){
-  alert("Name and Job cannot be empty");
-  return;
-}
+  let table=document.getElementById("table");
 
-let table=document.getElementById("table");
+  let row=table.insertRow();
+  row.innerHTML=`
+    <td contenteditable="true">${name}</td>
+    <td contenteditable="true">${job}</td>
+    <td><button class="delete" onclick="deleteRow(this)">Delete</button></td>
+  `;
 
-let row=table.insertRow();
-row.innerHTML=`
-<td contenteditable="true">${name}</td>
-<td contenteditable="true">${job}</td>
-<td><button class="delete" onclick="deleteRow(this)">Delete</button></td>
-`;
-
-document.getElementById("name").value="";
-document.getElementById("job").value="";
-
+  document.getElementById("name").value="";
+  document.getElementById("job").value="";
 }
 
 function deleteRow(btn){
-btn.parentNode.parentNode.remove();
+  btn.parentNode.parentNode.remove();
 }
 
 function sendAll(){
-
-if(sending){
-  alert("Already sending. Please wait...");
-  return;
-}
-
-let table=document.getElementById("table");
-let employees=[];
-
-for(let i=1;i<table.rows.length;i++){
-  let name=table.rows[i].cells[0].innerText.trim();
-  let job=table.rows[i].cells[1].innerText.trim();
-  if(name && job){
-    employees.push({name:name,job:job});
+  if(sending){
+    alert("Already sending. Please wait...");
+    return;
   }
-}
 
-if(employees.length===0){
-  alert("No employees to send");
-  return;
-}
+  let table=document.getElementById("table");
+  let employees=[];
 
-sending=true; // تعطيل الإرسال المؤقت
-
-fetch(API,{
-method:"POST",
-body:JSON.stringify({employees:employees})
-})
-.then(res=>res.json())
-.then(data=>{
-  if(data.status==="success"){
-    clearTable();
-    alert("Data sent successfully");
-  } else {
-    alert("Error: "+(data.message || "Unknown error"));
+  for(let i=1;i<table.rows.length;i++){
+    let name=table.rows[i].cells[0].innerText.trim();
+    let job=table.rows[i].cells[1].innerText.trim();
+    if(name && job){
+      employees.push({name:name, job:job});
+    }
   }
-})
-.catch(err=>{
-  console.error(err);
-  alert("Failed to send data");
-})
-.finally(()=>{
-  sending=false;
-});
 
+  if(employees.length===0){
+    alert("No employees to send");
+    return;
+  }
+
+  sending=true;
+  showLoading(true);
+
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({employees:employees})
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.status==="success"){
+      clearTable();
+      alert("Data sent successfully");
+    } else {
+      alert("Error: "+(data.message || "Unknown error"));
+    }
+  })
+  .catch(err=>{
+    console.error(err);
+    alert("Failed to send data");
+  })
+  .finally(()=>{
+    sending=false;
+    showLoading(false);
+  });
 }
 
 function clearTable(){
-let table=document.getElementById("table");
-while(table.rows.length>1){
-  table.deleteRow(1);
+  let table=document.getElementById("table");
+  while(table.rows.length>1){
+    table.deleteRow(1);
+  }
 }
+
+function showLoading(show){
+  document.getElementById("loading").style.display = show ? "block" : "none";
 }
 
 </script>
 
 </body>
-
 </html>
