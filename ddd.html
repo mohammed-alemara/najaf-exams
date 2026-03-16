@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <style>
 
 body{
-font-family: Arial;
-background:#f5f5f5;
+font-family:Arial;
+background:#f2f2f2;
 padding:40px;
 }
 
 .container{
-width:400px;
+width:500px;
 margin:auto;
 background:white;
 padding:20px;
 border-radius:8px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 input{
-width:100%;
-padding:10px;
-margin:10px 0;
+padding:8px;
+margin:5px;
 }
 
 button{
-padding:10px;
-background:#2c7be5;
-color:white;
-border:none;
+padding:8px 12px;
+margin:5px;
 cursor:pointer;
 }
 
@@ -38,62 +36,115 @@ margin-top:20px;
 border-collapse:collapse;
 }
 
-td{
+td,th{
 border:1px solid #ddd;
 padding:8px;
+text-align:center;
+}
+
+.edit{
+background:#ffc107;
+}
+
+.delete{
+background:#dc3545;
+color:white;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h3>Employee List</h3>
+<h3>Employee Manager</h3>
 
-<input id="name" placeholder="Employee Name">
+<input id="name" placeholder="Name">
 <input id="job" placeholder="Job">
 
-<button onclick="addEmployee()">Add</button>
+<button onclick="addRow()">Add Employee</button>
 
 <table id="table">
+
 <tr>
 <th>Name</th>
 <th>Job</th>
+<th>Actions</th>
 </tr>
+
 </table>
+
+<button onclick="sendAll()">Send To Google Sheets</button>
 
 </div>
 
 <script>
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbyXLhf2jscX4fG_YPTm8_n7H1iDnExsORJ3rnYccpGWBmf4mTKxlw6VQnI2EZVK0DM/exec";
+const API="https://script.google.com/macros/s/AKfycbyg49FabZ9pGN74UNgIchvu0xF2DhPE28wVeqhS5kWPm8nte34mhVLQRvNCEjSLX0r4/exec";
 
-function addEmployee(){
+function addRow(){
 
-let name = document.getElementById("name").value;
-let job = document.getElementById("job").value;
+let name=document.getElementById("name").value;
+let job=document.getElementById("job").value;
 
-let table = document.getElementById("table");
-let row = table.insertRow();
+let table=document.getElementById("table");
 
-row.insertCell(0).innerText = name;
-row.insertCell(1).innerText = job;
+let row=table.insertRow();
 
-fetch(scriptURL,{
-method:"POST",
-body: JSON.stringify({
-name:name,
-job:job
-})
-})
+row.innerHTML=`
+<td contenteditable="true">${name}</td>
+<td contenteditable="true">${job}</td>
+<td>
+<button class="delete" onclick="deleteRow(this)">Delete</button>
+</td>
+`;
 
 document.getElementById("name").value="";
 document.getElementById("job").value="";
+
+}
+
+function deleteRow(btn){
+
+btn.parentNode.parentNode.remove();
+
+}
+
+function sendAll(){
+
+let table=document.getElementById("table");
+
+let employees=[];
+
+for(let i=1;i<table.rows.length;i++){
+
+let name=table.rows[i].cells[0].innerText;
+let job=table.rows[i].cells[1].innerText;
+
+employees.push({
+name:name,
+job:job
+});
+
+}
+
+fetch(API,{
+method:"POST",
+body:JSON.stringify({
+employees:employees
+})
+})
+.then(res=>res.json())
+.then(data=>{
+alert("Data sent successfully");
+});
+
 }
 
 </script>
 
 </body>
+
 </html>
