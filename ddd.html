@@ -373,9 +373,10 @@
         document.getElementById("overlay").style.display = "block";
 
         try {
-            const response = await fetch(API, { 
+            // ملاحظة: استجابة fetch مع no-cors لا يمكن قراءة حالتها برمجياً ولكن سنفترض النجاح كما في كودك الأصلي
+            await fetch(API, { 
                 method: "POST", 
-                mode: 'no-cors', // لتجنب مشاكل CORS مع Google Script
+                mode: 'no-cors', 
                 body: JSON.stringify({ employees }) 
             });
             
@@ -393,19 +394,32 @@
     function getV(c){ return c.querySelector('select') ? c.querySelector('select').value : c.innerText; }
 
     function downloadPDF(data){
+        // إنشاء حاوية التقرير مع تعزيزات توافق الهاتف
         const el = document.createElement("div");
-        el.style.direction = "rtl"; el.style.padding = "20px";
-        el.style.fontFamily = "Cairo, sans-serif";
+        el.style.cssText = "direction: rtl; padding: 20px; background: white; width: 1000px;"; // عرض ثابت للتحويل فقط
         
         let h = `
-            <div style="text-align:center; margin-bottom:20px;">
-                <h2 style="color:#1e3a8a">تقرير ملاك الموظفين</h2>
-                <p>تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
-            </div>
-            <table border="1" style="width:100%; border-collapse:collapse; text-align:center; font-size: 10px;">
-            <tr style="background:#f1f5f9">
-                <th>ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th><th>الاختصاص</th><th>الخدمة</th><th>الحالة الوظيفية</th><th>الاجتماعية</th><th>الدورات</th>
-            </tr>`;
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+                .pdf-body { font-family: 'Cairo', sans-serif !important; direction: rtl; }
+                .pdf-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; }
+                .pdf-table { width: 100%; border-collapse: collapse; }
+                .pdf-table th, .pdf-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 11px; }
+                .pdf-table th { background-color: #f1f5f9; color: #1e3a8a; }
+            </style>
+            <div class="pdf-body">
+                <div class="pdf-header">
+                    <h2 style="color:#1e3a8a; margin:0;">تقرير ملاك الموظفين</h2>
+                    <p style="margin:5px 0;">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
+                </div>
+                <table class="pdf-table">
+                    <thead>
+                        <tr>
+                            <th>ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
+                            <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
         
         data.forEach(e => {
             h += `<tr>
@@ -414,15 +428,27 @@
             </tr>`;
         });
         
-        el.innerHTML = h + `</table>`;
+        el.innerHTML = h + `</tbody></table></div>`;
+        
+        // حل مشكلة الهاتف: إضافة العنصر مؤقتاً للـ DOM ليتمكن المحرك من رؤية الخطوط
+        document.body.appendChild(el);
+
         const opt = {
-            margin: 0.5,
+            margin: 0.3,
             filename: 'تقرير_الموظفين.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, // مهم لجلب الخطوط
+                letterRendering: true 
+            },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
         };
-        html2pdf().set(opt).from(el).save();
+
+        // توليد الـ PDF ثم حذف العنصر المؤقت
+        html2pdf().set(opt).from(el).toPdf().get('pdf').then(() => {
+            document.body.removeChild(el);
+        }).save();
     }
 </script>
 </body>
