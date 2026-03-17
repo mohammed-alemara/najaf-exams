@@ -146,7 +146,6 @@
             .container { max-width: 100%; width: 100%; }
             .table-container { box-shadow: none; overflow: visible; }
             
-            /* تحسين عرض الجدول في الهواتف عند الطباعة */
             table { 
                 display: table !important;
                 min-width: 100% !important; 
@@ -201,6 +200,8 @@
 
         <div class="input-grid">
             <div class="input-field"><label>الاسم الكامل</label><input id="name" type="text" placeholder="أحمد محمد علي"></div>
+            <div class="input-field"><label>الجنس</label><select id="gender"><option value="" disabled selected>اختر الجنس...</option><option value="ذكر">ذكر</option><option value="انثى">انثى</option></select></div>
+            
             <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر الوظيفة...</option><option value="مدير">مدير</option><option value="معلم">معلم</option><option value="مرشد">مرشد</option></select></div>
             <div class="input-field"><label>الفئة العمرية</label><select id="ageRange"><option value="" disabled selected>اختر العمر...</option><option value="اقل من 30">اقل من 30</option><option value="من 30 الى 39">من 30 الى 39</option><option value="من 40 الى 49">من 40 الى 49</option><option value="من 50 الى 59">من 50 الى 59</option></select></div>
             <div class="input-field"><label>التحصيل الدراسي</label><select id="degree"><option value="" disabled selected>الشهادة...</option><option value="دبلوم">دبلوم</option><option value="بكالوريوس">بكالوريوس</option><option value="ماجستير">ماجستير</option><option value="دكتوراه">دكتوراه</option></select></div>
@@ -219,7 +220,7 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th>ت</th><th>الاسم</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
+                    <th>ت</th><th>الاسم</th><th>الجنس</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
                     <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
                     <th class="no-print">الإجراءات</th>
                 </tr>
@@ -248,14 +249,14 @@
 <script>
     const API = "https://script.google.com/macros/s/AKfycbx3O4B5EQDUq53kSmn0UlBbFEJz3A-ppKnbfemnBGAuT8chEJW2yAzBtT_Md0JT5LtI/exec";
 
-    // تلوين الحقول الفارغة عند التفاعل
     document.querySelectorAll('input, select').forEach(element => {
         element.addEventListener('input', function() { if (this.value.trim() !== "") this.classList.remove('error-border'); });
     });
 
     function addRow() {
         const schoolInput = document.getElementById('schoolName');
-        const ids = ['name', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
+        // تم إضافة 'gender' للمصفوفة
+        const ids = ['name', 'gender', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
         let valid = true;
 
         if(!schoolInput.value.trim()) { schoolInput.classList.add('error-border'); valid = false; }
@@ -288,12 +289,14 @@
     function editRow(btn) {
         const row = btn.closest('tr');
         const isEditing = btn.innerHTML.includes("check");
-        const ids = ['name', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
+        // تم إضافة 'gender' للمصفوفة
+        const ids = ['name', 'gender', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
 
         if (!isEditing) {
             btn.innerHTML = '<i class="fas fa-check"></i>';
             btn.style.background = "var(--success)"; btn.style.color = "white";
-            for (let i = 1; i <= 9; i++) {
+            // تغيير حلقة الدوران لتشمل 10 أعمدة بدلاً من 9
+            for (let i = 1; i <= 10; i++) {
                 let currentVal = row.cells[i].innerText;
                 if (i === 1) row.cells[i].innerHTML = `<input type="text" class="table-input" value="${currentVal}">`;
                 else {
@@ -305,7 +308,7 @@
         } else {
             btn.innerHTML = '<i class="fas fa-edit"></i>';
             btn.style.background = ""; btn.style.color = "";
-            for (let i = 1; i <= 9; i++) row.cells[i].innerText = row.cells[i].querySelector('input, select').value;
+            for (let i = 1; i <= 10; i++) row.cells[i].innerText = row.cells[i].querySelector('input, select').value;
         }
     }
 
@@ -316,7 +319,6 @@
 
         if (!school || rows.length === 0) { alert("يرجى إكمال البيانات قبل الحفظ"); return; }
 
-        // تعطيل الزر فوراً لمنع الإرسال المتكرر
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> تم ارسال البيانات بنجاح ...';
         
@@ -324,26 +326,29 @@
         document.getElementById("overlay").style.display = "block";
         document.getElementById("printSchoolName").innerText = school;
 
+        // تم إضافة حقل 'gender' وتحريك أرقام الخلايا بالتبعية
         const employees = Array.from(rows).map(r => ({
-            id: r.cells[0].innerText, name: r.cells[1].innerText, job: r.cells[2].innerText,
-            age: r.cells[3].innerText, degree: r.cells[4].innerText, specialty: r.cells[5].innerText,
-            serviceYears: r.cells[6].innerText, status: r.cells[7].innerText, 
-            maritalStatus: r.cells[8].innerText, courses: r.cells[9].innerText
+            id: r.cells[0].innerText, 
+            name: r.cells[1].innerText, 
+            gender: r.cells[2].innerText, 
+            job: r.cells[3].innerText,
+            age: r.cells[4].innerText, 
+            degree: r.cells[5].innerText, 
+            specialty: r.cells[6].innerText,
+            serviceYears: r.cells[7].innerText, 
+            status: r.cells[8].innerText, 
+            maritalStatus: r.cells[9].innerText, 
+            courses: r.cells[10].innerText
         }));
 
         try {
-            // إرسال البيانات للسيرفر
             await fetch(API, { method: "POST", mode: 'no-cors', body: JSON.stringify({ school, employees }) });
             
-            // إخفاء التحميل
             document.getElementById("loading").style.display = "none";
             document.getElementById("overlay").style.display = "none";
 
-            // فتح نافذة الطباعة
             setTimeout(() => {
                 window.print();
-
-             
             }, 500);
 
         } catch (e) { 
