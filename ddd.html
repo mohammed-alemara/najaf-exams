@@ -318,7 +318,7 @@
 
         // تعطيل الزر فوراً لمنع الإرسال المتكرر
         sendBtn.disabled = true;
-        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> تم ارسال البيانات بنجاح ...';
         
         document.getElementById("loading").style.display = "block";
         document.getElementById("overlay").style.display = "block";
@@ -343,20 +343,7 @@
             setTimeout(() => {
                 window.print();
 
-                // التصفير يحدث "فقط" بعد انتهاء الطباعة
-                window.onafterprint = function() {
-                    if(confirm("تم حفظ البيانات بنجاح. هل تود إفراغ الجدول لبدء إدخال مدرسة جديدة؟")) {
-                        document.querySelector("#table tbody").innerHTML = ""; 
-                        document.getElementById("schoolName").value = ""; 
-                        sendBtn.disabled = false;
-                        sendBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وطباعة التقرير';
-                    } else {
-                        // إذا اختار "إلغاء"، يبقى الجدول كما هو ويتم تفعيل الزر مجدداً
-                        sendBtn.disabled = false;
-                        sendBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وطباعة التقرير';
-                    }
-                    window.onafterprint = null; // تنظيف الحدث
-                };
+             
             }, 500);
 
         } catch (e) { 
