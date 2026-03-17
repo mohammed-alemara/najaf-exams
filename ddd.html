@@ -394,18 +394,20 @@
     function getV(c){ return c.querySelector('select') ? c.querySelector('select').value : c.innerText; }
 
     function downloadPDF(data){
-        // إنشاء حاوية التقرير مع تعزيزات توافق الهاتف
         const el = document.createElement("div");
-        el.style.cssText = "direction: rtl; padding: 20px; background: white; width: 1000px;"; // عرض ثابت للتحويل فقط
+        // الحفاظ على اتجاه النص ومنحه عرضاً كافياً للمعالجة
+        el.style.cssText = "direction: rtl; padding: 10px; background: white; width: 1000px;";
         
         let h = `
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
                 .pdf-body { font-family: 'Cairo', sans-serif !important; direction: rtl; }
                 .pdf-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; }
-                .pdf-table { width: 100%; border-collapse: collapse; }
-                .pdf-table th, .pdf-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 11px; }
+                .pdf-table { width: 100%; border-collapse: collapse; table-layout: auto; }
+                .pdf-table th, .pdf-table td { border: 1px solid #333; padding: 8px; text-align: center; font-size: 11px; }
                 .pdf-table th { background-color: #f1f5f9; color: #1e3a8a; }
+                /* الجزء الأهم: منع قطع الصف الثاني أو أي صف آخر */
+                .pdf-table tr { page-break-inside: avoid !important; break-inside: avoid !important; }
             </style>
             <div class="pdf-body">
                 <div class="pdf-header">
@@ -415,7 +417,7 @@
                 <table class="pdf-table">
                     <thead>
                         <tr>
-                            <th>ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
+                            <th style="width: 30px;">ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
                             <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
                         </tr>
                     </thead>
@@ -430,24 +432,26 @@
         
         el.innerHTML = h + `</tbody></table></div>`;
         
-        // حل مشكلة الهاتف: إضافة العنصر مؤقتاً للـ DOM ليتمكن المحرك من رؤية الخطوط
+        // إلحاق العنصر بالصفحة مؤقتاً (ضروري للهواتف لكي يظهر الجدول)
         document.body.appendChild(el);
 
         const opt = {
-            margin: 0.3,
+            margin: [0.3, 0.3],
             filename: 'تقرير_الموظفين.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { 
                 scale: 2, 
-                useCORS: true, // مهم لجلب الخطوط
-                letterRendering: true 
+                useCORS: true, 
+                letterRendering: true,
+                scrollX: 0,
+                scrollY: 0
             },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // توليد الـ PDF ثم حذف العنصر المؤقت
         html2pdf().set(opt).from(el).toPdf().get('pdf').then(() => {
-            document.body.removeChild(el);
+            document.body.removeChild(el); // حذف العنصر بعد الانتهاء
         }).save();
     }
 </script>
