@@ -96,8 +96,10 @@
             justify-content: center; gap: 8px; transition: all 0.2s; font-family: 'Cairo';
         }
 
+        .btn:disabled { background: #94a3b8 !important; cursor: not-allowed; }
+
         #addBtn { background: var(--success); color: white; width: 100%; margin-top: 10px; }
-        #addBtn:hover { background: #16a34a; transform: translateY(-1px); }
+        #addBtn:hover:not(:disabled) { background: #16a34a; transform: translateY(-1px); }
 
         #sendBtn { 
             background: var(--primary); color: white; width: 100%; 
@@ -134,42 +136,53 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .print-footer, .print-only-header { display: none; }
-@media print {
-    @page { size: landscape; margin: 1cm; }
-    body { background: white; padding: 0; }
-    header, .card, #sendBtn, .edit-btn, .delete-btn, th:last-child, td:last-child, #overlay, #loading {
-        display: none !important;
-    }
-    .container { max-width: 100%; width: 100%; }
-    .table-container { box-shadow: none; overflow: visible; }
-    table { 
-        min-width: 100% !important; 
-        border: 1px solid #333; 
-        page-break-inside: auto; /* يسمح للجدول بالانقسام بين الصفحات */
-    }
-    tr { page-break-inside: avoid; page-break-after: auto; }
-    th, td { border: 1px solid #333 !important; padding: 8px !important; color: black !important; }
-    th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
-    
-    .print-only-header { display: block !important; text-align: right; margin-bottom: 20px; font-size: 18px; font-weight: bold; }
-    
-    /* التعديل الجذري هنا لمنع التداخل */
-    .print-footer { 
-        display: block !important; 
-        position: relative; /* تغيير من fixed إلى relative */
-        margin-top: 30px; /* ترك مسافة أمان بعد الجدول */
-        width: 100%; 
-        page-break-inside: avoid; /* يمنع انقسام التوقيع بين صفحتين */
-    }
-    .footer-grid { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: flex-start;
-        width: 100%;
-    }
-    .footer-right { text-align: right; font-weight: bold; }
-    .footer-left { text-align: center; font-weight: bold; }
-}
+
+        @media print {
+            @page { size: landscape; margin: 1cm; }
+            body { background: white; padding: 0; }
+            header, .card, #sendBtn, .edit-btn, .delete-btn, th:last-child, td:last-child, #overlay, #loading {
+                display: none !important;
+            }
+            .container { max-width: 100%; width: 100%; }
+            .table-container { box-shadow: none; overflow: visible; }
+            
+            /* تحسين عرض الجدول في الهواتف عند الطباعة */
+            table { 
+                display: table !important;
+                min-width: 100% !important; 
+                border: 1px solid #333 !important; 
+                page-break-inside: auto; 
+            }
+            thead { display: table-header-group !important; }
+            tbody { display: table-row-group !important; }
+            tr { display: table-row !important; page-break-inside: avoid; page-break-after: auto; }
+            th, td { 
+                display: table-cell !important;
+                border: 1px solid #333 !important; 
+                padding: 8px !important; 
+                color: black !important; 
+                text-align: center !important;
+            }
+            th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
+            
+            .print-only-header { display: block !important; text-align: right; margin-bottom: 20px; font-size: 18px; font-weight: bold; }
+            
+            .print-footer { 
+                display: block !important; 
+                position: relative; 
+                margin-top: 30px; 
+                width: 100%; 
+                page-break-inside: avoid; 
+            }
+            .footer-grid { 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: flex-start;
+                width: 100%;
+            }
+            .footer-right { text-align: right; font-weight: bold; }
+            .footer-left { text-align: center; font-weight: bold; }
+        }
     </style>
 </head>
 <body>
@@ -183,11 +196,11 @@
     <div class="card">
         <div class="school-header-input">
             <label><i class="fas fa-school"></i> اسم المدرسة:</label>
-            <input id="schoolName" type="text" placeholder="اكتب اسم المدرسة هنا ليتم تعميمه على الجدول...">
+            <input id="schoolName" type="text" placeholder="اكتب اسم المدرسة هنا...">
         </div>
 
         <div class="input-grid">
-            <div class="input-field"><label>الاسم الكامل</label><input id="name" type="text" placeholder="مثال: أحمد محمد علي"></div>
+            <div class="input-field"><label>الاسم الكامل</label><input id="name" type="text" placeholder="أحمد محمد علي"></div>
             <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر الوظيفة...</option><option value="مدير">مدير</option><option value="معلم">معلم</option><option value="مرشد">مرشد</option></select></div>
             <div class="input-field"><label>الفئة العمرية</label><select id="ageRange"><option value="" disabled selected>اختر العمر...</option><option value="اقل من 30">اقل من 30</option><option value="من 30 الى 39">من 30 الى 39</option><option value="من 40 الى 49">من 40 الى 49</option><option value="من 50 الى 59">من 50 الى 59</option></select></div>
             <div class="input-field"><label>التحصيل الدراسي</label><select id="degree"><option value="" disabled selected>الشهادة...</option><option value="دبلوم">دبلوم</option><option value="بكالوريوس">بكالوريوس</option><option value="ماجستير">ماجستير</option><option value="دكتوراه">دكتوراه</option></select></div>
@@ -230,14 +243,14 @@
 </div>
 
 <div id="overlay"></div>
-<div id="loading"><div class="loader"></div><p>جاري معالجة البيانات...</p></div>
+<div id="loading"><div class="loader"></div><p id="loadingText">جاري معالجة البيانات...</p></div>
 
 <script>
     const API = "https://script.google.com/macros/s/AKfycbx3O4B5EQDUq53kSmn0UlBbFEJz3A-ppKnbfemnBGAuT8chEJW2yAzBtT_Md0JT5LtI/exec";
 
+    // تلوين الحقول الفارغة عند التفاعل
     document.querySelectorAll('input, select').forEach(element => {
         element.addEventListener('input', function() { if (this.value.trim() !== "") this.classList.remove('error-border'); });
-        element.addEventListener('change', function() { if (this.value.trim() !== "") this.classList.remove('error-border'); });
     });
 
     function addRow() {
@@ -248,7 +261,7 @@
         if(!schoolInput.value.trim()) { schoolInput.classList.add('error-border'); valid = false; }
         const vals = ids.map(id => {
             const el = document.getElementById(id);
-            if(!el.value.trim() || el.value === "") { el.classList.add('error-border'); valid = false; }
+            if(!el.value || el.value === "") { el.classList.add('error-border'); valid = false; }
             return el.value.trim();
         });
 
@@ -297,10 +310,16 @@
     }
 
     async function sendAll() {
+        const sendBtn = document.getElementById("sendBtn");
         const rows = document.querySelectorAll("#table tbody tr");
         const school = document.getElementById("schoolName").value.trim();
+
         if (!school || rows.length === 0) { alert("يرجى إكمال البيانات قبل الحفظ"); return; }
 
+        // تعطيل الزر فوراً لمنع الإرسال المتكرر
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+        
         document.getElementById("loading").style.display = "block";
         document.getElementById("overlay").style.display = "block";
         document.getElementById("printSchoolName").innerText = school;
@@ -313,12 +332,37 @@
         }));
 
         try {
+            // إرسال البيانات للسيرفر
             await fetch(API, { method: "POST", mode: 'no-cors', body: JSON.stringify({ school, employees }) });
-            window.print();
-            document.querySelector("#table tbody").innerHTML = ""; 
-            document.getElementById("schoolName").value = ""; 
-        } catch (e) { alert("خطأ في الحفظ"); }
-        finally {
+            
+            // إخفاء التحميل
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+
+            // فتح نافذة الطباعة
+            setTimeout(() => {
+                window.print();
+
+                // التصفير يحدث "فقط" بعد انتهاء الطباعة
+                window.onafterprint = function() {
+                    if(confirm("تم حفظ البيانات بنجاح. هل تود إفراغ الجدول لبدء إدخال مدرسة جديدة؟")) {
+                        document.querySelector("#table tbody").innerHTML = ""; 
+                        document.getElementById("schoolName").value = ""; 
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وطباعة التقرير';
+                    } else {
+                        // إذا اختار "إلغاء"، يبقى الجدول كما هو ويتم تفعيل الزر مجدداً
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وطباعة التقرير';
+                    }
+                    window.onafterprint = null; // تنظيف الحدث
+                };
+            }, 500);
+
+        } catch (e) { 
+            alert("حدث خطأ في الاتصال بالخادم. حاول مرة أخرى."); 
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وطباعة التقرير';
             document.getElementById("loading").style.display = "none";
             document.getElementById("overlay").style.display = "none";
         }
