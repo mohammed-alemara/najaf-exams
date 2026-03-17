@@ -134,49 +134,50 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .print-footer, .print-only-header { display: none; }
-
-        @media print {
-            @page { size: landscape; margin: 1cm; }
-            body { background: white; padding: 0; }
-            header, .card, #sendBtn, .edit-btn, .delete-btn, th:last-child, td:last-child, #overlay, #loading {
-                display: none !important;
-            }
-            .container { max-width: 100%; width: 100%; }
-            .table-container { box-shadow: none; overflow: visible; }
-            table { min-width: 100% !important; border: 1px solid #333; }
-            th, td { border: 1px solid #333 !important; padding: 8px !important; color: black !important; }
-            th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
-            .print-only-header { display: block !important; text-align: right; margin-bottom: 20px; font-size: 18px; font-weight: bold; }
-            
-            .print-footer { 
-                display: block !important; 
-                position: fixed; 
-                bottom: 20px; 
-                width: 100%; 
-                padding-top: 20px;
-            }
-            .footer-grid { 
-                display: flex; 
-                justify-content: space-between; 
-                align-items: flex-start;
-                width: 100%;
-            }
-            .footer-right { text-align: right; font-weight: bold; }
-            .footer-left { text-align: center; font-weight: bold; }
-            .stamp-placeholder { 
-                width: 120px; height: 80px; border: 1px dashed #ccc; 
-                margin-top: 10px; display: flex; align-items: center; justify-content: center;
-                font-size: 12px; color: #666; font-weight: normal;
-            }
-        }
+@media print {
+    @page { size: landscape; margin: 1cm; }
+    body { background: white; padding: 0; }
+    header, .card, #sendBtn, .edit-btn, .delete-btn, th:last-child, td:last-child, #overlay, #loading {
+        display: none !important;
+    }
+    .container { max-width: 100%; width: 100%; }
+    .table-container { box-shadow: none; overflow: visible; }
+    table { 
+        min-width: 100% !important; 
+        border: 1px solid #333; 
+        page-break-inside: auto; /* يسمح للجدول بالانقسام بين الصفحات */
+    }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    th, td { border: 1px solid #333 !important; padding: 8px !important; color: black !important; }
+    th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
+    
+    .print-only-header { display: block !important; text-align: right; margin-bottom: 20px; font-size: 18px; font-weight: bold; }
+    
+    /* التعديل الجذري هنا لمنع التداخل */
+    .print-footer { 
+        display: block !important; 
+        position: relative; /* تغيير من fixed إلى relative */
+        margin-top: 30px; /* ترك مسافة أمان بعد الجدول */
+        width: 100%; 
+        page-break-inside: avoid; /* يمنع انقسام التوقيع بين صفحتين */
+    }
+    .footer-grid { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: flex-start;
+        width: 100%;
+    }
+    .footer-right { text-align: right; font-weight: bold; }
+    .footer-left { text-align: center; font-weight: bold; }
+}
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h2><i class="fas fa-users-cog"></i> منظومة إدارة شؤون الموظفين</h2>
-        <p>إدخال، تدقيق، وحفظ البيانات</p>
+        <h2><i class="fas fa-users-cog"></i> قسم التخطيط التربوي / قسم الاحصاء</h2>
+        <p>استمارة الملاك</p>
     </header>
 
     <div class="card">
