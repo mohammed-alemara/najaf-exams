@@ -1,197 +1,151 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+<meta charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <style>
 body {
   font-family: Arial;
   background: #f2f2f2;
   padding: 40px;
 }
-
 .container {
-  width: 500px;
+  width: 600px;
   margin: auto;
   background: white;
   padding: 20px;
   border-radius: 8px;
   position: relative;
 }
-
-input {
-  padding: 8px;
-  margin: 5px;
-}
-
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-
-td, th {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.delete {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 5px 8px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-/* دائرة التحميل */
-#loading {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.loader {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #2c7be5;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+input, button { padding: 8px; margin: 5px; }
+button { cursor: pointer; }
+table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+td, th { border: 1px solid #ddd; padding: 8px; text-align: center; }
+.delete { background: #dc3545; color: white; border: none; padding: 4px 8px; cursor: pointer; border-radius: 4px; }
+#overlay { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); z-index: 5; }
+.loader { display: none; position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); border: 6px solid #f3f3f3; border-top: 6px solid #2c7be5; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; z-index: 10; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-<h3>Employee Manager</h3>
-
-<input id="name" placeholder="Name">
-<input id="job" placeholder="Job">
-
-<button onclick="addRow()">Add Employee</button>
-
+<h3>إدارة الموظفين</h3>
+<input id="name" placeholder="الاسم">
+<input id="job" placeholder="الوظيفة">
+<button id="addBtn" onclick="addRow()">أضف موظف</button>
 <table id="table">
-<tr>
-<th>Name</th>
-<th>Job</th>
-<th>Actions</th>
-</tr>
+<tr><th>الاسم</th><th>الوظيفة</th><th>الإجراءات</th></tr>
 </table>
-
-<button onclick="sendAll()">Send To Google Sheets</button>
-
-<!-- دائرة التحميل -->
-<div id="loading">
-  <div class="loader"></div>
-</div>
-
+<button id="sendBtn" onclick="sendAll()">إرسال إلى Google Sheets</button>
+<div id="overlay"></div>
+<div class="loader" id="loader"></div>
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbxCCsSo7Cr9ZXMNRs2k7N7ZUW6fFGO8v0zXstbjQiVqxJ7qD8Qa5MPunnuTEO1VdSG1/exec"; // ضع رابط Google Apps Script هنا
-let sending=false;
+// رابط Google Apps Script Web App
+const API = "https://script.google.com/macros/s/AKfycbxCCsSo7Cr9ZXMNRs2k7N7ZUW6fFGO8v0zXstbjQiVqxJ7qD8Qa5MPunnuTEO1VdSG1/exec"; // ضع الرابط هنا
+let sending = false;
 
-function addRow(){
-  let name=document.getElementById("name").value.trim();
-  let job=document.getElementById("job").value.trim();
+// الخط العربي Amiri Base64 (أضف الخط كاملاً هنا)
+const amiriFont = "AAEAAAASAQAABAAgR0RFRrRCsIIAAhNMAAACP1BI..."; 
 
-  if(name==="" || job===""){
-    alert("Name and Job cannot be empty");
-    return;
-  }
-
-  let table=document.getElementById("table");
-
-  let row=table.insertRow();
-  row.innerHTML=`
-    <td contenteditable="true">${name}</td>
-    <td contenteditable="true">${job}</td>
-    <td><button class="delete" onclick="deleteRow(this)">Delete</button></td>
-  `;
-
-  document.getElementById("name").value="";
-  document.getElementById("job").value="";
+// إضافة موظف
+function addRow() {
+  let name = document.getElementById("name").value.trim();
+  let job = document.getElementById("job").value.trim();
+  if(!name || !job) { alert("الاسم والوظيفة مطلوبان"); return; }
+  let table = document.getElementById("table");
+  let row = table.insertRow();
+  row.innerHTML = `<td contenteditable="true">${name}</td><td contenteditable="true">${job}</td><td><button class="delete" onclick="deleteRow(this)">حذف</button></td>`;
+  document.getElementById("name").value = "";
+  document.getElementById("job").value = "";
 }
 
-function deleteRow(btn){
-  btn.parentNode.parentNode.remove();
-}
+// حذف موظف
+function deleteRow(btn) { btn.parentNode.parentNode.remove(); }
 
-function sendAll(){
-  if(sending){
-    alert("Already sending. Please wait...");
-    return;
-  }
-
-  let table=document.getElementById("table");
-  let employees=[];
-
+// تعطيل الحقول أثناء الإرسال
+function setFieldsDisabled(disable) {
+  document.getElementById("name").disabled = disable;
+  document.getElementById("job").disabled = disable;
+  document.getElementById("addBtn").disabled = disable;
+  document.getElementById("sendBtn").disabled = disable;
+  document.querySelectorAll(".delete").forEach(b => b.disabled = disable);
+  let table = document.getElementById("table");
   for(let i=1;i<table.rows.length;i++){
-    let name=table.rows[i].cells[0].innerText.trim();
-    let job=table.rows[i].cells[1].innerText.trim();
-    if(name && job){
-      employees.push({name:name, job:job});
-    }
+    table.rows[i].cells[0].contentEditable = !disable;
+    table.rows[i].cells[1].contentEditable = !disable;
   }
+}
 
-  if(employees.length===0){
-    alert("No employees to send");
-    return;
-  }
+// إظهار/إخفاء التحميل
+function showLoading(show) {
+  document.getElementById("overlay").style.display = show ? "block" : "none";
+  document.getElementById("loader").style.display = show ? "block" : "none";
+}
 
-  sending=true;
-  showLoading(true);
+// مسح الجدول
+function clearTable() {
+  let table = document.getElementById("table");
+  while(table.rows.length>1) table.deleteRow(1);
+}
 
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({employees:employees})
-  })
-  .then(res=>res.json())
-  .then(data=>{
-    if(data.status==="success"){
-      clearTable();
-      alert("Data sent successfully");
-    } else {
-      alert("Error: "+(data.message || "Unknown error"));
-    }
-  })
-  .catch(err=>{
-    console.error(err);
-    alert("Failed to send data");
-  })
-  .finally(()=>{
-    sending=false;
-    showLoading(false);
+// تنزيل PDF
+function downloadPDF(employees){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  doc.addFileToVFS("Amiri-Regular.ttf", amiriFont);
+  doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+  doc.setFont("Amiri");
+  doc.setFontSize(18);
+  doc.text("قائمة الموظفين", 40, 40);
+  const head = [["الاسم","الوظيفة"]];
+  const body = employees.map(emp => [emp.name, emp.job]);
+  doc.autoTable({
+    startY: 60,
+    head: head,
+    body: body,
+    styles: { font: "Amiri", fontSize: 12, halign: 'right' },
+    headStyles: { fillColor: [44,123,229], textColor: 255, halign:'center' },
+    theme: 'grid'
   });
+  doc.save("employees.pdf");
 }
 
-function clearTable(){
-  let table=document.getElementById("table");
-  while(table.rows.length>1){
-    table.deleteRow(1);
+// إرسال البيانات
+function sendAll(){
+  if(sending){ alert("يتم الإرسال، انتظر من فضلك..."); return; }
+  let table = document.getElementById("table");
+  let employees = [];
+  for(let i=1;i<table.rows.length;i++){
+    let name = table.rows[i].cells[0].innerText.trim();
+    let job = table.rows[i].cells[1].innerText.trim();
+    if(name && job) employees.push({name, job});
   }
-}
+  if(employees.length===0){ alert("لا توجد بيانات"); return; }
 
-function showLoading(show){
-  document.getElementById("loading").style.display = show ? "block" : "none";
-}
+  sending = true;
+  showLoading(true);
+  setFieldsDisabled(true);
 
+  fetch(API, {
+    method:"POST",
+    body: JSON.stringify({employees: employees})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success"){
+      alert("تم الإرسال بنجاح");
+      downloadPDF(employees);
+      clearTable();
+    } else {
+      alert("خطأ في الإرسال");
+    }
+  })
+  .catch(err => { console.error(err); alert("فشل الاتصال بالـ Sheets"); })
+  .finally(() => { sending=false; showLoading(false); setFieldsDisabled(false); });
+}
 </script>
 
 </body>
