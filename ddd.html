@@ -118,7 +118,15 @@
             body { background: white !important; padding: 0 !important; margin: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             header, .card, .action-controls, .no-print, #overlay, #loading { display: none !important; }
             .container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
-            .print-only-header { display: block !important; text-align: right; margin-bottom: 15px; font-weight: bold; font-size: 14px; border-bottom: 2px solid #000; padding-bottom: 5px; }
+            .print-only-header { 
+             display: flex !important; 
+             justify-content: space-between; /* توزيع النص يميناً ويساراً */
+             align-items: flex-start;
+             margin-bottom: 20px; 
+             border-bottom: 2px solid #000;
+             padding-bottom: 10px;
+             width: 100%;
+            }
             .table-container { box-shadow: none !important; border: 1px solid #000 !important; border-radius: 0 !important; overflow: visible !important; }
             table { 
                 width: 100% !important; 
@@ -127,6 +135,21 @@
                 border-collapse: collapse !important;
                 table-layout: fixed !important; 
             }
+
+            .header-right {
+        text-align: right;
+        font-weight: bold;
+        font-size: 14px;
+        width: 50%;
+    }
+
+    .header-left {
+        text-align: left; /* جعل النص في أقصى اليسار */
+        font-weight: bold;
+        font-size: 12px; /* تصغير الخط قليلاً ليناسب المساحة */
+        line-height: 1.4;
+        width: 50%;
+    }
 
             th, td { border: 1px solid #000 !important; padding: 4px 1px !important; font-size: 10px !important; color: black !important; word-wrap: break-word; text-align: center; }
             th { background-color: #f0f0f0 !important; }
@@ -144,7 +167,7 @@ th:nth-child(9)  { width: 0.5cm; }  /* الحالة الوظيفية */
 th:nth-child(10) { width: 0.8cm; }  /* الحالة الاجتماعية */
 th:nth-child(11) { width: 0.5cm; }  /* الدورات */
 
-            .print-footer { display: block !important; margin-top: 20px; width: 100%; }
+            .print-footer { display: block !important; margin-top: 40px; width: 100%; }
             .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 11px; padding: 0 10px; }
         }
 
@@ -183,7 +206,10 @@ th:nth-child(11) { width: 0.5cm; }  /* الدورات */
         <button id="addBtn" class="btn" onclick="addRow()"><i class="fas fa-plus-circle"></i> إضافة الموظف للجدول</button>
     </div>
 
-    <div id="printHeader" class="print-only-header">اسم المدرسة: <span id="printSchoolName"></span></div>
+    <div class="print-only-header">
+    <div class="header-right">اسم المدرسة: <span id="printSchoolName"></span></div>
+    <div class="header-left">المديرية العامة للتربية في محافظة النجف الأشرف<br>قسم التخطيط التربوي/شعبة الاحصاء</div>
+    </div>
 
     <div class="table-container">
         <table id="table">
@@ -207,7 +233,7 @@ th:nth-child(11) { width: 0.5cm; }  /* الدورات */
 <div class="print-footer">
     <div class="footer-grid">
         <div>توقيع مدير المدرسة: ............................</div>
-        <div>الختم الرسمي للمدرسة</div>
+        <div>      الختم للمدرسة</div>
     </div>
 </div>
 
