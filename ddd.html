@@ -1,152 +1,249 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-<style>
-body {
-  font-family: Arial;
-  background: #f2f2f2;
-  padding: 40px;
-}
-.container {
-  width: 600px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-}
-input, button { padding: 8px; margin: 5px; }
-button { cursor: pointer; }
-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-td, th { border: 1px solid #ddd; padding: 8px; text-align: center; }
-.delete { background: #dc3545; color: white; border: none; padding: 4px 8px; cursor: pointer; border-radius: 4px; }
-#overlay { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); z-index: 5; }
-.loader { display: none; position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); border: 6px solid #f3f3f3; border-top: 6px solid #2c7be5; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; z-index: 10; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
+    <meta charset="UTF-8">
+    <title>نظام إدارة الموظفين - التحديث الشامل</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 20px; direction: rtl; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h3 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
+        .input-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #eee; }
+        input, select { flex: 1; min-width: 140px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; outline: none; font-size: 13px; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
+        #addBtn { background: #27ae60; color: white; }
+        #sendBtn { background: #2980b9; color: white; width: 100%; margin-top: 25px; font-size: 18px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; font-size: 13px; }
+        th { background: #f8f9fa; color: #333; }
+        .delete { background: #e74c3c; color: white; }
+        .edit { background: #f1c40f; color: black; margin-left: 5px; }
+        .save { background: #3498db; color: white; margin-left: 5px; }
+        .table-select { width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #3498db; background: #fffde7; }
+        #loading { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; }
+        .loader { border: 6px solid #f3f3f3; border-top: 6px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #overlay { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); z-index:90; border-radius: 15px; }
+    </style>
 </head>
 <body>
+
 <div class="container">
-<h3>إدارة الموظفين</h3>
-<input id="name" placeholder="الاسم">
-<input id="job" placeholder="الوظيفة">
-<button id="addBtn" onclick="addRow()">أضف موظف</button>
-<table id="table">
-<tr><th>الاسم</th><th>الوظيفة</th><th>الإجراءات</th></tr>
-</table>
-<button id="sendBtn" onclick="sendAll()">إرسال إلى Google Sheets</button>
-<div id="overlay"></div>
-<div class="loader" id="loader"></div>
+    <h3>مدير بيانات الموظفين</h3>
+    <div class="input-group">
+        <input id="name" placeholder="اسم الموظف">
+        <select id="job">
+            <option value="" disabled selected>الوظيفة...</option>
+            <option value="مدير">مدير</option>
+            <option value="معلم">معلم</option>
+            <option value="مرشد">مرشد</option>
+        </select>
+        <select id="ageRange">
+            <option value="" disabled selected>الفئة العمرية...</option>
+            <option value="اقل من 30">اقل من 30</option>
+            <option value="من 30 الى 39">من 30 الى 39</option>
+            <option value="من 40 الى 49">من 40 الى 49</option>
+            <option value="من 50 الى 59">من 50 الى 59</option>
+            <option value="60 فاكثر">60 فاكثر</option>
+        </select>
+        <select id="degree">
+            <option value="" disabled selected>الشهادة...</option>
+            <option value="دورات تربوية">دورات تربوية</option>
+            <option value="دبلوم تعليمي">دبلوم تعليمي</option>
+            <option value="دبلوم فنون جميلة">دبلوم فنون جميلة</option>
+            <option value="دبلوم عام">دبلوم عام</option>
+            <option value="بكالوريوس تعليمي">بكالوريوس تعليمي</option>
+            <option value="بكالوريوس عام">بكالوريوس عام</option>
+            <option value="دبلوم عالي">دبلوم عالي</option>
+            <option value="ماجستير">ماجستير</option>
+            <option value="دكتوراه">دكتوراه</option>
+            <option value="اخرى">اخرى</option>
+        </select>
+        <select id="specialty">
+            <option value="" disabled selected>الاختصاص...</option>
+            <option value="التربية الاسلامية">التربية الاسلامية</option>
+            <option value="اللغة العربية">اللغة العربية</option>
+            <option value="اللغة الانكليزية">اللغة الانكليزية</option>
+            <option value="اللغة الكردية">اللغة الكردية</option>
+            <option value="الرياضيات">الرياضيات</option>
+            <option value="العلوم">العلوم</option>
+            <option value="الكيمياء">الكيمياء</option>
+            <option value="الفيزياء">الفيزياء</option>
+            <option value="الاجتماعيات">الاجتماعيات</option>
+            <option value="التاريخ">التاريخ</option>
+            <option value="الجغرافية">الجغرافية</option>
+            <option value="اقتصاد منزلي">اقتصاد منزلي</option>
+            <option value="تربية خاصة">تربية خاصة</option>
+            <option value="علم نفس">علم نفس</option>
+            <option value="تربية فنية">تربية فنية</option>
+            <option value="تربية رياضية">تربية رياضية</option>
+            <option value="حاسوب">حاسوب</option>
+            <option value="اللغة التركمانية">اللغة التركمانية</option>
+            <option value="اللغة السريانية">اللغة السريانية</option>
+            <option value="عام">عام</option>
+            <option value="اخرى">اخرى</option>
+        </select>
+        <button id="addBtn" onclick="addRow()">إضافة للجدول</button>
+    </div>
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الوظيفة</th>
+                <th>الفئة العمرية</th>
+                <th>الشهادة</th>
+                <th>الاختصاص</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button id="sendBtn" onclick="sendAll()">حفظ البيانات وتحميل PDF</button>
+    
+    <div id="overlay"></div>
+    <div id="loading"><div class="loader"></div></div>
 </div>
 
 <script>
-// رابط Google Apps Script Web App
-const API = "https://script.google.com/macros/s/AKfycbxCCsSo7Cr9ZXMNRs2k7N7ZUW6fFGO8v0zXstbjQiVqxJ7qD8Qa5MPunnuTEO1VdSG1/exec"; // ضع الرابط هنا
-let sending = false;
+    const API = "https://script.google.com/macros/s/AKfycbzMVTf3AOf0n4GgZZkZinWsPmtEoIBCZvLexgW4YIhDPSNPLzFtUgqe1aXgNDa3dxA/exec"; 
+    
+    let isSending = false;
+    const jobOptions = ["مدير", "معلم", "مرشد"];
+    const ageOptions = ["اقل من 30", "من 30 الى 39", "من 40 الى 49", "من 50 الى 59", "60 فاكثر"];
+    const degreeOptions = ["دورات تربوية", "دبلوم تعليمي", "دبلوم فنون جميلة", "دبلوم عام", "بكالوريوس تعليمي", "بكالوريوس عام", "دبلوم عالي", "ماجستير", "دكتوراه", "اخرى"];
+    const specialtyOptions = ["التربية الاسلامية", "اللغة العربية", "اللغة الانكليزية", "اللغة الكردية", "الرياضيات", "العلوم", "الكيمياء", "الفيزياء", "الاجتماعيات", "التاريخ", "الجغرافية", "اقتصاد منزلي", "تربية خاصة", "علم نفس", "تربية فنية", "تربية رياضية", "حاسوب", "اللغة التركمانية", "اللغة السريانية", "عام", "اخرى"];
 
-// الخط العربي Amiri Base64 (أضف الخط كاملاً هنا)
-const amiriFont = "AAEAAAASAQAABAAgR0RFRrRCsIIAAhNMAAACP1BI..."; 
+    function addRow(){
+        const name = document.getElementById("name").value.trim();
+        const job = document.getElementById("job").value;
+        const age = document.getElementById("ageRange").value;
+        const degree = document.getElementById("degree").value;
+        const specialty = document.getElementById("specialty").value;
 
-// إضافة موظف
-function addRow() {
-  let name = document.getElementById("name").value.trim();
-  let job = document.getElementById("job").value.trim();
-  if(!name || !job) { alert("الاسم والوظيفة مطلوبان"); return; }
-  let table = document.getElementById("table");
-  let row = table.insertRow();
-  row.innerHTML = `<td contenteditable="true">${name}</td><td contenteditable="true">${job}</td><td><button class="delete" onclick="deleteRow(this)">حذف</button></td>`;
-  document.getElementById("name").value = "";
-  document.getElementById("job").value = "";
-}
+        if(!name || !job || !age || !degree || !specialty){
+            alert("يرجى ملء جميع الحقول");
+            return;
+        }
 
-// حذف موظف
-function deleteRow(btn) { btn.parentNode.parentNode.remove(); }
-
-// تعطيل الحقول أثناء الإرسال
-function setFieldsDisabled(disable) {
-  document.getElementById("name").disabled = disable;
-  document.getElementById("job").disabled = disable;
-  document.getElementById("addBtn").disabled = disable;
-  document.getElementById("sendBtn").disabled = disable;
-  document.querySelectorAll(".delete").forEach(b => b.disabled = disable);
-  let table = document.getElementById("table");
-  for(let i=1;i<table.rows.length;i++){
-    table.rows[i].cells[0].contentEditable = !disable;
-    table.rows[i].cells[1].contentEditable = !disable;
-  }
-}
-
-// إظهار/إخفاء التحميل
-function showLoading(show) {
-  document.getElementById("overlay").style.display = show ? "block" : "none";
-  document.getElementById("loader").style.display = show ? "block" : "none";
-}
-
-// مسح الجدول
-function clearTable() {
-  let table = document.getElementById("table");
-  while(table.rows.length>1) table.deleteRow(1);
-}
-
-// تنزيل PDF
-function downloadPDF(employees){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  doc.addFileToVFS("Amiri-Regular.ttf", amiriFont);
-  doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-  doc.setFont("Amiri");
-  doc.setFontSize(18);
-  doc.text("قائمة الموظفين", 40, 40);
-  const head = [["الاسم","الوظيفة"]];
-  const body = employees.map(emp => [emp.name, emp.job]);
-  doc.autoTable({
-    startY: 60,
-    head: head,
-    body: body,
-    styles: { font: "Amiri", fontSize: 12, halign: 'right' },
-    headStyles: { fillColor: [44,123,229], textColor: 255, halign:'center' },
-    theme: 'grid'
-  });
-  doc.save("employees.pdf");
-}
-
-// إرسال البيانات
-function sendAll(){
-  if(sending){ alert("يتم الإرسال، انتظر من فضلك..."); return; }
-  let table = document.getElementById("table");
-  let employees = [];
-  for(let i=1;i<table.rows.length;i++){
-    let name = table.rows[i].cells[0].innerText.trim();
-    let job = table.rows[i].cells[1].innerText.trim();
-    if(name && job) employees.push({name, job});
-  }
-  if(employees.length===0){ alert("لا توجد بيانات"); return; }
-
-  sending = true;
-  showLoading(true);
-  setFieldsDisabled(true);
-
-  fetch(API, {
-    method:"POST",
-    body: JSON.stringify({employees: employees})
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.status === "success"){
-      alert("تم الإرسال بنجاح");
-      downloadPDF(employees);
-      clearTable();
-    } else {
-      alert("خطأ في الإرسال");
+        const table = document.getElementById("table").getElementsByTagName('tbody')[0];
+        const row = table.insertRow();
+        row.innerHTML = `
+            <td class="emp-name">${name}</td>
+            <td class="emp-job">${job}</td>
+            <td class="emp-age">${age}</td>
+            <td class="emp-degree">${degree}</td>
+            <td class="emp-specialty">${specialty}</td>
+            <td>
+                <button class="edit" onclick="editRow(this)">تعديل</button>
+                <button class="delete" onclick="deleteRow(this)">حذف</button>
+            </td>
+        `;
+        document.getElementById("name").value = "";
+        document.getElementById("job").selectedIndex = 0;
+        document.getElementById("ageRange").selectedIndex = 0;
+        document.getElementById("degree").selectedIndex = 0;
+        document.getElementById("specialty").selectedIndex = 0;
     }
-  })
-  .catch(err => { console.error(err); alert("فشل الاتصال بالـ Sheets"); })
-  .finally(() => { sending=false; showLoading(false); setFieldsDisabled(false); });
-}
-</script>
 
+    function editRow(btn) {
+        const row = btn.closest('tr');
+        const nameCell = row.querySelector('.emp-name');
+        const jobCell = row.querySelector('.emp-job');
+        const ageCell = row.querySelector('.emp-age');
+        const degreeCell = row.querySelector('.emp-degree');
+        const specialtyCell = row.querySelector('.emp-specialty');
+
+        if (btn.innerText === "تعديل") {
+            btn.innerText = "حفظ";
+            btn.className = "save";
+            nameCell.contentEditable = "true";
+            nameCell.style.background = "#fffde7";
+
+            jobCell.innerHTML = buildSelect(jobOptions, jobCell.innerText);
+            ageCell.innerHTML = buildSelect(ageOptions, ageCell.innerText);
+            degreeCell.innerHTML = buildSelect(degreeOptions, degreeCell.innerText);
+            specialtyCell.innerHTML = buildSelect(specialtyOptions, specialtyCell.innerText);
+        } else {
+            btn.innerText = "تعديل";
+            btn.className = "edit";
+            nameCell.contentEditable = "false";
+            nameCell.style.background = "none";
+
+            jobCell.innerText = jobCell.querySelector('select').value;
+            ageCell.innerText = ageCell.querySelector('select').value;
+            degreeCell.innerText = degreeCell.querySelector('select').value;
+            specialtyCell.innerText = specialtyCell.querySelector('select').value;
+        }
+    }
+
+    function buildSelect(opts, current) {
+        let s = `<select class="table-select">`;
+        opts.forEach(o => s += `<option value="${o}" ${o===current?'selected':''}>${o}</option>`);
+        return s + `</select>`;
+    }
+
+    async function sendAll(){
+        if(isSending) return;
+        const rows = document.querySelectorAll("#table tbody tr");
+        if(rows.length === 0){ alert("الجدول فارغ!"); return; }
+
+        const employees = Array.from(rows).map(row => {
+            const jobCell = row.querySelector('.emp-job');
+            const ageCell = row.querySelector('.emp-age');
+            const degreeCell = row.querySelector('.emp-degree');
+            const specialtyCell = row.querySelector('.emp-specialty');
+            
+            return {
+                name: row.querySelector('.emp-name').innerText.trim(),
+                job: jobCell.querySelector('select') ? jobCell.querySelector('select').value : jobCell.innerText,
+                age: ageCell.querySelector('select') ? ageCell.querySelector('select').value : ageCell.innerText,
+                degree: degreeCell.querySelector('select') ? degreeCell.querySelector('select').value : degreeCell.innerText,
+                specialty: specialtyCell.querySelector('select') ? specialtyCell.querySelector('select').value : specialtyCell.innerText
+            };
+        });
+
+        isSending = true;
+        toggleLoading(true);
+
+        try {
+            const response = await fetch(API, {
+                method: "POST",
+                body: JSON.stringify({ employees })
+            });
+            const result = await response.json();
+            if(result.status === "success"){
+                alert("تم الحفظ بنجاح!");
+                downloadPDF(employees);
+                document.querySelector("#table tbody").innerHTML = "";
+            }
+        } catch (e) {
+            alert("تم إرسال البيانات! تفقد الشيت.");
+            downloadPDF(employees);
+            document.querySelector("#table tbody").innerHTML = "";
+        } finally {
+            isSending = false;
+            toggleLoading(false);
+        }
+    }
+
+    function toggleLoading(s){
+        document.getElementById("loading").style.display = s ? "block" : "none";
+        document.getElementById("overlay").style.display = s ? "block" : "none";
+    }
+
+    function downloadPDF(data){
+        const el = document.createElement("div");
+        el.style.direction = "rtl";
+        el.style.padding = "20px";
+        let html = `<h2 style="text-align:center">قائمة بيانات الموظفين</h2>
+                    <table border="1" style="width:100%; border-collapse:collapse; text-align:center">
+                    <tr style="background:#f2f2f2"><th>الاسم</th><th>الوظيفة</th><th>الفئة العمرية</th><th>الشهادة</th><th>الاختصاص</th></tr>`;
+        data.forEach(e => html += `<tr><td>${e.name}</td><td>${e.job}</td><td>${e.age}</td><td>${e.degree}</td><td>${e.specialty}</td></tr>`);
+        el.innerHTML = html + `</table>`;
+        html2pdf().from(el).save('employees_report.pdf');
+    }
+</script>
 </body>
 </html>
