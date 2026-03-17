@@ -99,7 +99,6 @@
         #addBtn { background: var(--success); color: white; width: 100%; margin-top: 10px; }
         #addBtn:hover { background: #16a34a; transform: translateY(-1px); }
 
-        /* منطقة الأزرار السفلية */
         .action-controls { display: flex; gap: 15px; margin-top: 30px; }
         #sendBtn { background: var(--primary); color: white; flex: 2; font-size: 18px; padding: 15px; }
         #printBtn { background: #475569; color: white; flex: 1; font-size: 18px; padding: 15px; display: none; }
@@ -133,44 +132,80 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .print-footer, .print-only-header { display: none; }
-
+        /* منطقة تعديلات الطباعة المحسنة */
         @media print {
-            @page { size: A4 landscape; margin: 0.5cm; }
-            body { background: white !important; padding: 0 !important; margin: 0 !important; }
-            header, .card, .action-controls, .no-print, #overlay, #loading { display: none !important; }
-            .container { max-width: 100% !important; width: 100% !important; }
-            .table-container { box-shadow: none !important; }
-            table { width: 100% !important; border-collapse: collapse !important; border: 1px solid #000 !important; }
+            @page { 
+                size: A4 landscape; 
+                margin: 5mm; 
+            }
+
+            body { 
+                background: white !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            header, .card, .action-controls, .no-print, #overlay, #loading { 
+                display: none !important; 
+            }
+
+            .container { 
+                width: 100% !important; 
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .print-only-header { 
+                display: block !important; 
+                text-align: right; 
+                margin-bottom: 15px; 
+                font-weight: bold; 
+                font-size: 16px;
+                border-bottom: 2px solid #000;
+                padding-bottom: 5px;
+            }
+
+            .table-container { 
+                box-shadow: none !important; 
+                border: 1px solid #000 !important;
+                border-radius: 0 !important;
+                overflow: visible !important;
+            }
+
+            table { 
+                width: 100% !important; 
+                border-collapse: collapse !important;
+                table-layout: fixed; /* توزيع متساوي للأعمدة */
+            }
+
             th, td { 
                 border: 1px solid #000 !important; 
-                padding: 4px 2px !important; 
-                font-size: 10px !important; /* تصغير الخط للطباعة */
+                padding: 5px 2px !important; 
+                font-size: 10px !important; 
                 color: black !important;
+                word-wrap: break-word;
             }
-            .print-only-header { display: block !important; text-align: right; margin-bottom: 10px; font-weight: bold; }
-            .print-footer { display: block !important; margin-top: 20px; width: 100%; }
-            .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 12px; }
-        .table-container { 
-        border: 1.5px solid #000 !important; /* رسم إطار خارجي للحاوية */
-        border-radius: 10px !important;      /* استدارة الحاوية */
-        overflow: hidden !important;        /* إجبار الجدول على الالتزام بالاستدارة */
-    }
 
-    table { 
-        width: 100% !important; 
-        border-collapse: separate !important; /* تغيير من collapse إلى separate */
-        border-spacing: 0 !important;        /* إلغاء الفواصل بين الخلايا */
-        border: none !important;             /* إلغاء إطار الجدول الرئيسي لاعتماده على الحاوية */
-    }
+            th { background-color: #f0f0f0 !important; }
 
-    /* إضافة حدود للخلايا يدوياً لتجنب تداخلها مع الاستدارة */
-    th, td { 
-        border-left: 1px solid #000 !important;
-        border-bottom: 1px solid #000 !important;
-    }
-}
+            .print-footer { 
+                display: block !important; 
+                margin-top: 30px; 
+                width: 100%; 
+            }
+            .footer-grid { 
+                display: flex; 
+                justify-content: space-between; 
+                font-weight: bold; 
+                font-size: 12px; 
+                padding: 0 20px;
+            }
+        }
         
+        .print-footer, .print-only-header { display: none; }
     </style>
 </head>
 <body>
@@ -202,15 +237,24 @@
         <button id="addBtn" class="btn" onclick="addRow()"><i class="fas fa-plus-circle"></i> إضافة الموظف للجدول</button>
     </div>
 
-    <div id="printHeader" class="print-only-header">مدرسة: <span id="printSchoolName"></span></div>
+    <div id="printHeader" class="print-only-header">اسم المدرسة: <span id="printSchoolName"></span></div>
 
     <div class="table-container">
         <table id="table">
             <thead>
                 <tr>
-                    <th>ت</th><th>الاسم</th><th>الجنس</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
-                    <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
-                    <th class="no-print">الإجراءات</th>
+                    <th style="width: 30px;">ت</th>
+                    <th>الاسم</th>
+                    <th>الجنس</th>
+                    <th>الوظيفة</th>
+                    <th>العمر</th>
+                    <th>الشهادة</th>
+                    <th>الاختصاص</th>
+                    <th>الخدمة</th>
+                    <th>الحالة</th>
+                    <th>الاجتماعية</th>
+                    <th>الدورات</th>
+                    <th class="no-print" style="width: 100px;">الإجراءات</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -225,7 +269,7 @@
 
 <div class="print-footer">
     <div class="footer-grid">
-        <div>اسم مدير المدرسة: ...........................................</div>
+        <div>توقيع مدير المدرسة: ...........................................</div>
         <div>ختم المدرسة الرسمي</div>
     </div>
 </div>
@@ -293,7 +337,7 @@
     async function sendAll() {
         const rows = document.querySelectorAll("#table tbody tr");
         const school = document.getElementById("schoolName").value;
-        if (rows.length === 0 || !school) { alert("يرجى ملء البيانات"); return; }
+        if (rows.length === 0 || !school) { alert("يرجى ملء البيانات وإضافة موظف واحد على الأقل"); return; }
 
         document.getElementById("loading").style.display = "block";
         document.getElementById("overlay").style.display = "block";
@@ -308,12 +352,11 @@
         try {
             await fetch(API, { method: "POST", mode: 'no-cors', body: JSON.stringify({ school, employees }) });
             
-            // التعديل المطلوب: تعطيل زر الإرسال وإظهار زر الطباعة
             document.getElementById("sendBtn").style.display = "none";
             document.getElementById("printBtn").style.display = "inline-flex";
-            alert("تم إرسال البيانات بنجاح!");
+            alert("تم إرسال البيانات بنجاح! يمكنك الآن طباعة التقرير.");
         } catch (e) {
-            alert("حدث خطأ أثناء الإرسال");
+            alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً");
         } finally {
             document.getElementById("loading").style.display = "none";
             document.getElementById("overlay").style.display = "none";
