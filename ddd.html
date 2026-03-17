@@ -393,67 +393,63 @@
 
     function getV(c){ return c.querySelector('select') ? c.querySelector('select').value : c.innerText; }
 
-    function downloadPDF(data){
-        const el = document.createElement("div");
-        // الحفاظ على اتجاه النص ومنحه عرضاً كافياً للمعالجة
-        el.style.cssText = "direction: rtl; padding: 10px; background: white; width: 1000px;";
-        
-        let h = `
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-                .pdf-body { font-family: 'Cairo', sans-serif !important; direction: rtl; }
-                .pdf-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; }
-                .pdf-table { width: 100%; border-collapse: collapse; table-layout: auto; }
-                .pdf-table th, .pdf-table td { border: 1px solid #333; padding: 8px; text-align: center; font-size: 11px; }
-                .pdf-table th { background-color: #f1f5f9; color: #1e3a8a; }
-                /* الجزء الأهم: منع قطع الصف الثاني أو أي صف آخر */
-                .pdf-table tr { page-break-inside: avoid !important; break-inside: avoid !important; }
-            </style>
-            <div class="pdf-body">
-                <div class="pdf-header">
-                    <h2 style="color:#1e3a8a; margin:0;">تقرير ملاك الموظفين</h2>
-                    <p style="margin:5px 0;">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
-                </div>
-                <table class="pdf-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 30px;">ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
-                            <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-        
-        data.forEach(e => {
-            h += `<tr>
-                <td>${e.id}</td><td>${e.name}</td><td>${e.job}</td><td>${e.age}</td><td>${e.degree}</td>
-                <td>${e.specialty}</td><td>${e.serviceYears}</td><td>${e.status}</td><td>${e.maritalStatus}</td><td>${e.courses}</td>
-            </tr>`;
-        });
-        
-        el.innerHTML = h + `</tbody></table></div>`;
-        
-        // إلحاق العنصر بالصفحة مؤقتاً (ضروري للهواتف لكي يظهر الجدول)
-        document.body.appendChild(el);
+function downloadPDF(data){
+    const el = document.createElement("div");
+    // أهم تعديل: العرض 1100px يضمن أن الجدول لن ينكمش أو ينقطع في الموبايل
+    el.style.cssText = "direction: rtl; padding: 20px; background: white; width: 1100px; position: fixed; right: -10000px; top: 0;";
+    
+    let h = `
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+            .pdf-container { font-family: 'Cairo', sans-serif !important; }
+            .pdf-header { text-align: center; margin-bottom: 20px; border-bottom: 3px solid #1e3a8a; padding-bottom: 10px; }
+            .pdf-table { width: 100%; border-collapse: collapse; border: 2px solid #000; }
+            .pdf-table th, .pdf-table td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 14px; color: black; }
+            .pdf-table th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
+            /* منع انقطاع أي صف */
+            tr { page-break-inside: avoid !important; break-inside: avoid !important; }
+        </style>
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <h1 style="color:#1e3a8a; margin:0;">تقرير ملاك الموظفين</h1>
+                <p style="font-size:16px;">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
+            </div>
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th style="width:40px">ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
+                        <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+    
+    data.forEach(e => {
+        h += `<tr>
+            <td>${e.id}</td><td>${e.name}</td><td>${e.job}</td><td>${e.age}</td><td>${e.degree}</td>
+            <td>${e.specialty}</td><td>${e.serviceYears}</td><td>${e.status}</td><td>${e.maritalStatus}</td><td>${e.courses}</td>
+        </tr>`;
+    });
+    
+    el.innerHTML = h + `</tbody></table></div>`;
+    document.body.appendChild(el);
 
-        const opt = {
-            margin: [0.3, 0.3],
-            filename: 'تقرير_الموظفين.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true, 
-                letterRendering: true,
-                scrollX: 0,
-                scrollY: 0
-            },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
+    const opt = {
+        margin: 0.2,
+        filename: 'تقرير_الموظفين.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true, 
+            logging: false,
+            width: 1100 // إجبار المحرك على رؤية العرض الكامل
+        },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+    };
 
-        html2pdf().set(opt).from(el).toPdf().get('pdf').then(() => {
-            document.body.removeChild(el); // حذف العنصر بعد الانتهاء
-        }).save();
-    }
+    html2pdf().set(opt).from(el).save().then(() => {
+        document.body.removeChild(el);
+    });
+}
 </script>
 </body>
 </html>
