@@ -2,232 +2,427 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>نظام إدارة الموظفين - التحديث النهائي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة إدارة شؤون الموظفين الذكية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; direction: rtl; }
-        .container { max-width: 1400px; margin: auto; background: white; padding: 30px; border-radius: 15px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h3 { text-align: center; color: #1a73e8; margin-bottom: 25px; }
-        .input-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #dee2e6; }
-        input, select { flex: 1; min-width: 130px; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; outline: none; font-size: 12px; }
-        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
-        #addBtn { background: #28a745; color: white; }
-        #sendBtn { background: #1a73e8; color: white; width: 100%; margin-top: 25px; font-size: 18px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; table-layout: fixed; }
-        th, td { padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        th { background: #e9ecef; color: #495057; }
-        .delete { background: #dc3545; color: white; }
-        .edit { background: #ffc107; color: #212529; margin-left: 5px; }
-        .save { background: #17a2b8; color: white; margin-left: 5px; }
-        #overlay { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.8); z-index:90; border-radius: 15px; }
-        #loading { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; }
-        .loader { border: 5px solid #f3f3f3; border-top: 5px solid #1a73e8; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+        }
+
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: var(--background); 
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            direction: rtl; 
+        }
+
+        .container { 
+            max-width: 1400px; 
+            margin: auto; 
+        }
+
+        /* رأس الصفحة */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        header h2 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+
+        /* قسم الإدخال */
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .input-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-field label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        input, select { 
+            padding: 10px; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
+            font-size: 14px;
+            font-family: 'Cairo';
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* الأزرار */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-family: 'Cairo';
+        }
+
+        #addBtn { background: var(--success); color: white; width: 100%; margin-top: 10px; }
+        #addBtn:hover { background: #16a34a; transform: translateY(-1px); }
+
+        #sendBtn { 
+            background: var(--primary); 
+            color: white; 
+            width: 100%; 
+            font-size: 18px; 
+            margin-top: 30px;
+            padding: 15px;
+        }
+        #sendBtn:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+
+        /* الجدول */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        th { 
+            background: #f1f5f9; 
+            color: #475569; 
+            padding: 15px; 
+            font-size: 13px; 
+            border-bottom: 2px solid #e2e8f0;
+        }
+        td { padding: 12px 15px; border-bottom: 1px solid #f1f5f9; font-size: 13px; text-align: center; }
+        tr:hover { background-color: #f8fafc; }
+
+        /* أزرار الإجراءات داخل الجدول */
+        .edit-btn { background: #fef3c7; color: #92400e; padding: 5px 10px; font-size: 12px; }
+        .delete-btn { background: #fee2e2; color: #991b1b; padding: 5px 10px; font-size: 12px; }
+        
+        /* حالة التحميل */
+        #overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:90; backdrop-filter: blur(4px); }
+        #loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; text-align: center; color: white; }
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 10px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .input-grid { grid-template-columns: 1fr 1fr; }
+            body { padding: 10px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h3>إدخال بيانات الموظفين الشامل</h3>
-    <div class="input-group">
-        <input id="name" placeholder="اسم الموظف">
-        <select id="job">
-            <option value="" disabled selected>الوظيفة...</option>
-            <option value="مدير">مدير</option>
-            <option value="معلم">معلم</option>
-            <option value="مرشد">مرشد</option>
-        </select>
-        <select id="ageRange">
-            <option value="" disabled selected>العمر...</option>
-            <option value="اقل من 30">اقل من 30</option>
-            <option value="من 30 الى 39">من 30 الى 39</option>
-            <option value="من 40 الى 49">من 40 الى 49</option>
-            <option value="من 50 الى 59">من 50 الى 59</option>
-            <option value="60 فاكثر">60 فاكثر</option>
-        </select>
-        <select id="degree">
-            <option value="" disabled selected>الشهادة...</option>
-            <option value="بكالوريوس">بكالوريوس</option>
-            <option value="ماجستير">ماجستير</option>
-            <option value="دكتوراه">دكتوراه</option>
-            <option value="اخرى">اخرى</option>
-        </select>
-        <select id="specialty">
-            <option value="" disabled selected>الاختصاص...</option>
-            <option value="اللغة العربية">اللغة العربية</option>
-            <option value="الرياضيات">الرياضيات</option>
-            <option value="عام">عام</option>
-            <option value="اخرى">اخرى</option>
-        </select>
-        <select id="serviceYears">
-            <option value="" disabled selected>الخدمة...</option>
-            <option value="5 سنوات او اقل">5 سنوات او اقل</option>
-            <option value="16 فاكثر">16 فاكثر</option>
-        </select>
-        <select id="status">
-            <option value="" disabled selected>الحالة الوظيفية...</option>
-            <option value="داخل قوة العمل">داخل قوة العمل</option>
-            <option value="بعثة او زمالة دراسية">بعثة او زمالة دراسية</option>
-            <option value="إجازة دراسية">إجازة دراسية</option>
-            <option value="إجازة مصاحبة">إجازة مصاحبة</option>
-            <option value="إجازة بدون راتب">إجازة بدون راتب</option>
-            <option value="إجازة مرضية طويلة">إجازة مرضية طويلة</option>
-            <option value="إجازة امومة">إجازة امومة</option>
-            <option value="منسب الى جهات اخرى">منسب الى جهات اخرى</option>
-            <option value="اجازة (4-5) سنوات">اجازة (4-5) سنوات</option>
-        </select>
-        <button id="addBtn" onclick="addRow()">إضافة</button>
+    <header>
+        <h2><i class="fas fa-users-cog"></i> منظومة إدارة شؤون الموظفين</h2>
+        <p>إدخال، تدقيق، وتصدير بيانات الكوادر الوظيفية</p>
+    </header>
+
+    <div class="card">
+        <div class="input-grid">
+            <div class="input-field">
+                <label>الاسم الكامل</label>
+                <input id="name" type="text" placeholder="مثال: أحمد محمد علي">
+            </div>
+            <div class="input-field">
+                <label>العنوان الوظيفي</label>
+                <select id="job">
+                    <option value="" disabled selected>اختر الوظيفة...</option>
+                    <option value="مدير">مدير</option>
+                    <option value="معلم">معلم</option>
+                    <option value="مرشد">مرشد</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>الفئة العمرية</label>
+                <select id="ageRange">
+                    <option value="" disabled selected>اختر العمر...</option>
+                    <option value="اقل من 30">اقل من 30</option>
+                    <option value="من 30 الى 39">من 30 الى 39</option>
+                    <option value="من 40 الى 49">من 40 الى 49</option>
+                    <option value="من 50 الى 59">من 50 الى 59</option>
+                    <option value="60 فاكثر">60 فاكثر</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>التحصيل الدراسي</label>
+                <select id="degree">
+                    <option value="" disabled selected>الشهادة...</option>
+                    <option value="دبلوم">دبلوم</option>
+                    <option value="بكالوريوس">بكالوريوس</option>
+                    <option value="ماجستير">ماجستير</option>
+                    <option value="دكتوراه">دكتوراه</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>التخصص</label>
+                <select id="specialty">
+                    <option value="" disabled selected>الاختصاص...</option>
+                    <option value="اللغة العربية">اللغة العربية</option>
+                    <option value="الرياضيات">الرياضيات</option>
+                    <option value="عام">عام</option>
+                    <option value="اخرى">اخرى</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>سنوات الخدمة</label>
+                <select id="serviceYears">
+                    <option value="" disabled selected>مدة الخدمة...</option>
+                    <option value="5 سنوات او اقل">5 سنوات او اقل</option>
+                    <option value="من 6 الى 10">من 6 الى 10</option>
+                    <option value="من 11 الى 15">من 11 الى 15</option>
+                    <option value="16 فاكثر">16 فاكثر</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>الحالة الوظيفية</label>
+                <select id="status">
+                    <option value="" disabled selected>الحالة...</option>
+                    <option value="داخل قوة العمل">داخل قوة العمل</option>
+                    <option value="إجازة">إجازة</option>
+                    <option value="منسب">منسب</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>الحالة الاجتماعية</label>
+                <select id="maritalStatus">
+                    <option value="" disabled selected>الحالة...</option>
+                    <option value="اعزب">اعزب</option>
+                    <option value="متزوج">متزوج</option>
+                    <option value="ارمل">ارمل</option>
+                    <option value="مطلق">مطلق</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>الدورات التدريبية</label>
+                <select id="courses">
+                    <option value="" disabled selected>المشاركة...</option>
+                    <option value="مشارك">مشارك</option>
+                    <option value="غير مشارك">غير مشارك</option>
+                </select>
+            </div>
+        </div>
+        <button id="addBtn" class="btn" onclick="addRow()">
+            <i class="fas fa-plus-circle"></i> إضافة الموظف للجدول
+        </button>
     </div>
 
-    <table id="table">
-        <thead>
-            <tr>
-                <th style="width: 30px;">ت</th>
-                <th>الاسم</th>
-                <th>الوظيفة</th>
-                <th>العمر</th>
-                <th>الشهادة</th>
-                <th>الاختصاص</th>
-                <th>الخدمة</th>
-                <th>الحالة</th>
-                <th style="width: 120px;">الإجراءات</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-container">
+        <table id="table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">#</th>
+                    <th>الاسم</th>
+                    <th>الوظيفة</th>
+                    <th>العمر</th>
+                    <th>الشهادة</th>
+                    <th>الاختصاص</th>
+                    <th>الخدمة</th>
+                    <th>الحالة</th>
+                    <th>الاجتماعية</th>
+                    <th>الدورات</th>
+                    <th style="width: 140px;">الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
 
-    <button id="sendBtn" onclick="sendAll()">حفظ البيانات وتصدير PDF</button>
+    <button id="sendBtn" class="btn" onclick="sendAll()">
+        <i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وتصدير تقرير PDF
+    </button>
     
     <div id="overlay"></div>
-    <div id="loading"><div class="loader"></div></div>
+    <div id="loading">
+        <div class="loader"></div>
+        <p>جاري معالجة البيانات...</p>
+    </div>
 </div>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbwhIPJE0drgs3BPzcfuCgQnXJYcz2SlbZaNoVdjZ8zn1q7xoUEA_mRNGaqV-zG7MEwE/exec"; 
+    const API = "https://script.google.com/macros/s/AKfycby9PO0ZpAcGJZF3w4PY1VmCrXXbzwoNwt1iuZEYF6_rQonXFZRxLQDogrkzOkPikG74/exec"; 
     
-    const options = {
+    const opts = {
         job: ["مدير", "معلم", "مرشد"],
         age: ["اقل من 30", "من 30 الى 39", "من 40 الى 49", "من 50 الى 59", "60 فاكثر"],
-        degree: ["دورات تربوية", "دبلوم تعليمي", "دبلوم فنون جميلة", "دبلوم عام", "بكالوريوس تعليمي", "بكالوريوس عام", "دبلوم عالي", "ماجستير", "دكتوراه", "اخرى"],
-        spec: ["التربية الاسلامية", "اللغة العربية", "اللغة الانكليزية", "اللغة الكردية", "الرياضيات", "العلوم", "الكيمياء", "الفيزياء", "الاجتماعيات", "التاريخ", "الجغرافية", "اقتصاد منزلي", "تربية خاصة", "علم نفس", "تربية فنية", "تربية رياضية", "حاسوب", "اللغة التركمانية", "اللغة السريانية", "عام", "اخرى"],
-        service: ["5 سنوات او اقل", "من 6 الى 10", "من 11 الى 15", "16 فاكثر"],
-        status: ["داخل قوة العمل", "بعثة او زمالة دراسية", "إجازة دراسية", "إجازة مصاحبة", "إجازة بدون راتب", "إجازة مرضية طويلة", "إجازة امومة", "منسب الى جهات اخرى", "اجازة (4-5) سنوات"]
+        deg: ["دبلوم", "بكالوريوس", "ماجستير", "دكتوراه", "اخرى"],
+        spec: ["التربية اسلامية", "اللغة العربية", "اللغة الانكليزية", "الرياضيات", "العلوم", "عام", "اخرى"],
+        serv: ["5 سنوات او اقل", "من 6 الى 10", "من 11 الى 15", "16 فاكثر"],
+        stat: ["داخل قوة العمل", "بعثة او زمالة دراسية", "إجازة دراسية", "إجازة بدون راتب", "منسب الى جهات اخرى"],
+        mar: ["اعزب", "متزوج", "ارمل", "مطلق"],
+        crs: ["مشارك", "غير مشارك"]
     };
 
     function addRow(){
-        const fields = ['name', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status'];
-        const values = fields.map(id => document.getElementById(id).value.trim());
-
-        if(values.some(v => v === "")){ alert("يرجى ملء كافة الحقول."); return; }
+        const ids = ['name', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
+        const vals = ids.map(id => document.getElementById(id).value.trim());
+        if(vals.some(v => v === "")){ 
+            alert("يرجى ملء جميع الحقول المطلوبة"); 
+            return; 
+        }
 
         const row = document.querySelector("#table tbody").insertRow();
-        row.innerHTML = `
-            <td class="emp-id"></td>
-            <td class="emp-name">${values[0]}</td>
-            <td class="emp-job">${values[1]}</td>
-            <td class="emp-age">${values[2]}</td>
-            <td class="emp-degree">${values[3]}</td>
-            <td class="emp-spec">${values[4]}</td>
-            <td class="emp-serv">${values[5]}</td>
-            <td class="emp-status">${values[6]}</td>
-            <td>
-                <button class="edit" onclick="editRow(this)">تعديل</button>
-                <button class="delete" onclick="deleteRow(this)">حذف</button>
-            </td>
-        `;
+        row.innerHTML = `<td class="emp-id"></td>` + vals.map((v, i) => `<td class="col-${i}">${v}</td>`).join('') + 
+            `<td>
+                <button class="btn edit-btn" onclick="editRow(this)"><i class="fas fa-edit"></i> تعديل</button>
+                <button class="btn delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+            </td>`;
         updateIds();
         resetInputs();
     }
 
-    function updateIds(){
-        document.querySelectorAll("#table tbody tr").forEach((row, i) => row.querySelector(".emp-id").innerText = i + 1);
+    function updateIds(){ 
+        document.querySelectorAll("#table tbody tr").forEach((r, i) => r.querySelector(".emp-id").innerText = i + 1); 
     }
 
-    function deleteRow(btn){ btn.closest('tr').remove(); updateIds(); }
+    function deleteRow(b){ 
+        if(confirm("هل أنت متأكد من حذف هذا السجل؟")) {
+            b.closest('tr').remove(); 
+            updateIds(); 
+        }
+    }
 
-    function resetInputs(){
-        document.getElementById("name").value = "";
-        document.querySelectorAll(".input-group select").forEach(s => s.selectedIndex = 0);
+    function resetInputs(){ 
+        document.getElementById("name").value = ""; 
+        document.querySelectorAll(".input-grid select").forEach(s => s.selectedIndex = 0); 
     }
 
     function editRow(btn) {
         const row = btn.closest('tr');
-        const cells = {
-            name: row.querySelector('.emp-name'), job: row.querySelector('.emp-job'),
-            age: row.querySelector('.emp-age'), deg: row.querySelector('.emp-degree'),
-            spec: row.querySelector('.emp-spec'), serv: row.querySelector('.emp-serv'),
-            stat: row.querySelector('.emp-status')
-        };
-
-        if (btn.innerText === "تعديل") {
-            btn.innerText = "حفظ"; btn.className = "save";
-            cells.name.contentEditable = "true";
-            cells.job.innerHTML = buildSelect(options.job, cells.job.innerText);
-            cells.age.innerHTML = buildSelect(options.age, cells.age.innerText);
-            cells.deg.innerHTML = buildSelect(options.degree, cells.deg.innerText);
-            cells.spec.innerHTML = buildSelect(options.spec, cells.spec.innerText);
-            cells.serv.innerHTML = buildSelect(options.service, cells.serv.innerText);
-            cells.stat.innerHTML = buildSelect(options.status, cells.stat.innerText);
+        const cells = Array.from(row.cells).slice(1, 10);
+        if (btn.innerText.includes("تعديل")) {
+            btn.innerHTML = '<i class="fas fa-check"></i> حفظ';
+            btn.classList.replace('edit-btn', 'addBtn');
+            btn.style.background = "#22c55e"; btn.style.color = "white";
+            cells[0].contentEditable = "true";
+            cells[0].style.background = "#fff9db";
+            const config = [opts.job, opts.age, opts.deg, opts.spec, opts.serv, opts.stat, opts.mar, opts.crs];
+            for(let i=1; i<9; i++) cells[i].innerHTML = buildSelect(config[i-1], cells[i].innerText);
         } else {
-            btn.innerText = "تعديل"; btn.className = "edit";
-            cells.name.contentEditable = "false";
-            Object.values(cells).forEach(c => { if(c.querySelector('select')) c.innerText = c.querySelector('select').value; });
+            btn.innerHTML = '<i class="fas fa-edit"></i> تعديل';
+            btn.style.background = ""; btn.style.color = "";
+            btn.classList.replace('addBtn', 'edit-btn');
+            cells[0].contentEditable = "false";
+            cells[0].style.background = "transparent";
+            for(let i=1; i<9; i++) if(cells[i].querySelector('select')) cells[i].innerText = cells[i].querySelector('select').value;
         }
     }
 
-    function buildSelect(opts, cur) {
-        let s = `<select style="width:100%; font-size:10px;">`;
-        opts.forEach(o => s += `<option value="${o}" ${o===cur?'selected':''}>${o}</option>`);
+    function buildSelect(os, c) {
+        let s = `<select style="width:100%; font-size:12px; padding:4px;">`;
+        os.forEach(o => s += `<option value="${o}" ${o===c?'selected':''}>${o}</option>`);
         return s + `</select>`;
     }
 
     async function sendAll(){
         const rows = document.querySelectorAll("#table tbody tr");
-        if(rows.length === 0) return;
-
-        const employees = Array.from(rows).map(row => ({
-            id: row.querySelector('.emp-id').innerText,
-            name: row.querySelector('.emp-name').innerText,
-            job: getVal(row, '.emp-job'),
-            age: getVal(row, '.emp-age'),
-            degree: getVal(row, '.emp-degree'),
-            specialty: getVal(row, '.emp-spec'),
-            serviceYears: getVal(row, '.emp-serv'),
-            status: getVal(row, '.emp-status')
+        if(rows.length === 0) { alert("الجدول فارغ!"); return; }
+        
+        const employees = Array.from(rows).map(r => ({
+            id: r.cells[0].innerText, name: r.cells[1].innerText, job: getV(r.cells[2]), age: getV(r.cells[3]),
+            degree: getV(r.cells[4]), specialty: getV(r.cells[5]), serviceYears: getV(r.cells[6]),
+            status: getV(r.cells[7]), maritalStatus: getV(r.cells[8]), courses: getV(r.cells[9])
         }));
 
         document.getElementById("loading").style.display = "block";
         document.getElementById("overlay").style.display = "block";
 
         try {
-            await fetch(API, { method: "POST", body: JSON.stringify({ employees }) });
-            alert("تم الحفظ بنجاح.");
+            const response = await fetch(API, { 
+                method: "POST", 
+                mode: 'no-cors', // لتجنب مشاكل CORS مع Google Script
+                body: JSON.stringify({ employees }) 
+            });
+            
+            alert("تم إرسال البيانات بنجاح إلى النظام.");
             downloadPDF(employees);
             document.querySelector("#table tbody").innerHTML = "";
-        } catch (e) {
-            alert("حدث خطأ في الإرسال.");
-        } finally {
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
+        } catch (e) { 
+            alert("حدث خطأ في الاتصال، تأكد من إعدادات API"); 
+        } finally { 
+            document.getElementById("loading").style.display = "none"; 
+            document.getElementById("overlay").style.display = "none"; 
         }
     }
 
-    function getVal(r, c) {
-        const cell = r.querySelector(c);
-        return cell.querySelector('select') ? cell.querySelector('select').value : cell.innerText;
-    }
+    function getV(c){ return c.querySelector('select') ? c.querySelector('select').value : c.innerText; }
 
     function downloadPDF(data){
         const el = document.createElement("div");
-        el.style.direction = "rtl"; el.style.padding = "10px";
-        let html = `<h2 style="text-align:center">جدول بيانات الموظفين</h2>
-            <table border="1" style="width:100%; border-collapse:collapse; text-align:center; font-size: 9px;">
-            <tr style="background:#eee"><th>ت</th><th>الاسم</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th><th>الاختصاص</th><th>الخدمة</th><th>الحالة</th></tr>`;
+        el.style.direction = "rtl"; el.style.padding = "20px";
+        el.style.fontFamily = "Cairo, sans-serif";
+        
+        let h = `
+            <div style="text-align:center; margin-bottom:20px;">
+                <h2 style="color:#1e3a8a">تقرير ملاك الموظفين</h2>
+                <p>تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
+            </div>
+            <table border="1" style="width:100%; border-collapse:collapse; text-align:center; font-size: 10px;">
+            <tr style="background:#f1f5f9">
+                <th>ت</th><th>الاسم الكامل</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th><th>الاختصاص</th><th>الخدمة</th><th>الحالة الوظيفية</th><th>الاجتماعية</th><th>الدورات</th>
+            </tr>`;
+        
         data.forEach(e => {
-            html += `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.job}</td><td>${e.age}</td><td>${e.degree}</td><td>${e.specialty}</td><td>${e.serviceYears}</td><td>${e.status}</td></tr>`;
+            h += `<tr>
+                <td>${e.id}</td><td>${e.name}</td><td>${e.job}</td><td>${e.age}</td><td>${e.degree}</td>
+                <td>${e.specialty}</td><td>${e.serviceYears}</td><td>${e.status}</td><td>${e.maritalStatus}</td><td>${e.courses}</td>
+            </tr>`;
         });
-        el.innerHTML = html + `</table>`;
-        html2pdf().set({ margin: 0.3, filename: 'report.pdf', jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } }).from(el).save();
+        
+        el.innerHTML = h + `</table>`;
+        const opt = {
+            margin: 0.5,
+            filename: 'تقرير_الموظفين.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+        };
+        html2pdf().set(opt).from(el).save();
     }
 </script>
 </body>
