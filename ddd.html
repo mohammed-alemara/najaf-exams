@@ -225,7 +225,7 @@ th:nth-child(11) { width: 0.5cm; }  /* الدورات */
 
     <div class="action-controls">
         <button id="sendBtn" class="btn" onclick="sendAll()"><i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وإرسالها</button>
-        <button id="printBtn" class="btn" onclick="window.print()"><i class="fas fa-print"></i> طباعة التقرير النهائي</button>
+        <button id="printBtn" class="btn" onclick="prepareAndPrint()"><i class="fas fa-print"></i> طباعة الاستمارة</button>
     </div>
 </div>
 
@@ -314,7 +314,7 @@ th:nth-child(11) { width: 0.5cm; }  /* الدورات */
         document.getElementById("printSchoolName").innerText = school;
 
         const employees = Array.from(rows).map(r => ({
-            name: r.cells[1].innerText, gender: r.cells[2].innerText, job: r.cells[3].innerText,
+            id: r.cells[0].innerText,name: r.cells[1].innerText, gender: r.cells[2].innerText, job: r.cells[3].innerText,
             age: r.cells[4].innerText, degree: r.cells[5].innerText, specialty: r.cells[6].innerText,
             service: r.cells[7].innerText, status: r.cells[8].innerText, social: r.cells[9].innerText, 
             courses: r.cells[10].innerText
@@ -345,6 +345,49 @@ th:nth-child(11) { width: 0.5cm; }  /* الدورات */
             document.getElementById("loading").style.display = "none";
             document.getElementById("overlay").style.display = "none";
         }
+    }
+
+    // دالة التحضير للطباعة (ترتب كافة الأعمدة أبجدياً)
+    // دالة التحضير للطباعة (الترتيب يبدأ من الجنس ويتجاهل الأسماء)
+    function prepareAndPrint() {
+        const tbody = document.querySelector("#table tbody");
+        const originalRows = Array.from(tbody.rows); 
+
+        if (originalRows.length === 0) return;
+
+        const sortedRows = [...originalRows].sort((a, b) => {
+            // 👈 الترتيب يبدأ من 2 (الجنس) ويكمل لبقية الأعمدة، مع استبعاد 1 (الاسم) تماماً
+            // 2: الجنس | 3: الوظيفة | 4: العمر | 5: الشهادة | 6: الاختصاص | 7: الخدمة | 8: الحالة | 9: الاجتماعية | 10: الدورات
+            const priorityCols = [2, 3, 4, 5, 6, 7, 8, 9, 10]; 
+
+            for (let i = 0; i < priorityCols.length; i++) {
+                let colIdx = priorityCols[i];
+                let valA = a.cells[colIdx].innerText.trim();
+                let valB = b.cells[colIdx].innerText.trim();
+                
+                let comparison = valA.localeCompare(valB, 'ar');
+                
+                if (comparison !== 0) {
+                    return comparison;
+                }
+            }
+            return 0; // إذا تساووا في جميع هذه الأعمدة
+        });
+
+        // 1. تفريغ الجدول وعرض الترتيب الجديد للطباعة
+        tbody.innerHTML = "";
+        sortedRows.forEach(row => tbody.appendChild(row));
+        
+        // 2. تحديث أرقام التسلسل (ت) لتكون مرتبة (1, 2, 3...) في الورقة
+        updateIdx();
+
+        // 3. فتح نافذة الطباعة
+        window.print();
+
+        // 4. بعد إغلاق الطباعة: استعادة الترتيب الأصلي (كما تم الإرسال للشيت)
+        tbody.innerHTML = "";
+        originalRows.forEach(row => tbody.appendChild(row));
+        updateIdx();
     }
 </script>
 
