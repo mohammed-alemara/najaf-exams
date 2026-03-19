@@ -17,6 +17,33 @@
             --background: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #1e293b;
+
+            /* إعدادات عرض الأعمدة الافتراضية */
+            --w-idx: 40px;
+            --w-name: 180px;
+            --w-mother: 150px;
+            --w-staff: 100px;
+            --w-gender: 80px;
+            --w-birth: 80px;
+            --w-age: 60px;
+            --w-job: 120px;
+            --w-grade: 60px;
+            --w-salary: 100px;
+            --w-courses: 100px;
+            --w-college: 120px;
+            --w-degree: 100px;
+            --w-spec: 120px;
+            --w-grad: 80px;
+            --w-hire: 110px;
+            --w-service: 70px;
+            --w-return: 110px;
+            --w-soc: 100px;
+            --w-stat: 110px;
+            --w-notes: 200px;
+
+            /* عرض أعمدة الطباعة (10 أعمدة لكل صف - صفين للموظف) */
+            --pw-1: 11%; --pw-2: 9%; --pw-3: 8%; --pw-4: 6%; --pw-5: 6%; --pw-6: 5%; --pw-7: 9%; --pw-8: 7%; --pw-9: 10%; --pw-10: 10%;
+            --pw2-1: 10%; --pw2-2: 10%; --pw2-3: 10%; --pw2-4: 8%; --pw2-5: 10%; --pw2-6: 8%; --pw2-7: 10%; --pw2-8: 10%; --pw2-9: 10%; --pw2-10: 14%;
         }
 
         body { 
@@ -33,11 +60,67 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 30px 20px;
             background: linear-gradient(135deg, #1e3a8a, #2563eb);
             color: white;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h2 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .welcome-msg {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .current-date {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-family: var(--font-mono);
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .quote-msg {
+            font-style: italic;
+            font-size: 13px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
         }
 
         .card {
@@ -69,7 +152,7 @@
 
         .input-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
             gap: 15px; 
             margin-bottom: 20px;
         }
@@ -99,9 +182,39 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
-        th { background: #f1f5f9; color: #475569; padding: 15px; font-size: 13px; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 12px 15px; border-bottom: 1px solid #f1f5f9; font-size: 13px; text-align: center; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f5f9; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        
+        /* تطبيق العرض المخصص للأعمدة */
+        #table th:nth-child(1), #table td:nth-child(1) { width: var(--w-idx); min-width: var(--w-idx); text-align: center; }
+        #table th:nth-child(2), #table td:nth-child(2) { width: var(--w-name); min-width: var(--w-name); }
+        #table th:nth-child(3), #table td:nth-child(3) { width: var(--w-mother); min-width: var(--w-mother); white-space: normal; }
+        #table th:nth-child(4), #table td:nth-child(4) { width: var(--w-staff); min-width: var(--w-staff); }
+        #table th:nth-child(5), #table td:nth-child(5) { width: var(--w-gender); min-width: var(--w-gender); }
+        #table th:nth-child(6), #table td:nth-child(6) { width: var(--w-birth); min-width: var(--w-birth); }
+        #table th:nth-child(7), #table td:nth-child(7) { width: var(--w-age); min-width: var(--w-age); }
+        #table th:nth-child(8), #table td:nth-child(8) { width: var(--w-job); min-width: var(--w-job); }
+        #table th:nth-child(9), #table td:nth-child(9) { width: var(--w-salary); min-width: var(--w-salary); }
+        #table th:nth-child(10), #table td:nth-child(10) { width: var(--w-grade); min-width: var(--w-grade); }
+        #table th:nth-child(11), #table td:nth-child(11) { width: var(--w-college); min-width: var(--w-college); }
+        #table th:nth-child(12), #table td:nth-child(12) { width: var(--w-degree); min-width: var(--w-degree); }
+        #table th:nth-child(13), #table td:nth-child(13) { width: var(--w-spec); min-width: var(--w-spec); }
+        #table th:nth-child(14), #table td:nth-child(14) { width: var(--w-grad); min-width: var(--w-grad); }
+        #table th:nth-child(15), #table td:nth-child(15) { width: var(--w-hire); min-width: var(--w-hire); }
+        #table th:nth-child(16), #table td:nth-child(16) { width: var(--w-service); min-width: var(--w-service); }
+        #table th:nth-child(17), #table td:nth-child(17) { width: var(--w-return); min-width: var(--w-return); }
+        #table th:nth-child(18), #table td:nth-child(18) { width: var(--w-soc); min-width: var(--w-soc); }
+        #table th:nth-child(19), #table td:nth-child(19) { width: var(--w-stat); min-width: var(--w-stat); }
+        #table th:nth-child(20), #table td:nth-child(20) { width: var(--w-courses); min-width: var(--w-courses); }
+        #table th:nth-child(21), #table td:nth-child(21) { width: var(--w-notes); min-width: var(--w-notes); white-space: normal; }
+        #table th:nth-child(22), #table td:nth-child(22) { width: 100px; min-width: 100px; }
+
+        th { background: #f1f5f9; color: #475569; padding: 12px 8px; font-size: 12px; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+        td { padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 12px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .edit-btn { background: #fef3c7; color: #92400e; padding: 5px 10px; font-size: 12px; }
         .delete-btn { background: #fee2e2; color: #991b1b; padding: 5px 10px; font-size: 12px; }
@@ -170,99 +283,98 @@
         .modal-actions .btn { flex: 1; }
 
         /* --- تعديلات الطباعة العرضية LANDSCAPE --- */
+        .print-settings {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid #cbd5e1;
+        }
+        .print-settings h4 { margin-top: 0; color: #475569; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .width-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .width-field { display: flex; flex-direction: column; gap: 4px; }
+        .width-field label { font-size: 11px; font-weight: bold; color: #64748b; }
+        .width-field input { padding: 6px; font-size: 12px; }
+
         @media print {
-            @page { 
-                size: landscape; 
-                margin: 10mm; 
+            @page { size: portrait; margin: 5mm; }
+            body { padding: 0; background: white; }
+            .container { width: 100%; max-width: none; padding: 0; box-shadow: none; }
+            .no-print, .input-card, .action-controls, thead, header { display: none !important; }
+            
+            .table-container { 
+                overflow: visible !important; 
+                background: none !important; 
+                box-shadow: none !important;
+                width: 100% !important;
+            }
+
+            table { 
+                width: 100% !important; 
+                min-width: 0 !important;
+                border-collapse: collapse !important; 
+                table-layout: fixed !important;
+                border: 2px solid #000 !important;
             }
             
-            html, body { 
-                background: white !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact;
-                width: 100%;
-                height: auto;
-                overflow: visible !important;
+            td { 
+                border: 1px solid #000 !important; 
+                padding: 2px !important; 
+                vertical-align: top !important;
+                word-wrap: break-word !important;
+                white-space: normal !important;
+                overflow-wrap: break-word !important;
             }
-            
-            header, .card, .action-controls, .no-print, .modal-overlay, #overlay, #loading { display: none !important; }
-            
-            .container { 
-                width: 297mm !important; 
-                max-width: none !important; 
-                margin: 0 !important; 
-                padding: 0 !important; 
+
+            /* تنسيق التسمية داخل الخلية */
+            .print-label {
                 display: block !important;
+                font-size: 8px !important;
+                color: #555 !important;
+                border-bottom: 1px solid #ddd !important;
+                margin-bottom: 1px !important;
+                font-weight: bold !important;
+                background: #f8fafc !important;
+                padding: 1px 2px !important;
+                text-align: center !important;
+                line-height: 1.1 !important;
+                white-space: normal !important;
+                overflow: hidden !important;
             }
-            
+
+            .print-value {
+                display: block !important;
+                font-size: 10px !important;
+                font-weight: bold !important;
+                text-align: center !important;
+                padding: 1px 0 !important;
+                line-height: 1.1 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+
+            .idx-cell {
+                width: 25px !important;
+                background: #f8fafc !important;
+                vertical-align: middle !important;
+                text-align: center !important;
+                border: 1px solid #000 !important;
+                padding: 0 !important;
+            }
+
             .print-only-header { 
                 display: flex !important; 
                 justify-content: space-between; 
                 align-items: flex-start;
-                margin-bottom: 20px; 
-                border-bottom: 2px solid #000;
-                padding-bottom: 10px;
-                width: 100%;
+                margin-bottom: 15px; 
+                border-bottom: 2px solid #000; 
+                padding-bottom: 8px; 
             }
-            
-            .table-container { 
-                box-shadow: none !important; 
-                border: 1px solid #000 !important; 
-                border-radius: 0 !important; 
-                overflow: visible !important; 
-                width: 100% !important;
-            }
-            
-            table { 
-                width: 100% !important; 
-                min-width: 280mm !important; 
-                border-collapse: collapse !important;
-                table-layout: fixed !important; 
-            }
-
-            .header-right {
-                text-align: right;
-                font-weight: bold;
-                font-size: 14px;
-                width: 50%;
-            }
-
-            .header-left {
-                text-align: left;
-                font-weight: bold;
-                font-size: 12px;
-                line-height: 1.4;
-                width: 50%;
-            }
-
-            th, td { 
-                border: 1px solid #000 !important; 
-                padding: 4px 1px !important; 
-                font-size: 10px !important; 
-                color: black !important; 
-                word-wrap: break-word; 
-                text-align: center; 
-            }
-            
-            th { background-color: #f0f0f0 !important; }
-            
-            /* التوزيع بالنسب المئوية لضمان التوافق مع العرض */
-            th:nth-child(1)  { width: 3%; }
-            th:nth-child(2)  { width: 18%; }
-            th:nth-child(3)  { width: 6%; }
-            th:nth-child(4)  { width: 8%; }
-            th:nth-child(5)  { width: 6%; }
-            th:nth-child(6)  { width: 8%; }
-            th:nth-child(7)  { width: 10%; }
-            th:nth-child(8)  { width: 6%; }
-            th:nth-child(9)  { width: 10%; }
-            th:nth-child(10) { width: 10%; }
-            th:nth-child(11) { width: 15%; }
-
-            .print-footer { display: block !important; margin-top: 40px; width: 100%; }
-            .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 11px; padding: 0 10px; }
+            .header-right { text-align: right; font-weight: bold; font-size: 13px; width: 50%; }
+            .header-left { text-align: left; font-weight: bold; font-size: 11px; line-height: 1.4; width: 50%; }
+            .print-footer { display: block !important; margin-top: 20px; width: 100%; }
+            .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 12px; }
         }
 
         #overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:90; backdrop-filter: blur(4px); }
@@ -274,8 +386,13 @@
 <body>
 
 <div class="container">
-    <header>
-        <h2><i class="fas fa-users-cog"></i> قسم التخطيط التربوي / شعبة الاحصاء</h2>
+    <header class="no-print">
+        <div class="header-content">
+            <h2><i class="fas fa-users-cog"></i> قسم التخطيط التربوي / شعبة الاحصاء</h2>
+            <div id="welcomeMessage" class="welcome-msg">أهلاً بك في نظام إدارة الموظفين</div>
+            <div id="currentDate" class="current-date"></div>
+            <div id="motivationalQuote" class="quote-msg"></div>
+        </div>
     </header>
 
     <div class="card" id="inputCard">
@@ -285,16 +402,24 @@
         </div>
 
         <div class="input-grid">
-            <div class="input-field"><label>الاسم الكامل</label><input id="name" type="text"></div>
+            <div class="input-field"><label>الاسم الثلاثي</label><input type="text" id="name" placeholder="الاسم الكامل..."></div>
+            <div class="input-field"><label>اسم الأم الثلاثي</label><input type="text" id="motherName" placeholder="اسم الأم..."></div>
+            <div class="input-field"><label>نوع الكادر</label><select id="staffType"><option value="" disabled selected>اختر...</option><option>تدريسي</option><option>وظيفي</option></select></div>
             <div class="input-field"><label>الجنس</label><select id="gender"><option value="" disabled selected>اختر...</option><option>ذكر</option><option>انثى</option></select></div>
+            <div class="input-field"><label>سنة التولد</label><input type="number" id="birthYear" placeholder="مثلاً: 1985"></div>
             <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معلم</option><option>مرشد</option></select></div>
-            <div class="input-field"><label>العمر</label><select id="ageRange"><option value="" disabled selected>اختر...</option><option>اقل من 30</option><option>30-39</option><option>40-49</option><option>50-59</option></select></div>
+            <div class="input-field"><label>الراتب الاسمي</label><select id="salary"><option value="" disabled selected>اختر...</option></select></div>
+            <div class="input-field"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+            <div class="input-field"><label>الكلية او المعهد</label><select id="college"><option value="" disabled selected>اختر...</option><option>كلية التربية</option><option>معهد المعلمين</option><option>أخرى</option></select></div>
             <div class="input-field"><label>الشهادة</label><select id="degree"><option value="" disabled selected>الشهادة...</option><option>دبلوم</option><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option></select></div>
-            <div class="input-field"><label>التخصص</label><select id="specialty"><option value="" disabled selected>الاختصاص...</option><option>اللغة العربية</option><option>الرياضيات</option><option>عام</option></select></div>
-            <div class="input-field"><label>الخدمة</label><select id="serviceYears"><option value="" disabled selected>المدة...</option><option>5 فأقل</option><option>6-10</option><option>16 فأكثر</option></select></div>
-            <div class="input-field"><label>الحالة الوظيفية</label><select id="status"><option value="" disabled selected>الحالة...</option><option>داخل قوة العمل</option><option>إجازة</option><option>منسب</option></select></div>
-            <div class="input-field"><label>الحالة الاجتماعية</label><select id="maritalStatus"><option value="" disabled selected>الحالة...</option><option>اعزب</option><option>متزوج</option></select></div>
-            <div class="input-field"><label>الدورات</label><select id="courses"><option value="" disabled selected>المشاركة...</option><option>مشارك</option><option>غير مشارك</option></select></div>
+            <div class="input-field"><label>الاختصاص</label><select id="specialty"><option value="" disabled selected>الاختصاص...</option><option>اللغة العربية</option><option>الرياضيات</option><option>عام</option></select></div>
+            <div class="input-field"><label>سنة التخرج</label><input type="number" id="gradYear" placeholder="مثلاً: 2010"></div>
+            <div class="input-field"><label>تاريخ التعيين لأول مرة</label><input type="date" id="hireDate"></div>
+            <div class="input-field"><label>تاريخ عودته للعمل</label><input type="date" id="returnDate"></div>
+            <div class="input-field"><label>الحالة الاجتماعية</label><select id="maritalStatus"><option value="" disabled selected>الحالة...</option><option>اعزب</option><option>متزوج</option><option>مطلق</option><option>ارمل</option></select></div>
+            <div class="input-field"><label>الحالة الوظيفية</label><select id="status"><option value="" disabled selected>الحالة...</option><option>داخل قوة العمل</option><option>إجازة</option></select></div>
+            <div class="input-field"><label>(الدورات)</label><select id="courseParticipation"><option value="" disabled selected>اختر...</option><option>نعم</option><option>لا</option></select></div>
+            <div class="input-field"><label>الملاحظات</label><input type="text" id="notes" placeholder="ملاحظات..."></div>
         </div>
         <button id="addBtn" class="btn" onclick="addRow()"><i class="fas fa-plus-circle"></i> إضافة الموظف للجدول</button>
     </div>
@@ -308,14 +433,13 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th>ت</th><th>الاسم</th><th>الجنس</th><th>الوظيفة</th><th>العمر</th><th>الشهادة</th>
-                    <th>الاختصاص</th><th>الخدمة</th><th>الحالة</th><th>الاجتماعية</th><th>الدورات</th>
+                    <th>ت</th><th>الاسم</th><th>الأم</th><th>الكادر</th><th>الجنس</th><th>التولد</th><th>العمر</th><th>الوظيفة</th><th>الراتب</th><th>الدرجة</th><th>الكلية</th><th>الشهادة</th><th>الاختصاص</th><th>التخرج</th><th>التعيين</th><th>الخدمة</th><th>العودة</th><th>الاجتماعية</th><th>الحالة</th><th>الدورات</th><th>الملاحظات</th>
                     <th class="no-print">الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
                 <tr id="emptyRow" class="empty-state-row">
-                    <td colspan="12">
+                    <td colspan="22">
                         <div class="empty-state-content">
                             <i class="fas fa-users-slash"></i>
                             <span>لم يتم إضافة أي موظف بعد...</span>
@@ -337,6 +461,67 @@
         <button id="sendBtn" class="btn" onclick="confirmSend()"><i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وإرسالها</button>
         <button id="printBtn" class="btn" onclick="prepareAndPrint()"><i class="fas fa-print"></i> طباعة الاستمارة</button>
     </div>
+
+    <div id="printSettings" class="print-settings no-print">
+        <h4><i class="fas fa-sliders-h"></i> إعدادات عرض الأعمدة (CSS)</h4>
+        
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+            <p style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">1. عرض أعمدة الجدول الرئيسي (على الشاشة):</p>
+            <div class="width-controls">
+                <div class="width-field"><label>ت</label><input type="text" id="mw-idx" value="20px" oninput="updateCSSVar('--w-idx', this.value)"></div>
+                <div class="width-field"><label>الاسم</label><input type="text" id="mw-name" value="12%" oninput="updateCSSVar('--w-name', this.value)"></div>
+                <div class="width-field"><label>الأم</label><input type="text" id="mw-mother" value="10%" oninput="updateCSSVar('--w-mother', this.value)"></div>
+                <div class="width-field"><label>الكادر</label><input type="text" id="mw-staff" value="8%" oninput="updateCSSVar('--w-staff', this.value)"></div>
+                <div class="width-field"><label>الجنس</label><input type="text" id="mw-gender" value="6%" oninput="updateCSSVar('--w-gender', this.value)"></div>
+                <div class="width-field"><label>التولد</label><input type="text" id="mw-birth" value="6%" oninput="updateCSSVar('--w-birth', this.value)"></div>
+                <div class="width-field"><label>الوظيفة</label><input type="text" id="mw-job" value="8%" oninput="updateCSSVar('--w-job', this.value)"></div>
+                <div class="width-field"><label>الراتب</label><input type="text" id="mw-salary" value="7%" oninput="updateCSSVar('--w-salary', this.value)"></div>
+                <div class="width-field"><label>الدرجة</label><input type="text" id="mw-grade" value="5%" oninput="updateCSSVar('--w-grade', this.value)"></div>
+                <div class="width-field"><label>الدورات</label><input type="text" id="mw-courses" value="7%" oninput="updateCSSVar('--w-courses', this.value)"></div>
+                <div class="width-field"><label>الكلية</label><input type="text" id="mw-college" value="8%" oninput="updateCSSVar('--w-college', this.value)"></div>
+                <div class="width-field"><label>الشهادة</label><input type="text" id="mw-degree" value="7%" oninput="updateCSSVar('--w-degree', this.value)"></div>
+                <div class="width-field"><label>الاختصاص</label><input type="text" id="mw-spec" value="8%" oninput="updateCSSVar('--w-spec', this.value)"></div>
+                <div class="width-field"><label>التخرج</label><input type="text" id="mw-grad" value="6%" oninput="updateCSSVar('--w-grad', this.value)"></div>
+                <div class="width-field"><label>التعيين</label><input type="text" id="mw-hire" value="8%" oninput="updateCSSVar('--w-hire', this.value)"></div>
+                <div class="width-field"><label>العودة</label><input type="text" id="mw-return" value="8%" oninput="updateCSSVar('--w-return', this.value)"></div>
+                <div class="width-field"><label>الاجتماعية</label><input type="text" id="mw-soc" value="7%" oninput="updateCSSVar('--w-soc', this.value)"></div>
+                <div class="width-field"><label>الحالة</label><input type="text" id="mw-stat" value="7%" oninput="updateCSSVar('--w-stat', this.value)"></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+            <p style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">2. عرض أعمدة الطباعة - الصف الأول (الاسم، الأم، الكادر، الجنس، التولد، العمر، الوظيفة، الراتب، الدرجة، الكلية):</p>
+            <div class="width-controls">
+                <div class="width-field"><label>1</label><input type="text" id="pw-1" value="11%" oninput="updateCSSVar('--pw-1', this.value)"></div>
+                <div class="width-field"><label>2</label><input type="text" id="pw-2" value="9%" oninput="updateCSSVar('--pw-2', this.value)"></div>
+                <div class="width-field"><label>3</label><input type="text" id="pw-3" value="8%" oninput="updateCSSVar('--pw-3', this.value)"></div>
+                <div class="width-field"><label>4</label><input type="text" id="pw-4" value="6%" oninput="updateCSSVar('--pw-4', this.value)"></div>
+                <div class="width-field"><label>5</label><input type="text" id="pw-5" value="6%" oninput="updateCSSVar('--pw-5', this.value)"></div>
+                <div class="width-field"><label>6</label><input type="text" id="pw-6" value="5%" oninput="updateCSSVar('--pw-6', this.value)"></div>
+                <div class="width-field"><label>7</label><input type="text" id="pw-7" value="9%" oninput="updateCSSVar('--pw-7', this.value)"></div>
+                <div class="width-field"><label>8</label><input type="text" id="pw-8" value="7%" oninput="updateCSSVar('--pw-8', this.value)"></div>
+                <div class="width-field"><label>9</label><input type="text" id="pw-9" value="10%" oninput="updateCSSVar('--pw-9', this.value)"></div>
+                <div class="width-field"><label>10</label><input type="text" id="pw-10" value="10%" oninput="updateCSSVar('--pw-10', this.value)"></div>
+            </div>
+        </div>
+
+        <div>
+            <p style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">3. عرض أعمدة الطباعة - الصف الثاني (الشهادة، الاختصاص، التخرج، التعيين، الخدمة، العودة، الاجتماعية، الحالة، الدورات، الملاحظات):</p>
+            <div class="width-controls">
+                <div class="width-field"><label>1</label><input type="text" id="pw2-1" value="10%" oninput="updateCSSVar('--pw2-1', this.value)"></div>
+                <div class="width-field"><label>2</label><input type="text" id="pw2-2" value="10%" oninput="updateCSSVar('--pw2-2', this.value)"></div>
+                <div class="width-field"><label>3</label><input type="text" id="pw2-3" value="10%" oninput="updateCSSVar('--pw2-3', this.value)"></div>
+                <div class="width-field"><label>4</label><input type="text" id="pw2-4" value="8%" oninput="updateCSSVar('--pw2-4', this.value)"></div>
+                <div class="width-field"><label>5</label><input type="text" id="pw2-5" value="10%" oninput="updateCSSVar('--pw2-5', this.value)"></div>
+                <div class="width-field"><label>6</label><input type="text" id="pw2-6" value="8%" oninput="updateCSSVar('--pw2-6', this.value)"></div>
+                <div class="width-field"><label>7</label><input type="text" id="pw2-7" value="10%" oninput="updateCSSVar('--pw2-7', this.value)"></div>
+                <div class="width-field"><label>8</label><input type="text" id="pw2-8" value="10%" oninput="updateCSSVar('--pw2-8', this.value)"></div>
+                <div class="width-field"><label>9</label><input type="text" id="pw2-9" value="10%" oninput="updateCSSVar('--pw2-9', this.value)"></div>
+                <div class="width-field"><label>10</label><input type="text" id="pw2-10" value="14%" oninput="updateCSSVar('--pw2-10', this.value)"></div>
+            </div>
+        </div>
+        <p style="font-size: 10px; color: #64748b; margin-top: 10px;">* يمكنك استخدام النسبة المئوية (%) أو البكسل (px). التغييرات تظهر فوراً على الجدول الرئيسي.</p>
+    </div>
 </div>
 
 <!-- Custom Modal Structure -->
@@ -353,7 +538,7 @@
 <div id="loading"><div class="loader"></div><p>جاري المعالجة...</p></div>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbyt6BYluibESyTCSf16EzJ6Udm02RI33e-M5iu6M9-arvsdzKzsxxL0U-kMVawxzTj_/exec";
+    const API = "https://script.google.com/macros/s/AKfycbyab3gshchqfQSSvXJAQ5fnbMjfqvonAZH_cydtu2ozItRS4-2bKJkvxwnZCsloSyx9/exec";
 
     function showModal(type, title, message, onConfirm = null) {
         const overlay = document.getElementById('modalOverlay');
@@ -403,8 +588,12 @@
         }
     }
 
+    function updateCSSVar(name, value) {
+        document.documentElement.style.setProperty(name, value);
+    }
+
     function addRow() {
-        const ids = ['name', 'gender', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
+        const ids = ['name', 'motherName', 'staffType', 'gender', 'birthYear', 'job', 'salary', 'grade', 'college', 'degree', 'specialty', 'gradYear', 'hireDate', 'returnDate', 'maritalStatus', 'status', 'courseParticipation', 'notes'];
         let valid = true;
         const schoolInput = document.getElementById('schoolName');
 
@@ -413,10 +602,32 @@
 
         const vals = ids.map(id => {
             const el = document.getElementById(id);
-            if(!el.value) { el.classList.add('error-border'); valid = false; }
+            // الملاحظات وتاريخ العودة غير مطلوبة
+            if(!el.value && id !== 'notes' && id !== 'returnDate') { el.classList.add('error-border'); valid = false; }
             el.oninput = () => el.classList.remove('error-border');
             return el.value;
         });
+
+        // التحقق من صحة السنوات
+        const currentYear = new Date().getFullYear();
+        const bYear = parseInt(document.getElementById('birthYear').value);
+        const gYear = parseInt(document.getElementById('gradYear').value);
+
+        if (bYear < 1940 || bYear > currentYear) {
+            document.getElementById('birthYear').classList.add('error-border');
+            showModal('warning', 'تنبيه', 'سنة التولد غير منطقية (يجب أن تكون بين 1940 والسنة الحالية).');
+            return;
+        }
+        if (gYear < 1960 || gYear > currentYear) {
+            document.getElementById('gradYear').classList.add('error-border');
+            showModal('warning', 'تنبيه', 'سنة التخرج غير منطقية (يجب أن تكون بين 1960 والسنة الحالية).');
+            return;
+        }
+        if (gYear < bYear + 15) {
+            document.getElementById('gradYear').classList.add('error-border');
+            showModal('warning', 'تنبيه', 'سنة التخرج يجب أن تكون بعد سنة التولد بـ 15 سنة على الأقل.');
+            return;
+        }
 
         if(!valid) { 
             showModal('warning', 'تنبيه', 'يرجى إكمال جميع البيانات المطلوبة.');
@@ -427,18 +638,38 @@
         const emptyRow = document.getElementById('emptyRow');
         if(emptyRow) emptyRow.remove();
 
+        // حساب العمر
+        const birthYear = parseInt(document.getElementById('birthYear').value);
+        const age = currentYear - birthYear;
+
+        // حساب سنوات الخدمة
+        const hireDateVal = document.getElementById('hireDate').value;
+        const serviceYears = hireDateVal ? (currentYear - new Date(hireDateVal).getFullYear()) : 0;
+
         const row = tbody.insertRow();
-        row.innerHTML = `<td class="idx"></td>` + vals.map(v => `<td>${v}</td>`).join('') + 
-            `<td class="no-print">
+        
+        // بناء الصف مع الحقول المحسوبة
+        let rowHTML = `<td class="idx"></td>`;
+        vals.forEach((v, i) => {
+            rowHTML += `<td>${v}</td>`;
+            if (i === 4) rowHTML += `<td>${age}</td>`; // بعد سنة التولد
+            if (i === 12) rowHTML += `<td>${serviceYears}</td>`; // بعد تاريخ التعيين (hireDate at index 12)
+        });
+        
+        rowHTML += `<td class="no-print">
                 <button class="btn edit-btn" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-                <button class="btn delete-btn" onclick="this.closest('tr').remove(); updateIdx(); checkEmpty();"><i class="fas fa-trash"></i></button>
+                <button class="btn delete-btn" onclick="confirmDelete(this)"><i class="fas fa-trash"></i></button>
             </td>`;
+        
+        row.innerHTML = rowHTML;
         updateIdx();
         
         ids.forEach(id => { 
             const el = document.getElementById(id);
             if(el.tagName === "SELECT") el.selectedIndex = 0; else el.value = "";
         });
+
+        showModal('success', 'تمت الإضافة', 'تم إضافة الموظف إلى الجدول بنجاح.');
     }
 
     function updateIdx() { document.querySelectorAll(".idx").forEach((td, i) => td.innerText = i + 1); }
@@ -448,7 +679,7 @@
         if (tbody.rows.length === 0) {
             tbody.innerHTML = `
                 <tr id="emptyRow" class="empty-state-row">
-                    <td colspan="12">
+                    <td colspan="22">
                         <div class="empty-state-content">
                             <i class="fas fa-users-slash"></i>
                             <span>لم يتم إضافة أي موظف بعد...</span>
@@ -461,25 +692,72 @@
     function editRow(btn) {
         const row = btn.closest('tr');
         const isEditing = btn.innerHTML.includes("check");
-        const ids = ['name', 'gender', 'job', 'ageRange', 'degree', 'specialty', 'serviceYears', 'status', 'maritalStatus', 'courses'];
+        const ids = ['name', 'motherName', 'staffType', 'gender', 'birthYear', 'job', 'salary', 'grade', 'college', 'degree', 'specialty', 'gradYear', 'hireDate', 'returnDate', 'maritalStatus', 'status', 'courseParticipation', 'notes'];
+        
+        // فهارس الأعمدة التي تحتوي على مدخلات (تجنب الأعمدة المحسوبة: العمر والخدمة)
+        const inputColIndices = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20];
 
         if (!isEditing) {
             btn.innerHTML = '<i class="fas fa-check"></i>';
             btn.style.background = "var(--success)"; btn.style.color = "white";
-            for (let i = 1; i <= 10; i++) {
-                let currentVal = row.cells[i].innerText;
-                if (i === 1) row.cells[i].innerHTML = `<input type="text" class="table-input" value="${currentVal}">`;
-                else {
-                    let options = document.getElementById(ids[i-1]).innerHTML;
-                    row.cells[i].innerHTML = `<select class="table-input">${options}</select>`;
-                    row.cells[i].querySelector('select').value = currentVal;
+            
+            inputColIndices.forEach((colIdx, i) => {
+                let currentVal = row.cells[colIdx].innerText;
+                // الحقول التي تستخدم input
+                if ([1, 2, 5, 13, 14, 16, 20].includes(colIdx)) {
+                    let type = (colIdx === 5 || colIdx === 13) ? "number" : (colIdx === 14 || colIdx === 16) ? "date" : "text";
+                    row.cells[colIdx].innerHTML = `<input type="${type}" class="table-input" value="${currentVal}">`;
+                } else {
+                    // الحقول التي تستخدم select
+                    let options = document.getElementById(ids[i]).innerHTML;
+                    row.cells[colIdx].innerHTML = `<select class="table-input">${options}</select>`;
+                    row.cells[colIdx].querySelector('select').value = currentVal;
                 }
-            }
+            });
         } else {
+            // التحقق من صحة السنوات عند الحفظ
+            const bYear = parseInt(row.cells[5].querySelector('input, select').value);
+            const gYear = parseInt(row.cells[13].querySelector('input, select').value);
+            const currentYear = new Date().getFullYear();
+
+            if (bYear < 1940 || bYear > currentYear) {
+                row.cells[5].querySelector('input, select').classList.add('error-border');
+                showModal('warning', 'تنبيه', 'سنة التولد غير منطقية (يجب أن تكون بين 1940 والسنة الحالية).');
+                return;
+            }
+            if (gYear < 1960 || gYear > currentYear) {
+                row.cells[13].querySelector('input, select').classList.add('error-border');
+                showModal('warning', 'تنبيه', 'سنة التخرج غير منطقية (يجب أن تكون بين 1960 والسنة الحالية).');
+                return;
+            }
+            if (gYear < bYear + 15) {
+                row.cells[13].querySelector('input, select').classList.add('error-border');
+                showModal('warning', 'تنبيه', 'سنة التخرج يجب أن تكون بعد سنة التولد بـ 15 سنة على الأقل.');
+                return;
+            }
+
             btn.innerHTML = '<i class="fas fa-edit"></i>';
             btn.style.background = ""; btn.style.color = "";
-            for (let i = 1; i <= 10; i++) row.cells[i].innerText = row.cells[i].querySelector('input, select').value;
+            
+            inputColIndices.forEach(colIdx => {
+                row.cells[colIdx].innerText = row.cells[colIdx].querySelector('input, select').value;
+            });
+
+            // إعادة حساب العمر والخدمة بعد التعديل
+            const birthYear = parseInt(row.cells[5].innerText);
+            row.cells[6].innerText = currentYear - birthYear;
+
+            const hireDateVal = row.cells[14].innerText;
+            row.cells[15].innerText = hireDateVal ? (currentYear - new Date(hireDateVal).getFullYear()) : 0;
         }
+    }
+
+    function confirmDelete(btn) {
+        showModal('warning', 'تأكيد الحذف', 'هل أنت متأكد من حذف هذا الموظف من الجدول؟', () => {
+            btn.closest('tr').remove();
+            updateIdx();
+            checkEmpty();
+        });
     }
 
     function confirmSend() {
@@ -502,17 +780,41 @@
         document.getElementById("printSchoolName").innerText = school;
 
         const employees = Array.from(rows).map(r => ({
-            id: r.cells[0].innerText,name: r.cells[1].innerText, gender: r.cells[2].innerText, job: r.cells[3].innerText,
-            age: r.cells[4].innerText, degree: r.cells[5].innerText, specialty: r.cells[6].innerText,
-            service: r.cells[7].innerText, status: r.cells[8].innerText, social: r.cells[9].innerText, 
-            courses: r.cells[10].innerText
+            id: r.cells[0].innerText,
+            name: r.cells[1].innerText,
+            motherName: r.cells[2].innerText,
+            staffType: r.cells[3].innerText,
+            gender: r.cells[4].innerText,
+            birthYear: r.cells[5].innerText,
+            age: r.cells[6].innerText,
+            job: r.cells[7].innerText,
+            salary: r.cells[8].innerText,
+            grade: r.cells[9].innerText,
+            college: r.cells[10].innerText,
+            degree: r.cells[11].innerText,
+            specialty: r.cells[12].innerText,
+            gradYear: r.cells[13].innerText,
+            hireDate: r.cells[14].innerText,
+            serviceYears: r.cells[15].innerText,
+            returnDate: r.cells[16].innerText,
+            maritalStatus: r.cells[17].innerText,
+            status: r.cells[18].innerText,
+            courseParticipation: r.cells[19].innerText,
+            notes: r.cells[20].innerText
         }));
 
         try {
-            await fetch(API, { method: "POST", mode: 'no-cors', body: JSON.stringify({ school, employees }) });
+            // استخدام text/plain مع no-cors لتجنب مشاكل الـ CORS مع Google Apps Script
+            await fetch(API, { 
+                method: "POST", 
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ school, employees }) 
+            });
             
             document.getElementById("sendBtn").style.display = "none";
             document.getElementById("printBtn").style.display = "inline-flex";
+            document.getElementById("printSettings").style.display = "block";
             
             schoolInput.disabled = true;
             schoolInput.style.backgroundColor = "#f1f5f9";
@@ -530,45 +832,164 @@
     }
 
     function prepareAndPrint() {
-        const tbody = document.querySelector("#table tbody");
+        const table = document.getElementById("table");
+        const thead = table.querySelector("thead");
+        const tbody = table.querySelector("tbody");
+        
+        const originalTheadHTML = thead.innerHTML;
         const originalRows = Array.from(tbody.rows); 
 
-        if (originalRows.length === 0) return;
+        if (originalRows.length === 0 || originalRows[0].id === 'emptyRow') return;
 
-        // ترتيب البيانات للطباعة
+        // 1. ترتيب البيانات
         const sortedRows = [...originalRows].sort((a, b) => {
-            const priorityCols = [2, 3, 4, 5, 6, 7, 8, 9, 10]; 
-
+            const priorityCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
             for (let i = 0; i < priorityCols.length; i++) {
                 let colIdx = priorityCols[i];
                 let valA = a.cells[colIdx].innerText.trim();
                 let valB = b.cells[colIdx].innerText.trim();
-                
                 let comparison = valA.localeCompare(valB, 'ar');
-                
-                if (comparison !== 0) {
-                    return comparison;
-                }
+                if (comparison !== 0) return comparison;
             }
             return 0;
         });
 
-        tbody.innerHTML = "";
-        sortedRows.forEach(row => tbody.appendChild(row));
-        updateIdx();
+        // 2. إعادة بناء الجسم للطباعة (كل موظف صفين لضمان الوضوح)
+        const rootStyles = getComputedStyle(document.documentElement);
+        const w1 = [
+            rootStyles.getPropertyValue('--pw-1').trim(), rootStyles.getPropertyValue('--pw-2').trim(), 
+            rootStyles.getPropertyValue('--pw-3').trim(), rootStyles.getPropertyValue('--pw-4').trim(),
+            rootStyles.getPropertyValue('--pw-5').trim(), rootStyles.getPropertyValue('--pw-6').trim(),
+            rootStyles.getPropertyValue('--pw-7').trim(), rootStyles.getPropertyValue('--pw-8').trim(),
+            rootStyles.getPropertyValue('--pw-9').trim(), rootStyles.getPropertyValue('--pw-10').trim()
+        ];
+        const w2 = [
+            rootStyles.getPropertyValue('--pw2-1').trim(), rootStyles.getPropertyValue('--pw2-2').trim(), 
+            rootStyles.getPropertyValue('--pw2-3').trim(), rootStyles.getPropertyValue('--pw2-4').trim(),
+            rootStyles.getPropertyValue('--pw2-5').trim(), rootStyles.getPropertyValue('--pw2-6').trim(),
+            rootStyles.getPropertyValue('--pw2-7').trim(), rootStyles.getPropertyValue('--pw2-8').trim(),
+            rootStyles.getPropertyValue('--pw2-9').trim(), rootStyles.getPropertyValue('--pw2-10').trim()
+        ];
 
-        // إعداد اسم المدرسة للترويسة
+        tbody.innerHTML = "";
+        sortedRows.forEach((row, index) => {
+            const cells = Array.from(row.cells).map(c => c.innerText);
+            
+            const tr1 = document.createElement("tr");
+            tr1.innerHTML = `
+                <td rowspan="2" class="idx-cell">
+                    <span class="print-label" style="border-bottom:none !important; background:none !important; margin:0 !important;">ت</span>
+                    <span class="print-value" style="font-size:12px !important;">${index + 1}</span>
+                </td>
+                <td style="width: ${w1[0]}"><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
+                <td style="width: ${w1[1]}"><span class="print-label">الأم</span><span class="print-value">${cells[2]}</span></td>
+                <td style="width: ${w1[2]}"><span class="print-label">الكادر</span><span class="print-value">${cells[3]}</span></td>
+                <td style="width: ${w1[3]}"><span class="print-label">الجنس</span><span class="print-value">${cells[4]}</span></td>
+                <td style="width: ${w1[4]}"><span class="print-label">التولد</span><span class="print-value">${cells[5]}</span></td>
+                <td style="width: ${w1[5]}"><span class="print-label">العمر</span><span class="print-value">${cells[6]}</span></td>
+                <td style="width: ${w1[6]}"><span class="print-label">الوظيفة</span><span class="print-value">${cells[7]}</span></td>
+                <td style="width: ${w1[7]}"><span class="print-label">الراتب</span><span class="print-value">${cells[8]}</span></td>
+                <td style="width: ${w1[8]}"><span class="print-label">الدرجة</span><span class="print-value">${cells[9]}</span></td>
+                <td style="width: ${w1[9]}"><span class="print-label">الكلية/المعهد</span><span class="print-value">${cells[10]}</span></td>
+            `;
+            
+            const tr2 = document.createElement("tr");
+            tr2.innerHTML = `
+                <td style="width: ${w2[0]}"><span class="print-label">الشهادة</span><span class="print-value">${cells[11]}</span></td>
+                <td style="width: ${w2[1]}"><span class="print-label">الاختصاص</span><span class="print-value">${cells[12]}</span></td>
+                <td style="width: ${w2[2]}"><span class="print-label">التخرج</span><span class="print-value">${cells[13]}</span></td>
+                <td style="width: ${w2[3]}"><span class="print-label">التعيين</span><span class="print-value">${cells[14]}</span></td>
+                <td style="width: ${w2[4]}"><span class="print-label">الخدمة</span><span class="print-value">${cells[15]}</span></td>
+                <td style="width: ${w2[5]}"><span class="print-label">العودة</span><span class="print-value">${cells[16]}</span></td>
+                <td style="width: ${w2[6]}"><span class="print-label">الاجتماعية</span><span class="print-value">${cells[17]}</span></td>
+                <td style="width: ${w2[7]}"><span class="print-label">الحالة</span><span class="print-value">${cells[18]}</span></td>
+                <td style="width: ${w2[8]}"><span class="print-label">(الدورات)</span><span class="print-value">${cells[19]}</span></td>
+                <td style="width: ${w2[9]}"><span class="print-label">الملاحظات</span><span class="print-value">${cells[20]}</span></td>
+            `;
+            
+            tbody.appendChild(tr1);
+            tbody.appendChild(tr2);
+        });
+
+        // إعداد اسم المدرسة
         const schoolName = document.getElementById("schoolName").value || "استمارة";
         document.getElementById("printSchoolName").innerText = schoolName;
         
-        // استدعاء طباعة المتصفح
+        // استدعاء الطباعة
         window.print();
 
-        // استعادة الجدول الأصلي بعد الطباعة
+        // 3. استعادة الوضع الأصلي
+        thead.innerHTML = originalTheadHTML;
         tbody.innerHTML = "";
         originalRows.forEach(row => tbody.appendChild(row));
         updateIdx();
     }
+    // ملء قائمة الراتب تلقائياً وتحديث الرأس
+    window.onload = () => {
+        // تحديث رسالة الترحيب بناءً على الوقت
+        const welcomeEl = document.getElementById('welcomeMessage');
+        const hour = new Date().getHours();
+        let greeting = "أهلاً بك";
+        if (hour < 12) greeting = "صباح الخير";
+        else if (hour < 18) greeting = "طاب يومك";
+        else greeting = "مساء الخير";
+        welcomeEl.innerText = `${greeting} في نظام إدارة الكوادر التعليمية - معاً لبناء أجيال الغد`;
+
+        // تحديث التاريخ
+        const dateEl = document.getElementById('currentDate');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateEl.innerText = new Date().toLocaleDateString('ar-IQ', options);
+
+        // إضافة حكمة اليوم (خاصة بالكوادر التعليمية)
+        const quotes = [
+            "التعليم هو أقوى سلاح يمكنك استخدامه لتغيير العالم.",
+            "المعلم الناجح هو من يوقد في طلابه الرغبة في التعلم.",
+            "التعليم ليس ملء دلو، بل إيقاد شعلة.",
+            "رسالة المعلم هي بناء العقول وصناعة الأجيال.",
+            "الاستثمار في المعرفة يحقق أفضل العوائد.",
+            "المعلمون هم بناة الأمة الحقيقيون.",
+            "من فتح مدرسة، أغلق سجناً."
+        ];
+        const quoteEl = document.getElementById('motivationalQuote');
+        quoteEl.innerText = `💡 حكمة اليوم: ${quotes[Math.floor(Math.random() * quotes.length)]}`;
+
+        const salarySelect = document.getElementById('salary');
+        const gradeSelect = document.getElementById('grade');
+
+        // جدول رواتب موظفي الدولة في العراق (تقريبي للدرجات والخطوات)
+        const salaryScale = [
+            { grade: 1, start: 910000, step: 20000 },
+            { grade: 2, start: 723000, step: 10000 },
+            { grade: 3, start: 600000, step: 8000 },
+            { grade: 4, start: 509000, step: 8000 },
+            { grade: 5, start: 429000, step: 6000 },
+            { grade: 6, start: 362000, step: 6000 },
+            { grade: 7, start: 296000, step: 6000 },
+            { grade: 8, start: 273000, step: 6000 },
+            { grade: 9, start: 210000, step: 3000 },
+            { grade: 10, start: 170000, step: 3000 }
+        ];
+
+        // ملء قائمة الرواتب
+        salaryScale.forEach(item => {
+            for (let step = 0; step < 11; step++) {
+                const salary = item.start + (step * item.step);
+                const opt = document.createElement('option');
+                opt.value = salary;
+                opt.innerText = `${salary.toLocaleString()} (درجة ${item.grade} - مرحلة ${step + 1})`;
+                opt.dataset.grade = item.grade;
+                salarySelect.appendChild(opt);
+            }
+        });
+
+        // تغيير الدرجة تلقائياً عند اختيار الراتب
+        salarySelect.onchange = () => {
+            const selectedOpt = salarySelect.options[salarySelect.selectedIndex];
+            if (selectedOpt.dataset.grade) {
+                gradeSelect.value = selectedOpt.dataset.grade;
+            }
+        };
+    };
 </script>
 
 </body>
