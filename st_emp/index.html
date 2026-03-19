@@ -172,11 +172,11 @@
         /* --- تعديلات الطباعة العرضية LANDSCAPE --- */
         @media print {
             @page { 
-                size: A4 landscape; 
+                size: landscape; 
                 margin: 5mm; 
             }
             
-            body { 
+            html, body { 
                 background: white !important; 
                 padding: 0 !important; 
                 margin: 0 !important; 
@@ -184,15 +184,17 @@
                 print-color-adjust: exact;
                 width: 100%;
                 height: auto;
+                overflow: visible !important;
             }
             
             header, .card, .action-controls, .no-print, .modal-overlay, #overlay, #loading { display: none !important; }
             
             .container { 
-                width: 100% !important; 
+                width: 297mm !important; 
                 max-width: none !important; 
                 margin: 0 !important; 
                 padding: 0 !important; 
+                display: block !important;
             }
             
             .print-only-header { 
@@ -215,8 +217,7 @@
             
             table { 
                 width: 100% !important; 
-                min-width: 0 !important; 
-                max-width: 100% !important;
+                min-width: 280mm !important; 
                 border-collapse: collapse !important;
                 table-layout: fixed !important; 
             }
