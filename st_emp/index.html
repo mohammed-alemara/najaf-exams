@@ -275,7 +275,8 @@
             background: white !important;
             padding: 0 !important;
             margin: 0 !important;
-            font-family: 'Cairo', Arial, sans-serif !important;
+            /* استخدام خطوط النظام العامة لضمان التوافق مع الكانفاس */
+            font-family: sans-serif !important;
         }
 
         .printing html, .printing body {
@@ -285,6 +286,8 @@
             overflow: visible !important;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            direction: rtl !important;
+            text-rendering: optimizeLegibility !important;
         }
 
         .printing header, 
@@ -354,10 +357,12 @@
         .printing th, .printing td { 
             border: 1px solid #000 !important; 
             padding: 4px 1px !important; 
-            font-size: 10px !important; 
+            font-size: 11px !important; 
             color: black !important; 
             word-wrap: break-word; 
             text-align: center; 
+            font-family: sans-serif !important;
+            font-weight: bold !important;
         }
 
         .printing th { background-color: #f0f0f0 !important; }
@@ -676,23 +681,27 @@
         const opt = {
             margin:       0,
             filename:     `${schoolName}.pdf`,
-            image:        { type: 'jpeg', quality: 1.0 },
+            image:        { type: 'png' }, // استخدام PNG لضمان دقة النصوص
             html2canvas:  { 
                 scale: 2, 
                 useCORS: true, 
                 letterRendering: false,
-                allowTaint: true,
-                logging: false
+                allowTaint: false,
+                logging: false,
+                backgroundColor: '#ffffff'
             },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape', compress: true }
         };
 
         try {
+            // التمرير لأعلى الصفحة لضمان التقاط الكانفاس بشكل صحيح
+            window.scrollTo(0, 0);
+            
             // إضافة كلاس الطباعة للجسم
             document.body.classList.add('printing');
             
-            // انتظار أطول لضمان تحميل الخطوط العربية بالكامل
-            await new Promise(resolve => setTimeout(resolve, 1200));
+            // انتظار كافٍ لضمان استقرار الأنماط والخطوط
+            await new Promise(resolve => setTimeout(resolve, 2500));
 
             await html2pdf().set(opt).from(element).save();
             
