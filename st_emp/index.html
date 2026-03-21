@@ -298,13 +298,16 @@
         .width-field input { padding: 6px; font-size: 12px; }
 
         @media print {
-            @page { size: auto; margin: 10mm; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page { size: portrait; margin: 5mm; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
             html, body { width: 100%; height: auto; margin: 0; padding: 0; overflow: visible !important; }
-            body { background: white; font-size: 10pt; }
+            body { background: white; font-size: 9pt; line-height: 1; }
             .container { width: 100% !important; max-width: none !important; padding: 0 !important; box-shadow: none !important; margin: 0 !important; overflow: visible !important; }
-            .no-print, .input-card, .action-controls, thead, header, .print-settings, .modal-overlay, #overlay, #loading { display: none !important; }
+            .no-print, .input-card, .action-controls, header, .print-settings, .modal-overlay, #overlay, #loading { display: none !important; }
             
+            /* إخفاء رأس الجدول الأصلي في الطباعة */
+            thead.no-print-header { display: none !important; }
+
             .table-container { 
                 overflow: visible !important; 
                 background: none !important; 
@@ -317,18 +320,18 @@
 
             table { 
                 width: 100% !important; 
-                min-width: 100% !important;
                 border-collapse: collapse !important; 
                 table-layout: fixed !important;
                 border: 1px solid #000 !important;
                 page-break-inside: auto;
+                margin: 0 !important;
             }
             
             tr { page-break-inside: avoid; page-break-after: auto; }
 
-            td { 
+            td, th { 
                 border: 1px solid #000 !important; 
-                padding: 2px 1px !important; 
+                padding: 0 !important; 
                 vertical-align: middle !important;
                 word-wrap: break-word !important;
                 white-space: normal !important;
@@ -337,32 +340,41 @@
             }
 
             .print-label {
-                display: block !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 font-size: 8px !important;
                 color: #000 !important;
                 border-bottom: 1px solid #000 !important;
-                margin-bottom: 2px !important;
+                margin-bottom: 0 !important;
                 font-weight: bold !important;
-                background: #f1f5f9 !important;
-                padding: 1px 2px !important;
+                background: #e2e8f0 !important;
+                padding: 2px !important;
                 text-align: center !important;
-                line-height: 1.2 !important;
+                line-height: 1 !important;
+                height: 18px !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
             }
 
             .print-value {
-                display: block !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 font-size: 10px !important;
                 font-weight: bold !important;
                 text-align: center !important;
-                padding: 1px 0 !important;
+                padding: 4px 2px !important;
                 line-height: 1.2 !important;
                 word-break: break-word !important;
                 color: #000 !important;
+                min-height: 24px !important;
+                box-sizing: border-box !important;
             }
 
             .idx-cell {
                 width: var(--pw-idx) !important;
-                background: #f1f5f9 !important;
+                background: #f8fafc !important;
                 vertical-align: middle !important;
                 text-align: center !important;
                 border: 1px solid #000 !important;
@@ -373,10 +385,10 @@
             .print-only-header { 
                 display: flex !important; 
                 justify-content: space-between; 
-                align-items: flex-start;
-                margin-bottom: 20px; 
-                border-bottom: 2px solid #000; 
-                padding-bottom: 10px; 
+                align-items: center;
+                margin-bottom: 25px; 
+                border-bottom: 3px double #000; 
+                padding-bottom: 15px; 
                 width: 100%;
             }
             .header-right { text-align: right; font-weight: bold; font-size: 13px; width: 50%; }
@@ -502,13 +514,13 @@
 
     <div class="table-container">
         <table id="table">
-            <thead>
+            <thead id="mainThead">
                 <tr>
                     <th>ت</th><th>الاسم</th><th>الأم</th><th>الكادر</th><th>الجنس</th><th>التولد</th><th>العمر</th><th>الوظيفة</th><th>الراتب</th><th>الدرجة</th><th>الكلية</th><th>الشهادة</th><th>الاختصاص</th><th>التخرج</th><th>التعيين</th><th>الخدمة</th><th>العودة</th><th>الاجتماعية</th><th>الحالة</th><th>الدورات</th><th>الملاحظات</th>
                     <th class="no-print">الإجراءات</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="mainTbody">
                 <tr id="emptyRow" class="empty-state-row">
                     <td colspan="22">
                         <div class="empty-state-content">
@@ -889,29 +901,25 @@
 
     function prepareAndPrint() {
         const table = document.getElementById("table");
-        const thead = table.querySelector("thead");
-        const tbody = table.querySelector("tbody");
+        const thead = document.getElementById("mainThead");
+        const tbody = document.getElementById("mainTbody");
         
         const originalTheadHTML = thead.innerHTML;
+        const originalTbodyHTML = tbody.innerHTML;
         const originalRows = Array.from(tbody.rows); 
 
         if (originalRows.length === 0 || originalRows[0].id === 'emptyRow') return;
 
         // 1. ترتيب البيانات
         const sortedRows = [...originalRows].sort((a, b) => {
-            const priorityCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
-            for (let i = 0; i < priorityCols.length; i++) {
-                let colIdx = priorityCols[i];
-                let valA = a.cells[colIdx].innerText.trim();
-                let valB = b.cells[colIdx].innerText.trim();
-                let comparison = valA.localeCompare(valB, 'ar');
-                if (comparison !== 0) return comparison;
-            }
-            return 0;
+            const valA = a.cells[1].innerText.trim();
+            const valB = b.cells[1].innerText.trim();
+            return valA.localeCompare(valB, 'ar');
         });
 
-        // 2. إعادة بناء الجسم للطباعة (كل موظف صفين لضمان الوضوح)
+        // 2. الحصول على العروض
         const rootStyles = getComputedStyle(document.documentElement);
+        const pwIdx = rootStyles.getPropertyValue('--pw-idx').trim();
         const pw = [
             rootStyles.getPropertyValue('--pw-1').trim(), rootStyles.getPropertyValue('--pw-2').trim(), 
             rootStyles.getPropertyValue('--pw-3').trim(), rootStyles.getPropertyValue('--pw-4').trim(),
@@ -920,6 +928,15 @@
             rootStyles.getPropertyValue('--pw-9').trim(), rootStyles.getPropertyValue('--pw-10').trim()
         ];
 
+        // 3. تحديث الهيكل للطباعة
+        thead.classList.add('no-print-header'); // إخفاء الرأس الأصلي
+        
+        // إضافة colgroup لضمان ثبات العرض في الطباعة
+        let colgroup = document.createElement('colgroup');
+        colgroup.className = 'print-colgroup';
+        colgroup.innerHTML = `<col style="width: ${pwIdx}"><col style="width: ${pw[0]}"><col style="width: ${pw[1]}"><col style="width: ${pw[2]}"><col style="width: ${pw[3]}"><col style="width: ${pw[4]}"><col style="width: ${pw[5]}"><col style="width: ${pw[6]}"><col style="width: ${pw[7]}"><col style="width: ${pw[8]}"><col style="width: ${pw[9]}">`;
+        table.insertBefore(colgroup, thead);
+
         tbody.innerHTML = "";
         sortedRows.forEach((row, index) => {
             const cells = Array.from(row.cells).map(c => c.innerText);
@@ -927,33 +944,33 @@
             const tr1 = document.createElement("tr");
             tr1.innerHTML = `
                 <td rowspan="2" class="idx-cell">
-                    <span class="print-label" style="border-bottom:none !important; background:none !important; margin:0 !important;">ت</span>
-                    <span class="print-value" style="font-size:12px !important;">${index + 1}</span>
+                    <div style="font-size: 8px; border-bottom: 1px solid #000; background: #e2e8f0; padding: 2px; font-weight: bold;">ت</div>
+                    <div style="font-size: 14px; padding: 5px 0;">${index + 1}</div>
                 </td>
-                <td style="width: ${pw[0]}"><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
-                <td style="width: ${pw[1]}"><span class="print-label">الأم</span><span class="print-value">${cells[2]}</span></td>
-                <td style="width: ${pw[2]}"><span class="print-label">الكادر</span><span class="print-value">${cells[3]}</span></td>
-                <td style="width: ${pw[3]}"><span class="print-label">الجنس</span><span class="print-value">${cells[4]}</span></td>
-                <td style="width: ${pw[4]}"><span class="print-label">التولد</span><span class="print-value">${cells[5]}</span></td>
-                <td style="width: ${pw[5]}"><span class="print-label">العمر</span><span class="print-value">${cells[6]}</span></td>
-                <td style="width: ${pw[6]}"><span class="print-label">الوظيفة</span><span class="print-value">${cells[7]}</span></td>
-                <td style="width: ${pw[7]}"><span class="print-label">الراتب</span><span class="print-value">${cells[8]}</span></td>
-                <td style="width: ${pw[8]}"><span class="print-label">الدرجة</span><span class="print-value">${cells[9]}</span></td>
-                <td style="width: ${pw[9]}"><span class="print-label">الكلية/المعهد</span><span class="print-value">${cells[10]}</span></td>
+                <td><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
+                <td><span class="print-label">الأم</span><span class="print-value">${cells[2]}</span></td>
+                <td><span class="print-label">الكادر</span><span class="print-value">${cells[3]}</span></td>
+                <td><span class="print-label">الجنس</span><span class="print-value">${cells[4]}</span></td>
+                <td><span class="print-label">التولد</span><span class="print-value">${cells[5]}</span></td>
+                <td><span class="print-label">العمر</span><span class="print-value">${cells[6]}</span></td>
+                <td><span class="print-label">الوظيفة</span><span class="print-value">${cells[7]}</span></td>
+                <td><span class="print-label">الراتب</span><span class="print-value">${cells[8]}</span></td>
+                <td><span class="print-label">الدرجة</span><span class="print-value">${cells[9]}</span></td>
+                <td><span class="print-label">الكلية/المعهد</span><span class="print-value">${cells[10]}</span></td>
             `;
             
             const tr2 = document.createElement("tr");
             tr2.innerHTML = `
-                <td style="width: ${pw[0]}"><span class="print-label">الشهادة</span><span class="print-value">${cells[11]}</span></td>
-                <td style="width: ${pw[1]}"><span class="print-label">الاختصاص</span><span class="print-value">${cells[12]}</span></td>
-                <td style="width: ${pw[2]}"><span class="print-label">التخرج</span><span class="print-value">${cells[13]}</span></td>
-                <td style="width: ${pw[3]}"><span class="print-label">التعيين</span><span class="print-value">${cells[14]}</span></td>
-                <td style="width: ${pw[4]}"><span class="print-label">الخدمة</span><span class="print-value">${cells[15]}</span></td>
-                <td style="width: ${pw[5]}"><span class="print-label">العودة</span><span class="print-value">${cells[16]}</span></td>
-                <td style="width: ${pw[6]}"><span class="print-label">الاجتماعية</span><span class="print-value">${cells[17]}</span></td>
-                <td style="width: ${pw[7]}"><span class="print-label">الحالة</span><span class="print-value">${cells[18]}</span></td>
-                <td style="width: ${pw[8]}"><span class="print-label">(الدورات)</span><span class="print-value">${cells[19]}</span></td>
-                <td style="width: ${pw[9]}"><span class="print-label">الملاحظات</span><span class="print-value">${cells[20]}</span></td>
+                <td><span class="print-label">الشهادة</span><span class="print-value">${cells[11]}</span></td>
+                <td><span class="print-label">الاختصاص</span><span class="print-value">${cells[12]}</span></td>
+                <td><span class="print-label">التخرج</span><span class="print-value">${cells[13]}</span></td>
+                <td><span class="print-label">التعيين</span><span class="print-value">${cells[14]}</span></td>
+                <td><span class="print-label">الخدمة</span><span class="print-value">${cells[15]}</span></td>
+                <td><span class="print-label">العودة</span><span class="print-value">${cells[16]}</span></td>
+                <td><span class="print-label">الاجتماعية</span><span class="print-value">${cells[17]}</span></td>
+                <td><span class="print-label">الحالة</span><span class="print-value">${cells[18]}</span></td>
+                <td><span class="print-label">(الدورات)</span><span class="print-value">${cells[19]}</span></td>
+                <td><span class="print-label">الملاحظات</span><span class="print-value">${cells[20]}</span></td>
             `;
             
             tbody.appendChild(tr1);
@@ -964,15 +981,16 @@
         const schoolName = document.getElementById("schoolName").value || "استمارة";
         document.getElementById("printSchoolName").innerText = schoolName;
         
-        // استدعاء الطباعة مع تأخير بسيط لضمان تحديث الـ DOM في المتصفحات المحمولة
+        // استدعاء الطباعة
         setTimeout(() => {
             window.print();
             
-            // استعادة الوضع الأصلي بعد إغلاق نافذة الطباعة
             const restore = () => {
+                thead.classList.remove('no-print-header');
+                const cg = table.querySelector('.print-colgroup');
+                if(cg) cg.remove();
                 thead.innerHTML = originalTheadHTML;
-                tbody.innerHTML = "";
-                originalRows.forEach(row => tbody.appendChild(row));
+                tbody.innerHTML = originalTbodyHTML;
                 updateIdx();
                 window.onafterprint = null;
             };
@@ -980,9 +998,9 @@
             if ('onafterprint' in window) {
                 window.onafterprint = restore;
             } else {
-                setTimeout(restore, 1000);
+                setTimeout(restore, 1500);
             }
-        }, 1000);
+        }, 1500);
     }
     // ملء قائمة الراتب تلقائياً وتحديث الرأس
     window.onload = () => {
