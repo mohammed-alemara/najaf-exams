@@ -6,6 +6,7 @@
     <title>استمارة الملاكات</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root {
@@ -542,7 +543,7 @@
 
     <div class="action-controls">
         <button id="sendBtn" class="btn" onclick="confirmSend()"><i class="fas fa-cloud-upload-alt"></i> حفظ البيانات وإرسالها</button>
-        <button id="printBtn" class="btn" onclick="prepareAndPrint()"><i class="fas fa-print"></i> طباعة الاستمارة</button>
+        <button id="printBtn" class="btn" onclick="exportToPDF()"><i class="fas fa-file-pdf"></i> تصدير كـ PDF</button>
     </div>
 
     <div id="printSettings" class="print-settings no-print">
@@ -930,7 +931,17 @@
         }
     }
 
-    function prepareAndPrint() {
+    function showLoading() {
+        document.getElementById("loading").style.display = "flex";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function hideLoading() {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    async function exportToPDF() {
         const table = document.getElementById("table");
         const thead = table.querySelector("thead");
         const tbody = table.querySelector("tbody");
@@ -938,87 +949,101 @@
         const originalTheadHTML = thead.innerHTML;
         const originalRows = Array.from(tbody.rows); 
 
-        if (originalRows.length === 0 || originalRows[0].id === 'emptyRow') return;
+        if (originalRows.length === 0 || originalRows[0].id === 'emptyRow') {
+            showModal("warning", "تنبيه", "لا توجد بيانات لتصديرها.");
+            return;
+        }
 
-        // 1. ترتيب البيانات
-        const sortedRows = [...originalRows].sort((a, b) => {
-            const priorityCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
-            for (let i = 0; i < priorityCols.length; i++) {
-                let colIdx = priorityCols[i];
-                let valA = a.cells[colIdx].innerText.trim();
-                let valB = b.cells[colIdx].innerText.trim();
-                let comparison = valA.localeCompare(valB, 'ar');
-                if (comparison !== 0) return comparison;
-            }
-            return 0;
-        });
+        showLoading();
 
-        // 2. إعادة بناء الجسم للطباعة (صف واحد لكل موظف)
-        const rootStyles = getComputedStyle(document.documentElement);
-        const pw = [
-            rootStyles.getPropertyValue('--pw-1').trim(), rootStyles.getPropertyValue('--pw-2').trim(), 
-            rootStyles.getPropertyValue('--pw-3').trim(), rootStyles.getPropertyValue('--pw-4').trim(),
-            rootStyles.getPropertyValue('--pw-5').trim(), rootStyles.getPropertyValue('--pw-6').trim(),
-            rootStyles.getPropertyValue('--pw-7').trim(), rootStyles.getPropertyValue('--pw-8').trim(),
-            rootStyles.getPropertyValue('--pw-9').trim(), rootStyles.getPropertyValue('--pw-10').trim()
-        ];
+        try {
+            // 1. ترتيب البيانات
+            const sortedRows = [...originalRows].sort((a, b) => {
+                const priorityCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
+                for (let i = 0; i < priorityCols.length; i++) {
+                    let colIdx = priorityCols[i];
+                    let valA = a.cells[colIdx].innerText.trim();
+                    let valB = b.cells[colIdx].innerText.trim();
+                    let comparison = valA.localeCompare(valB, 'ar');
+                    if (comparison !== 0) return comparison;
+                }
+                return 0;
+            });
 
-        tbody.innerHTML = "";
-        thead.innerHTML = `
-            <tr>
-                <th style="width: 3%">ت</th>
-                <th style="width: ${pw[0]}">الاسم الثلاثي</th>
-                <th style="width: ${pw[1]}">الجنس</th>
-                <th style="width: ${pw[2]}">تصنيف العمر</th>
-                <th style="width: ${pw[3]}">العنوان الوظيفي</th>
-                <th style="width: ${pw[4]}">الشهادة</th>
-                <th style="width: ${pw[5]}">الاختصاص</th>
-                <th style="width: ${pw[6]}">تصنيف الخدمة</th>
-                <th style="width: ${pw[7]}">الحالة الاجتماعية</th>
-                <th style="width: ${pw[8]}">الحالة الوظيفية</th>
-                <th style="width: ${pw[9]}">الدورات</th>
-            </tr>
-        `;
-        sortedRows.forEach((row, index) => {
-            const cells = Array.from(row.cells).map(c => c.innerText);
-            
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td class="idx-cell">
-                    <span class="print-value" style="font-size:10px !important;">${index + 1}</span>
-                </td>
-                <td style="width: ${pw[0]}"><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
-                <td style="width: ${pw[1]}"><span class="print-label">الجنس</span><span class="print-value">${cells[4]}</span></td>
-                <td style="width: ${pw[2]}"><span class="print-label">تصنيف العمر</span><span class="print-value">${cells[7]}</span></td>
-                <td style="width: ${pw[3]}"><span class="print-label">العنوان الوظيفي</span><span class="print-value">${cells[8]}</span></td>
-                <td style="width: ${pw[4]}"><span class="print-label">الشهادة</span><span class="print-value">${cells[12]}</span></td>
-                <td style="width: ${pw[5]}"><span class="print-label">الاختصاص</span><span class="print-value">${cells[13]}</span></td>
-                <td style="width: ${pw[6]}"><span class="print-label">تصنيف الخدمة</span><span class="print-value">${cells[17]}</span></td>
-                <td style="width: ${pw[7]}"><span class="print-label">الحالة الاجتماعية</span><span class="print-value">${cells[19]}</span></td>
-                <td style="width: ${pw[8]}"><span class="print-label">الحالة الوظيفية</span><span class="print-value">${cells[20]}</span></td>
-                <td style="width: ${pw[9]}"><span class="print-label">الدورات</span><span class="print-value">${cells[21]}</span></td>
+            // 2. إعداد العرض للطباعة
+            const rootStyles = getComputedStyle(document.documentElement);
+            const pw = [
+                rootStyles.getPropertyValue('--pw-1').trim(), rootStyles.getPropertyValue('--pw-2').trim(), 
+                rootStyles.getPropertyValue('--pw-3').trim(), rootStyles.getPropertyValue('--pw-4').trim(),
+                rootStyles.getPropertyValue('--pw-5').trim(), rootStyles.getPropertyValue('--pw-6').trim(),
+                rootStyles.getPropertyValue('--pw-7').trim(), rootStyles.getPropertyValue('--pw-8').trim(),
+                rootStyles.getPropertyValue('--pw-9').trim(), rootStyles.getPropertyValue('--pw-10').trim()
+            ];
+
+            tbody.innerHTML = "";
+            thead.innerHTML = `
+                <tr>
+                    <th style="width: 3%">ت</th>
+                    <th style="width: ${pw[0]}">الاسم الثلاثي</th>
+                    <th style="width: ${pw[1]}">الجنس</th>
+                    <th style="width: ${pw[2]}">تصنيف العمر</th>
+                    <th style="width: ${pw[3]}">العنوان الوظيفي</th>
+                    <th style="width: ${pw[4]}">الشهادة</th>
+                    <th style="width: ${pw[5]}">الاختصاص</th>
+                    <th style="width: ${pw[6]}">تصنيف الخدمة</th>
+                    <th style="width: ${pw[7]}">الحالة الاجتماعية</th>
+                    <th style="width: ${pw[8]}">الحالة الوظيفية</th>
+                    <th style="width: ${pw[9]}">الدورات</th>
+                </tr>
             `;
-            
-            tbody.appendChild(tr);
-        });
 
-        // إعداد اسم المدرسة
-        const schoolName = document.getElementById("schoolName").value || "استمارة";
-        document.getElementById("printSchoolName").innerText = schoolName;
-        
-        // استدعاء الطباعة مع تأخير بسيط لضمان تحديث الـ DOM في المتصفحات المحمولة
-        setTimeout(() => {
-            window.print();
-            
-            // استعادة الوضع الأصلي بعد إغلاق نافذة الطباعة
-            // نستخدم setTimeout إضافي لضمان أن المتصفح انتهى من معالجة الطباعة
-            setTimeout(() => {
-                thead.innerHTML = originalTheadHTML;
-                tbody.innerHTML = "";
-                originalRows.forEach(row => tbody.appendChild(row));
-                updateIdx();
-            }, 500);
-        }, 500);
+            sortedRows.forEach((row, index) => {
+                const cells = Array.from(row.cells).map(c => c.innerText);
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="idx-cell"><span class="print-value" style="font-size:10px !important;">${index + 1}</span></td>
+                    <td style="width: ${pw[0]}"><span class="print-value">${cells[1]}</span></td>
+                    <td style="width: ${pw[1]}"><span class="print-value">${cells[4]}</span></td>
+                    <td style="width: ${pw[2]}"><span class="print-value">${cells[7]}</span></td>
+                    <td style="width: ${pw[3]}"><span class="print-value">${cells[8]}</span></td>
+                    <td style="width: ${pw[4]}"><span class="print-value">${cells[12]}</span></td>
+                    <td style="width: ${pw[5]}"><span class="print-value">${cells[13]}</span></td>
+                    <td style="width: ${pw[6]}"><span class="print-value">${cells[17]}</span></td>
+                    <td style="width: ${pw[7]}"><span class="print-value">${cells[19]}</span></td>
+                    <td style="width: ${pw[8]}"><span class="print-value">${cells[20]}</span></td>
+                    <td style="width: ${pw[9]}"><span class="print-value">${cells[21]}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const schoolName = document.getElementById("schoolName").value || "استمارة";
+            document.getElementById("printSchoolName").innerText = schoolName;
+
+            // 3. إعداد خيارات html2pdf
+            const element = document.querySelector('.container');
+            const opt = {
+                margin:       [10, 5, 10, 5],
+                filename:     `${schoolName}_احصاء.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            // 4. توليد الـ PDF
+            await html2pdf().set(opt).from(element).save();
+
+        } catch (error) {
+            console.error("PDF Export Error:", error);
+            showModal("error", "خطأ", "حدث خطأ أثناء تصدير ملف PDF.");
+        } finally {
+            // 5. استعادة الجدول الأصلي
+            thead.innerHTML = originalTheadHTML;
+            tbody.innerHTML = "";
+            originalRows.forEach(row => tbody.appendChild(row));
+            updateIdx();
+            hideLoading();
+        }
     }
     // ملء قائمة الراتب تلقائياً وتحديث الرأس
     window.onload = () => {
