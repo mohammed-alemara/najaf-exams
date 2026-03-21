@@ -179,9 +179,9 @@
         }
 
         #addBtn { background: var(--success); color: white; width: 100%; margin-top: 10px; }
-        .action-controls { display: flex; gap: 15px; margin-top: 30px; }
-        #sendBtn { background: var(--primary); color: white; flex: 2; font-size: 18px; padding: 15px; }
-        #printBtn { background: #475569; color: white; flex: 1; font-size: 18px; padding: 15px; display: none; }
+        .action-controls { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
+        #sendBtn { background: var(--primary); color: white; width: auto; font-size: 18px; padding: 15px 30px; }
+        #printBtn { background: #475569; color: white; width: auto; font-size: 18px; padding: 15px 25px; display: none; }
 
         .table-container {
             overflow-x: auto; background: white; border-radius: 12px;
@@ -269,20 +269,30 @@
 
         .print-only-header { 
             justify-content: space-between; 
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 10px; 
             border-bottom: 1.5px solid #000; 
             padding-bottom: 5px; 
             direction: rtl;
             width: 100%;
         }
-        .header-right { text-align: right; font-weight: bold; font-size: 11px; width: 48%; }
-        .header-left { text-align: left; font-weight: bold; font-size: 10px; line-height: 1.3; width: 48%; }
+        .header-right { text-align: right; font-weight: bold; font-size: 11px; width: 35%; }
+        .header-center { text-align: center; width: 25%; display: flex; justify-content: center; align-items: center; }
+        .header-left { text-align: left; font-weight: bold; font-size: 10px; line-height: 1.3; width: 35%; }
+        .header-logo { max-width: 100%; height: 60px; object-fit: contain; }
         
         .print-footer { margin-top: 20px; width: 100%; direction: rtl; }
         .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; width: 100%; }
         .footer-right { text-align: right; width: 48%; }
         .footer-left { text-align: left; width: 48%; }
+
+        .main-logo {
+            max-width: 200px;
+            height: 80px;
+            margin-bottom: 5px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
 
         /* Custom Modal Styles */
         .modal-overlay {
@@ -393,6 +403,30 @@
         #loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; text-align: center; color: white; }
         .loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .main-footer {
+            margin-top: 60px;
+            padding: 25px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 13px;
+        }
+        .footer-content p {
+            margin: 0;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .footer-content p::before, .footer-content p::after {
+            content: "";
+            height: 1px;
+            width: 30px;
+            background: #cbd5e1;
+        }
     </style>
 </head>
 <body>
@@ -400,8 +434,8 @@
 <div class="container">
     <header class="no-print">
         <div class="header-content">
+            <img src="images/Logo big.png" alt="Logo" class="main-logo">
             <h2><i class="fas fa-users-cog"></i> قسم التخطيط التربوي / شعبة الاحصاء</h2>
-            <div id="welcomeMessage" class="welcome-msg">أهلاً بك في نظام إدارة الموظفين</div>
             <div id="currentDate" class="current-date"></div>
             <div id="motivationalQuote" class="quote-msg"></div>
         </div>
@@ -419,10 +453,10 @@
             <div class="input-field"><label>نوع الكادر</label><select id="staffType"><option value="" disabled selected>اختر...</option><option>تدريسي</option><option>وظيفي</option></select></div>
             <div class="input-field"><label>الجنس</label><select id="gender"><option value="" disabled selected>اختر...</option><option>ذكر</option><option>انثى</option></select></div>
             <div class="input-field"><label>سنة التولد</label><input type="number" id="birthYear" placeholder="مثلاً: 1985"></div>
-            <div class="input-field" style="display: none;"><label>تصنيف العمر</label><select id="ageClass"><option value="" disabled selected>اختر...</option><option>اقل من 30</option><option>من 30 الى 39</option><option>من 40 الى 49</option><option>من 50 الى 59</option><option>60 فاكثر</option></select></div>
+            <div class="input-field" style="display: none;"><label>الفئة العمرية</label><select id="ageClass"><option value="" disabled selected>اختر...</option><option>اقل من 30</option><option>من 30 الى 39</option><option>من 40 الى 49</option><option>من 50 الى 59</option><option>60 فاكثر</option></select></div>
             <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معلم</option><option>مرشد</option></select></div>
             <div class="input-field"><label>الراتب الاسمي</label><select id="salary"><option value="" disabled selected>اختر...</option></select></div>
-            <div class="input-field"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+            <div class="input-field" style="display: none;"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
             <div class="input-field"><label>الكلية او المعهد</label><select id="college">
                 <option value="" disabled selected>اختر...</option>
                 <optgroup label="الجامعات الحكومية">
@@ -503,6 +537,7 @@
 
     <div class="print-only-header">
         <div class="header-right">اسم المدرسة: <span id="printSchoolName"></span></div>
+        <div class="header-center"><img src="images/Logo big.png" alt="Logo" class="header-logo"></div>
         <div class="header-left">المديرية العامة للتربية في محافظة النجف الأشرف<br>قسم التخطيط التربوي/شعبة الاحصاء</div>
     </div>
 
@@ -510,7 +545,7 @@
         <table id="table">
             <thead>
                 <tr>
-                    <th>ت</th><th>الاسم</th><th>الأم</th><th>الكادر</th><th>الجنس</th><th>التولد</th><th>العمر</th><th>تصنيف العمر</th><th>الوظيفة</th><th>الراتب</th><th>الدرجة</th><th>الكلية</th><th>الشهادة</th><th>الاختصاص</th><th>التخرج</th><th>التعيين</th><th>الخدمة</th><th>تصنيف الخدمة</th><th>العودة</th><th>الاجتماعية</th><th>الحالة</th><th>الدورات</th><th>الملاحظات</th>
+                    <th>ت</th><th>الاسم</th><th>الأم</th><th>الكادر</th><th>الجنس</th><th>التولد</th><th>العمر</th><th>الفئة العمرية</th><th>الوظيفة</th><th>الراتب</th><th>الدرجة</th><th>الكلية</th><th>الشهادة</th><th>الاختصاص</th><th>التخرج</th><th>التعيين</th><th>الخدمة</th><th>تصنيف الخدمة</th><th>العودة</th><th>الاجتماعية</th><th>الحالة</th><th>الدورات</th><th>الملاحظات</th>
                     <th class="no-print">الإجراءات</th>
                 </tr>
             </thead>
@@ -541,6 +576,12 @@
     </div>
 
     <div id="printSettings" class="print-settings" style="display: none;"></div>
+
+    <footer class="main-footer no-print">
+        <div class="footer-content">
+            <p>مصمم الموقع : م.م محمد مصطفى الامارة</p>
+        </div>
+    </footer>
 </div>
 
 <!-- Custom Modal Structure -->
@@ -731,7 +772,7 @@
         const isEditing = btn.innerHTML.includes("check");
         const ids = ['name', 'motherName', 'staffType', 'gender', 'birthYear', 'job', 'salary', 'grade', 'college', 'degree', 'specialty', 'gradYear', 'hireDate', 'returnDate', 'maritalStatus', 'status', 'courseParticipation', 'notes'];
         
-        // فهارس الأعمدة التي تحتوي على مدخلات (تجنب الأعمدة المحسوبة: العمر وتصنيف العمر والخدمة وتصنيف الخدمة)
+        // فهارس الأعمدة التي تحتوي على مدخلات (تجنب الأعمدة المحسوبة: العمر والفئة العمرية والخدمة وتصنيف الخدمة)
         const inputColIndices = [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22];
 
         if (!isEditing) {
@@ -952,7 +993,7 @@
                     <th style="width: 3%; ${thStyle}">ت</th>
                     <th style="width: ${pw[0]}; ${thStyle}">الاسم الثلاثي</th>
                     <th style="width: ${pw[1]}; ${thStyle}">الجنس</th>
-                    <th style="width: ${pw[2]}; ${thStyle}">تصنيف العمر</th>
+                    <th style="width: ${pw[2]}; ${thStyle}">الفئة العمرية</th>
                     <th style="width: ${pw[3]}; ${thStyle}">العنوان الوظيفي</th>
                     <th style="width: ${pw[4]}; ${thStyle}">الشهادة</th>
                     <th style="width: ${pw[5]}; ${thStyle}">الاختصاص</th>
@@ -1066,15 +1107,6 @@
     }
     // ملء قائمة الراتب تلقائياً وتحديث الرأس
     window.onload = () => {
-        // تحديث رسالة الترحيب بناءً على الوقت
-        const welcomeEl = document.getElementById('welcomeMessage');
-        const hour = new Date().getHours();
-        let greeting = "أهلاً بك";
-        if (hour < 12) greeting = "صباح الخير";
-        else if (hour < 18) greeting = "طاب يومك";
-        else greeting = "مساء الخير";
-        welcomeEl.innerText = `${greeting} في نظام إدارة الكوادر التعليمية - معاً لبناء أجيال الغد`;
-
         // تحديث التاريخ
         const dateEl = document.getElementById('currentDate');
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
