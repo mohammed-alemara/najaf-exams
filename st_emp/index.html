@@ -301,11 +301,18 @@
             @page { size: portrait; margin: 5mm; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
             html, body { width: 100%; height: auto !important; margin: 0; padding: 0; overflow: visible !important; }
-            body { background: white; font-size: 9pt; line-height: 1.1; color: #000; }
+            body { background: white !important; font-size: 9pt; line-height: 1.1; color: #000 !important; }
             
             /* إخفاء كل شيء ما عدا حاوية الطباعة */
             body > *:not(#printContainer) { display: none !important; }
-            #printContainer { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            #printContainer { 
+                display: block !important; 
+                width: 100% !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
 
             .print-table { 
                 width: 100% !important; 
@@ -332,15 +339,15 @@
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                font-size: 9px !important;
+                font-size: 9.5px !important;
                 color: #000 !important;
                 border-bottom: 1px solid #000 !important;
                 font-weight: bold !important;
-                background: #d1d5db !important; /* لون رمادي احترافي */
+                background: #f1f5f9 !important; /* لون رمادي فاتح جداً واحترافي */
                 padding: 4px !important;
                 text-align: center !important;
                 line-height: 1 !important;
-                height: 22px !important;
+                height: 24px !important; /* ارتفاع ثابت وموحد لجميع الرؤوس */
                 box-sizing: border-box !important;
                 width: 100% !important;
             }
@@ -349,19 +356,19 @@
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                font-size: 11px !important;
+                font-size: 11.5px !important;
                 font-weight: bold !important;
                 text-align: center !important;
-                padding: 6px 3px !important;
+                padding: 8px 4px !important; /* زيادة الحشو لزيادة ارتفاع الصف */
                 line-height: 1.2 !important;
                 word-break: break-word !important;
                 color: #000 !important;
-                min-height: 30px !important;
+                min-height: 38px !important; /* زيادة الارتفاع الأدنى لصفوف المعلومات */
                 box-sizing: border-box !important;
             }
 
             .idx-cell {
-                background: #f3f4f6 !important;
+                background: #f8fafc !important;
                 vertical-align: middle !important;
                 text-align: center !important;
                 border: 1.5px solid #000 !important;
@@ -403,6 +410,8 @@
     </style>
 </head>
 <body>
+
+<div id="printContainer"></div>
 
 <div class="container">
     <header class="no-print">
@@ -962,8 +971,8 @@
             html += `
                 <tr>
                     <td rowspan="2" class="idx-cell">
-                        <div style="font-size: 8.5px; border-bottom: 1px solid #000; background: #cbd5e1; padding: 3px; font-weight: bold;">ت</div>
-                        <div style="font-size: 15px; padding: 6px 0;">${index + 1}</div>
+                        <div style="font-size: 9.5px; border-bottom: 1px solid #000; background: #f1f5f9; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold;">ت</div>
+                        <div style="font-size: 16px; padding: 8px 0;">${index + 1}</div>
                     </td>
                     <td><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
                     <td><span class="print-label">الأم</span><span class="print-value">${cells[2]}</span></td>
@@ -1009,18 +1018,20 @@
         setTimeout(() => {
             window.print();
             
-            // تنظيف الحاوية بعد الطباعة (اختياري)
+            // تنظيف الحاوية بعد الطباعة (تأخير إضافي للهواتف)
             const restore = () => {
-                printContainer.innerHTML = "";
-                window.onafterprint = null;
+                setTimeout(() => {
+                    printContainer.innerHTML = "";
+                    window.onafterprint = null;
+                }, 2000); // تأخير التنظيف لضمان انتهاء توليد الـ PDF
             };
 
             if ('onafterprint' in window) {
                 window.onafterprint = restore;
             } else {
-                setTimeout(restore, 1000);
+                setTimeout(restore, 2000);
             }
-        }, 1000);
+        }, 2000); // زيادة وقت الانتظار قبل الطباعة لضمان استقرار الـ DOM
     }
     // ملء قائمة الراتب تلقائياً وتحديث الرأس
     window.onload = () => {
@@ -1090,7 +1101,6 @@
     };
 </script>
 
-    <div id="printContainer"></div>
 </body>
 </html>
 
