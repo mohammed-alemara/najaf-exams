@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استمارة الملاكات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
@@ -46,7 +46,7 @@
 
             /* عرض أعمدة الطباعة (10 أعمدة لكل صف - صف واحد للموظف) */
             --pw-idx: 3%;
-            --pw-1: 15%; --pw-2: 7%; --pw-3: 10%; --pw-4: 10%; --pw-5: 10%; --pw-6: 10%; --pw-7: 10%; --pw-8: 10%; --pw-9: 10%; --pw-10: 5%;
+            --pw-1: 18%; --pw-2: 6%; --pw-3: 9%; --pw-4: 9%; --pw-5: 9%; --pw-6: 10%; --pw-7: 10%; --pw-8: 9%; --pw-9: 9%; --pw-10: 8%;
         }
 
         body { 
@@ -218,8 +218,25 @@
         #table th:nth-child(23), #table td:nth-child(23) { width: var(--w-notes); min-width: var(--w-notes); white-space: normal; }
         #table th:nth-child(24), #table td:nth-child(24) { width: 100px; min-width: 100px; }
 
-        th { background: #f1f5f9; color: #475569; padding: 12px 8px; font-size: 12px; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
-        td { padding: 10px 8px; border-bottom: 1px solid #f1f5f9; font-size: 12px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        th { 
+            background: #f1f5f9; 
+            color: #475569; 
+            padding: 12px 8px; 
+            font-size: 12px; 
+            border: 1px solid #cbd5e1; 
+            white-space: normal; 
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        td { 
+            padding: 10px 8px; 
+            border: 1px solid #e2e8f0; 
+            font-size: 12px; 
+            text-align: center; 
+            white-space: normal; 
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
         .edit-btn { background: #fef3c7; color: #92400e; padding: 5px 10px; font-size: 12px; }
         .delete-btn { background: #fee2e2; color: #991b1b; padding: 5px 10px; font-size: 12px; }
@@ -303,9 +320,9 @@
         .width-field input { padding: 6px; font-size: 12px; }
 
         @media print {
-            @page { size: portrait; margin: 5mm; }
-            html, body { width: 100%; height: auto; margin: 0; padding: 0; overflow: visible !important; }
-            body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page { size: landscape; margin: 5mm; }
+            html, body { width: 100%; height: auto; margin: 0; padding: 0; overflow: visible !important; font-family: 'Amiri', serif !important; }
+            body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; color: #000 !important; }
             .container { width: 100%; max-width: none; padding: 0; box-shadow: none; margin: 0; }
             .no-print, .input-card, .action-controls, header, .print-settings { display: none !important; }
             
@@ -315,8 +332,8 @@
             th { 
                 border: 1px solid #000 !important; 
                 background: #f1f5f9 !important; 
-                font-size: 6px !important; 
-                padding: 1px !important; 
+                font-size: 9px !important; 
+                padding: 2px !important; 
                 text-align: center !important;
                 font-weight: bold !important;
                 white-space: normal !important;
@@ -340,22 +357,33 @@
                 max-width: 100% !important;
                 border-collapse: collapse !important; 
                 table-layout: fixed !important;
-                border: 1px solid #000 !important;
+                border: 1.5px solid #000 !important;
                 page-break-inside: auto !important;
+                font-family: 'Amiri', serif !important;
             }
             
             tr { page-break-inside: avoid !important; page-break-after: auto !important; }
             
+            th { 
+                background: #eee !important; 
+                color: #000 !important; 
+                border: 1.5px solid #000 !important; 
+                font-size: 10pt !important; 
+                padding: 4px 2px !important;
+                font-weight: bold !important;
+            }
+            
             td { 
                 border: 1px solid #000 !important; 
-                padding: 1px !important; 
+                padding: 4px 2px !important; 
                 vertical-align: middle !important;
                 word-wrap: break-word !important;
                 white-space: normal !important;
                 overflow-wrap: break-word !important;
                 height: auto !important;
-                font-size: 7px !important;
+                font-size: 9pt !important;
                 overflow: hidden !important;
+                color: #000 !important;
             }
 
             /* إخفاء التسمية داخل الخلية عند الطباعة لأننا سنستخدم رأس الجدول المكرر */
@@ -365,11 +393,11 @@
 
             .print-value {
                 display: block !important;
-                font-size: 9px !important;
+                font-size: 9pt !important;
                 font-weight: bold !important;
                 text-align: center !important;
                 padding: 1px 0 !important;
-                line-height: 1.1 !important;
+                line-height: 1.2 !important;
                 word-break: break-word !important;
             }
 
@@ -546,55 +574,7 @@
         <button id="printBtn" class="btn" onclick="exportToPDF()"><i class="fas fa-file-pdf"></i> تصدير كـ PDF</button>
     </div>
 
-    <div id="printSettings" class="print-settings no-print">
-        <h4><i class="fas fa-sliders-h"></i> إعدادات عرض الأعمدة (CSS)</h4>
-        
-        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-            <p style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">1. عرض أعمدة الجدول الرئيسي (على الشاشة):</p>
-            <div class="width-controls">
-                <div class="width-field"><label>ت</label><input type="text" id="mw-idx" value="20px" oninput="updateCSSVar('--w-idx', this.value)"></div>
-                <div class="width-field"><label>الاسم</label><input type="text" id="mw-name" value="12%" oninput="updateCSSVar('--w-name', this.value)"></div>
-                <div class="width-field"><label>الأم</label><input type="text" id="mw-mother" value="10%" oninput="updateCSSVar('--w-mother', this.value)"></div>
-                <div class="width-field"><label>الكادر</label><input type="text" id="mw-staff" value="8%" oninput="updateCSSVar('--w-staff', this.value)"></div>
-                <div class="width-field"><label>الجنس</label><input type="text" id="mw-gender" value="6%" oninput="updateCSSVar('--w-gender', this.value)"></div>
-                <div class="width-field"><label>التولد</label><input type="text" id="mw-birth" value="6%" oninput="updateCSSVar('--w-birth', this.value)"></div>
-                <div class="width-field"><label>العمر</label><input type="text" id="mw-age" value="5%" oninput="updateCSSVar('--w-age', this.value)"></div>
-                <div class="width-field"><label>تصنيف العمر</label><input type="text" id="mw-age-class" value="8%" oninput="updateCSSVar('--w-age-class', this.value)"></div>
-                <div class="width-field"><label>الوظيفة</label><input type="text" id="mw-job" value="8%" oninput="updateCSSVar('--w-job', this.value)"></div>
-                <div class="width-field"><label>الراتب</label><input type="text" id="mw-salary" value="7%" oninput="updateCSSVar('--w-salary', this.value)"></div>
-                <div class="width-field"><label>الدرجة</label><input type="text" id="mw-grade" value="5%" oninput="updateCSSVar('--w-grade', this.value)"></div>
-                <div class="width-field"><label>الدورات</label><input type="text" id="mw-courses" value="7%" oninput="updateCSSVar('--w-courses', this.value)"></div>
-                <div class="width-field"><label>الكلية</label><input type="text" id="mw-college" value="8%" oninput="updateCSSVar('--w-college', this.value)"></div>
-                <div class="width-field"><label>الشهادة</label><input type="text" id="mw-degree" value="7%" oninput="updateCSSVar('--w-degree', this.value)"></div>
-                <div class="width-field"><label>الاختصاص</label><input type="text" id="mw-spec" value="8%" oninput="updateCSSVar('--w-spec', this.value)"></div>
-                <div class="width-field"><label>التخرج</label><input type="text" id="mw-grad" value="6%" oninput="updateCSSVar('--w-grad', this.value)"></div>
-                <div class="width-field"><label>التعيين</label><input type="text" id="mw-hire" value="8%" oninput="updateCSSVar('--w-hire', this.value)"></div>
-                <div class="width-field"><label>الخدمة</label><input type="text" id="mw-service" value="6%" oninput="updateCSSVar('--w-service', this.value)"></div>
-                <div class="width-field"><label>تصنيف الخدمة</label><input type="text" id="mw-service-class" value="8%" oninput="updateCSSVar('--w-service-class', this.value)"></div>
-                <div class="width-field"><label>العودة</label><input type="text" id="mw-return" value="8%" oninput="updateCSSVar('--w-return', this.value)"></div>
-                <div class="width-field"><label>الاجتماعية</label><input type="text" id="mw-soc" value="7%" oninput="updateCSSVar('--w-soc', this.value)"></div>
-                <div class="width-field"><label>الحالة</label><input type="text" id="mw-stat" value="7%" oninput="updateCSSVar('--w-stat', this.value)"></div>
-            </div>
-        </div>
-
-        <div style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-            <p style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">2. عرض أعمدة الطباعة (صف واحد لكل موظف):</p>
-            <div class="width-controls">
-                <div class="width-field"><label>ت (3%)</label><input type="text" id="pw-idx-input" value="3%" oninput="updateCSSVar('--pw-idx', this.value)"></div>
-                <div class="width-field"><label>1 (الاسم)</label><input type="text" id="pw-1" value="15%" oninput="updateCSSVar('--pw-1', this.value)"></div>
-                <div class="width-field"><label>2 (الجنس)</label><input type="text" id="pw-2" value="7%" oninput="updateCSSVar('--pw-2', this.value)"></div>
-                <div class="width-field"><label>3 (تصنيف العمر)</label><input type="text" id="pw-3" value="10%" oninput="updateCSSVar('--pw-3', this.value)"></div>
-                <div class="width-field"><label>4 (الوظيفة)</label><input type="text" id="pw-4" value="10%" oninput="updateCSSVar('--pw-4', this.value)"></div>
-                <div class="width-field"><label>5 (الشهادة)</label><input type="text" id="pw-5" value="10%" oninput="updateCSSVar('--pw-5', this.value)"></div>
-                <div class="width-field"><label>6 (الاختصاص)</label><input type="text" id="pw-6" value="10%" oninput="updateCSSVar('--pw-6', this.value)"></div>
-                <div class="width-field"><label>7 (تصنيف الخدمة)</label><input type="text" id="pw-7" value="10%" oninput="updateCSSVar('--pw-7', this.value)"></div>
-                <div class="width-field"><label>8 (الاجتماعية)</label><input type="text" id="pw-8" value="10%" oninput="updateCSSVar('--pw-8', this.value)"></div>
-                <div class="width-field"><label>9 (الحالة)</label><input type="text" id="pw-9" value="10%" oninput="updateCSSVar('--pw-9', this.value)"></div>
-                <div class="width-field"><label>10 (الدورات)</label><input type="text" id="pw-10" value="5%" oninput="updateCSSVar('--pw-10', this.value)"></div>
-            </div>
-        </div>
-        <p style="font-size: 10px; color: #64748b; margin-top: 10px;">* يمكنك استخدام النسبة المئوية (%) أو البكسل (px). التغييرات تظهر فوراً على الجدول الرئيسي.</p>
-    </div>
+    <div id="printSettings" class="print-settings" style="display: none;"></div>
 </div>
 
 <!-- Custom Modal Structure -->
@@ -661,9 +641,6 @@
         }
     }
 
-    function updateCSSVar(name, value) {
-        document.documentElement.style.setProperty(name, value);
-    }
 
     function calculateAgeClass(age) {
         if (age < 30) return "اقل من 30";
@@ -914,7 +891,6 @@
             
             document.getElementById("sendBtn").style.display = "none";
             document.getElementById("printBtn").style.display = "inline-flex";
-            document.getElementById("printSettings").style.display = "block";
             
             schoolInput.disabled = true;
             schoolInput.style.backgroundColor = "#f1f5f9";
@@ -1025,8 +1001,13 @@
                 margin:       [10, 5, 10, 5],
                 filename:     `${schoolName}_احصاء.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    letterRendering: true,
+                    ignoreElements: (el) => el.classList.contains('no-print') || el.classList.contains('action-controls') || el.classList.contains('print-settings')
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
                 pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
