@@ -298,11 +298,34 @@
         .width-field input { padding: 6px; font-size: 12px; }
 
         @media print {
-            @page { size: portrait; margin: 5mm; }
-            html, body { width: 100%; height: auto; margin: 0; padding: 0; }
-            body { background: white; }
-            .container { width: 100%; max-width: none; padding: 0; box-shadow: none; margin: 0; }
-            .no-print, .input-card, .action-controls, thead, header, .print-settings { display: none !important; }
+            @page { 
+                size: A4 portrait; 
+                margin: 10mm; 
+            }
+            html, body { 
+                width: 210mm !important; 
+                height: auto !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                font-family: 'Cairo', sans-serif !important;
+                font-size: 10pt !important;
+                overflow: visible !important;
+            }
+            body > *:not(.container) { display: none !important; }
+            .container { 
+                width: 100% !important; 
+                max-width: none !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                box-shadow: none !important;
+                display: block !important;
+            }
+            .no-print, .input-card, .action-controls, thead, header, .print-settings, .modal-overlay, #overlay, #loading { 
+                display: none !important; 
+            }
             
             .table-container { 
                 overflow: visible !important; 
@@ -311,71 +334,93 @@
                 width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                display: block !important;
             }
 
             table { 
                 width: 100% !important; 
-                min-width: 0 !important;
                 border-collapse: collapse !important; 
                 table-layout: fixed !important;
-                border: 1px solid #000 !important;
+                border: 1pt solid #000 !important;
+                display: table !important;
+                margin: 0 !important;
+                page-break-after: auto !important;
             }
             
+            tr { 
+                display: table-row !important; 
+                page-break-inside: avoid !important; 
+                break-inside: avoid !important;
+            }
+
             td { 
-                border: 1px solid #000 !important; 
-                padding: 1px !important; 
+                border: 0.5pt solid #000 !important; 
+                padding: 3pt 2pt !important; 
                 vertical-align: middle !important;
                 word-wrap: break-word !important;
                 white-space: normal !important;
                 overflow-wrap: break-word !important;
                 height: auto !important;
+                display: table-cell !important;
+                color: #000 !important;
             }
 
-            /* تنسيق التسمية داخل الخلية */
             .print-label {
                 display: block !important;
-                font-size: 7px !important;
-                color: #333 !important;
-                border-bottom: 1px solid #ccc !important;
-                margin-bottom: 1px !important;
+                font-size: 7pt !important;
+                color: #000 !important;
+                border-bottom: 0.5pt solid #000 !important;
+                margin-bottom: 2pt !important;
                 font-weight: bold !important;
                 background: #f1f5f9 !important;
-                padding: 1px 2px !important;
+                padding: 1pt !important;
                 text-align: center !important;
-                line-height: 1 !important;
+                line-height: 1.2 !important;
             }
 
             .print-value {
                 display: block !important;
-                font-size: 9px !important;
+                font-size: 9pt !important;
                 font-weight: bold !important;
                 text-align: center !important;
-                padding: 1px 0 !important;
-                line-height: 1.1 !important;
-                word-break: break-word !important;
+                padding: 1pt 0 !important;
+                line-height: 1.2 !important;
+                color: #000 !important;
             }
 
             .idx-cell {
-                width: var(--pw-idx) !important;
                 background: #f1f5f9 !important;
                 vertical-align: middle !important;
                 text-align: center !important;
-                border: 1px solid #000 !important;
+                border: 0.5pt solid #000 !important;
                 padding: 0 !important;
             }
 
             .print-only-header { 
                 display: flex !important; 
-                justify-content: space-between; 
-                align-items: flex-start;
-                margin-bottom: 15px; 
-                border-bottom: 2px solid #000; 
-                padding-bottom: 8px; 
+                flex-direction: row !important;
+                justify-content: space-between !important; 
+                align-items: center !important;
+                margin-bottom: 8mm !important; 
+                border-bottom: 1.5pt solid #000 !important; 
+                padding-bottom: 4mm !important; 
+                width: 100% !important;
             }
-            .header-right { text-align: right; font-weight: bold; font-size: 13px; width: 50%; }
-            .header-left { text-align: left; font-weight: bold; font-size: 11px; line-height: 1.4; width: 50%; }
-            .print-footer { display: block !important; margin-top: 20px; width: 100%; }
-            .footer-grid { display: flex; justify-content: space-between; font-weight: bold; font-size: 12px; }
+            .header-right { text-align: right !important; font-weight: bold !important; font-size: 12pt !important; width: 48% !important; color: #000 !important; }
+            .header-left { text-align: left !important; font-weight: bold !important; font-size: 10pt !important; line-height: 1.3 !important; width: 48% !important; color: #000 !important; }
+            .print-footer { 
+                display: block !important; 
+                margin-top: 8mm !important; 
+                width: 100% !important; 
+            }
+            .footer-grid { 
+                display: flex !important; 
+                flex-direction: row !important;
+                justify-content: space-between !important; 
+                font-weight: bold !important; 
+                font-size: 11pt !important; 
+                color: #000 !important;
+            }
         }
 
         #overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:90; backdrop-filter: blur(4px); }
@@ -411,7 +456,70 @@
             <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معلم</option><option>مرشد</option></select></div>
             <div class="input-field"><label>الراتب الاسمي</label><select id="salary"><option value="" disabled selected>اختر...</option></select></div>
             <div class="input-field"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
-            <div class="input-field"><label>الكلية او المعهد</label><select id="college"><option value="" disabled selected>اختر...</option><option>كلية التربية</option><option>معهد المعلمين</option><option>أخرى</option></select></div>
+            <div class="input-field"><label>الكلية او المعهد</label><select id="college">
+                <option value="" disabled selected>اختر...</option>
+                <optgroup label="الجامعات الحكومية">
+                    <option>جامعة بغداد</option>
+                    <option>الجامعة المستنصرية</option>
+                    <option>جامعة البصرة</option>
+                    <option>جامعة الموصل</option>
+                    <option>الجامعة التكنولوجية</option>
+                    <option>جامعة الكوفة</option>
+                    <option>جامعة تكريت</option>
+                    <option>جامعة القادسية</option>
+                    <option>جامعة الانبار</option>
+                    <option>جامعة بابل</option>
+                    <option>جامعة النهرين</option>
+                    <option>جامعة ديالى</option>
+                    <option>جامعة كربلاء</option>
+                    <option>جامعة ذي قار</option>
+                    <option>جامعة كركوك</option>
+                    <option>جامعة واسط</option>
+                    <option>جامعة ميسان</option>
+                    <option>جامعة المثنى</option>
+                    <option>الجامعة العراقية</option>
+                    <option>جامعة سامراء</option>
+                    <option>جامعة القاسم الخضراء</option>
+                    <option>جامعة الفلوجة</option>
+                    <option>جامعة جابر بن حيان الطبية</option>
+                    <option>جامعة البصرة للنفط والغاز</option>
+                    <option>جامعة الكرخ للعلوم</option>
+                    <option>جامعة تكنولوجيا المعلومات والاتصالات</option>
+                    <option>جامعة نينوى</option>
+                    <option>جامعة الحمدانية</option>
+                    <option>جامعة تلعفر</option>
+                    <option>جامعة سومر</option>
+                    <option>جامعة ابن سينا للعلوم الطبية والصيدلانية</option>
+                </optgroup>
+                <optgroup label="الجامعات التقنية">
+                    <option>الجامعة التقنية الوسطى</option>
+                    <option>الجامعة التقنية الشمالية</option>
+                    <option>الجامعة التقنية الجنوبية</option>
+                    <option>جامعة الفرات الاوسط التقنية</option>
+                </optgroup>
+                <optgroup label="المعاهد والجهات الأخرى">
+                    <option>هيئة التعليم التقني</option>
+                    <option>المعهد التقني / بغداد</option>
+                    <option>المعهد التقني / الموصل</option>
+                    <option>المعهد التقني / البصرة</option>
+                    <option>المعهد التقني / كركوك</option>
+                    <option>المعهد التقني / الناصرية</option>
+                    <option>المعهد التقني / النجف</option>
+                    <option>المعهد التقني / كربلاء</option>
+                    <option>المعهد التقني / بابل</option>
+                    <option>المعهد التقني / الكوت</option>
+                    <option>المعهد التقني / الديوانية</option>
+                    <option>المعهد التقني / العمارة</option>
+                    <option>المعهد التقني / السماوة</option>
+                    <option>المعهد التقني / بعقوبة</option>
+                    <option>المعهد التقني / الانبار</option>
+                    <option>المعهد التقني / المسيب</option>
+                    <option>معهد المعلمين</option>
+                    <option>معهد الفنون الجميلة</option>
+                    <option>معهد الإدارة</option>
+                    <option>أخرى</option>
+                </optgroup>
+            </select></div>
             <div class="input-field"><label>الشهادة</label><select id="degree"><option value="" disabled selected>الشهادة...</option><option>دبلوم</option><option>بكالوريوس</option><option>ماجستير</option><option>دكتوراه</option></select></div>
             <div class="input-field"><label>الاختصاص</label><select id="specialty"><option value="" disabled selected>الاختصاص...</option><option>اللغة العربية</option><option>الرياضيات</option><option>عام</option></select></div>
             <div class="input-field"><label>سنة التخرج</label><input type="number" id="gradYear" placeholder="مثلاً: 2010"></div>
@@ -829,36 +937,37 @@
 
         // 1. ترتيب البيانات
         const sortedRows = [...originalRows].sort((a, b) => {
-            const priorityCols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
-            for (let i = 0; i < priorityCols.length; i++) {
-                let colIdx = priorityCols[i];
-                let valA = a.cells[colIdx].innerText.trim();
-                let valB = b.cells[colIdx].innerText.trim();
-                let comparison = valA.localeCompare(valB, 'ar');
-                if (comparison !== 0) return comparison;
-            }
-            return 0;
+            const valA = a.cells[1].innerText.trim();
+            const valB = b.cells[1].innerText.trim();
+            return valA.localeCompare(valB, 'ar');
         });
 
-        // 2. إعادة بناء الجسم للطباعة (كل موظف صفين لضمان الوضوح)
-        const rootStyles = getComputedStyle(document.documentElement);
-        const pw = [
-            rootStyles.getPropertyValue('--pw-1').trim(), rootStyles.getPropertyValue('--pw-2').trim(), 
-            rootStyles.getPropertyValue('--pw-3').trim(), rootStyles.getPropertyValue('--pw-4').trim(),
-            rootStyles.getPropertyValue('--pw-5').trim(), rootStyles.getPropertyValue('--pw-6').trim(),
-            rootStyles.getPropertyValue('--pw-7').trim(), rootStyles.getPropertyValue('--pw-8').trim(),
-            rootStyles.getPropertyValue('--pw-9').trim(), rootStyles.getPropertyValue('--pw-10').trim()
-        ];
+        // 2. عرض الأعمدة (قيم ثابتة للطباعة لضمان الدقة)
+        const pwIdx = "4%";
+        const pw = ["14%", "12%", "10%", "8%", "8%", "7%", "9%", "9%", "9%", "10%"];
 
+        // 3. إعادة بناء الجدول للطباعة
         tbody.innerHTML = "";
+        
+        // إضافة colgroup لضمان ثبات العرض في الطباعة
+        let colGroup = table.querySelector("colgroup");
+        if (!colGroup) {
+            colGroup = document.createElement("colgroup");
+            table.insertBefore(colGroup, thead);
+        }
+        colGroup.innerHTML = `
+            <col style="width: ${pwIdx}">
+            ${pw.map(w => `<col style="width: ${w}">`).join('')}
+        `;
+
         sortedRows.forEach((row, index) => {
             const cells = Array.from(row.cells).map(c => c.innerText);
             
             const tr1 = document.createElement("tr");
             tr1.innerHTML = `
-                <td rowspan="2" class="idx-cell">
+                <td rowspan="2" class="idx-cell" style="width: ${pwIdx}">
                     <span class="print-label" style="border-bottom:none !important; background:none !important; margin:0 !important;">ت</span>
-                    <span class="print-value" style="font-size:12px !important;">${index + 1}</span>
+                    <span class="print-value" style="font-size:11pt !important;">${index + 1}</span>
                 </td>
                 <td style="width: ${pw[0]}"><span class="print-label">الاسم الثلاثي</span><span class="print-value">${cells[1]}</span></td>
                 <td style="width: ${pw[1]}"><span class="print-label">الأم</span><span class="print-value">${cells[2]}</span></td>
@@ -894,19 +1003,33 @@
         const schoolName = document.getElementById("schoolName").value || "استمارة";
         document.getElementById("printSchoolName").innerText = schoolName;
         
-        // استدعاء الطباعة مع تأخير بسيط لضمان تحديث الـ DOM في المتصفحات المحمولة
+        // إخفاء العناصر غير الضرورية يدوياً لضمان التوافق مع بعض متصفحات أندرويد
+        const elementsToHide = document.querySelectorAll('header, .no-print, .action-controls, .input-card, .print-settings');
+        elementsToHide.forEach(el => el.style.setProperty('display', 'none', 'important'));
+
+        // خدعة الـ Viewport للهواتف: إجبار المتصفح على رندرة الصفحة بعرض كافٍ قبل الطباعة
+        const viewport = document.querySelector("meta[name=viewport]");
+        const originalViewport = viewport.getAttribute("content");
+        viewport.setAttribute("content", "width=1200"); // زيادة العرض قليلاً لضمان عدم التداخل
+
+        // استدعاء الطباعة مع تأخير كافٍ لضمان تحديث الـ DOM وتطبيق التنسيقات
         setTimeout(() => {
             window.print();
             
-            // استعادة الوضع الأصلي بعد إغلاق نافذة الطباعة
-            // نستخدم setTimeout إضافي لضمان أن المتصفح انتهى من معالجة الطباعة
+            // استعادة الوضع الأصلي
             setTimeout(() => {
+                viewport.setAttribute("content", originalViewport);
+                elementsToHide.forEach(el => el.style.display = '');
+                if (colGroup) colGroup.remove();
                 thead.innerHTML = originalTheadHTML;
                 tbody.innerHTML = "";
                 originalRows.forEach(row => tbody.appendChild(row));
                 updateIdx();
-            }, 500);
-        }, 500);
+                
+                document.getElementById("printBtn").style.display = "inline-flex";
+                document.getElementById("printSettings").style.display = "block";
+            }, 1500);
+        }, 1500);
     }
     // ملء قائمة الراتب تلقائياً وتحديث الرأس
     window.onload = () => {
