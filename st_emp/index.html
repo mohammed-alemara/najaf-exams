@@ -306,7 +306,17 @@
             html, body { width: 100%; height: auto; margin: 0; padding: 0; }
             body { background: white; }
             .container { width: 100%; max-width: none; padding: 0; box-shadow: none; margin: 0; }
-            .no-print, .input-card, .action-controls, thead, header, .print-settings { display: none !important; }
+            .no-print, .input-card, .action-controls, header, .print-settings { display: none !important; }
+            
+            thead { display: table-header-group !important; }
+            th { 
+                border: 1px solid #000 !important; 
+                background: #f1f5f9 !important; 
+                font-size: 8px !important; 
+                padding: 2px !important; 
+                text-align: center !important;
+                font-weight: bold !important;
+            }
             
             .table-container { 
                 overflow: visible !important; 
@@ -335,18 +345,9 @@
                 height: auto !important;
             }
 
-            /* تنسيق التسمية داخل الخلية */
+            /* إخفاء التسمية داخل الخلية عند الطباعة لأننا سنستخدم رأس الجدول المكرر */
             .print-label {
-                display: block !important;
-                font-size: 7px !important;
-                color: #333 !important;
-                border-bottom: 1px solid #ccc !important;
-                margin-bottom: 1px !important;
-                font-weight: bold !important;
-                background: #f1f5f9 !important;
-                padding: 1px 2px !important;
-                text-align: center !important;
-                line-height: 1 !important;
+                display: none !important;
             }
 
             .print-value {
