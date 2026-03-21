@@ -309,6 +309,8 @@
             .no-print, .input-card, .action-controls, header, .print-settings { display: none !important; }
             
             thead { display: table-header-group !important; visibility: visible !important; }
+            thead tr { break-inside: avoid !important; }
+            
             th { 
                 border: 1px solid #000 !important; 
                 background: #f1f5f9 !important; 
@@ -318,6 +320,7 @@
                 font-weight: bold !important;
                 white-space: normal !important;
                 word-wrap: break-word !important;
+                overflow: hidden !important;
             }
             
             .table-container { 
@@ -332,11 +335,15 @@
 
             table { 
                 width: 100% !important; 
-                min-width: 0 !important;
+                min-width: 100% !important;
+                max-width: 100% !important;
                 border-collapse: collapse !important; 
                 table-layout: fixed !important;
                 border: 1px solid #000 !important;
+                page-break-inside: auto !important;
             }
+            
+            tr { page-break-inside: avoid !important; page-break-after: auto !important; }
             
             td { 
                 border: 1px solid #000 !important; 
@@ -347,6 +354,7 @@
                 overflow-wrap: break-word !important;
                 height: auto !important;
                 font-size: 7px !important;
+                overflow: hidden !important;
             }
 
             /* إخفاء التسمية داخل الخلية عند الطباعة لأننا سنستخدم رأس الجدول المكرر */
