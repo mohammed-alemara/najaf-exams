@@ -454,67 +454,40 @@
             <div class="input-field"><label>الجنس</label><select id="gender"><option value="" disabled selected>اختر...</option><option>ذكر</option><option>انثى</option></select></div>
             <div class="input-field"><label>سنة التولد</label><input type="number" id="birthYear" placeholder="مثلاً: 1985"></div>
             <div class="input-field" style="display: none;"><label>الفئة العمرية</label><select id="ageClass"><option value="" disabled selected>اختر...</option><option>اقل من 30</option><option>من 30 الى 39</option><option>من 40 الى 49</option><option>من 50 الى 59</option><option>60 فاكثر</option></select></div>
-            <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معلم</option><option>مرشد</option></select></div>
+            <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معاون</option><option>مدرس</option><option>مرشد</option><option>موظف اداري</option><option>محاسب</option><option>كاتب</option><option>مساعد مختبر</option><option>امين مكتبة</option><option>موظف خدمات</option><option>حارس</option><option>سائق</option><option>فلاح</option></select></div>
             <div class="input-field"><label>الراتب الاسمي</label><select id="salary"><option value="" disabled selected>اختر...</option></select></div>
             <div class="input-field" style="display: none;"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
             <div class="input-field"><label>الكلية او المعهد</label><select id="college">
-                <option value="" disabled selected>اختر...</option>
-                <optgroup label="الجامعات الحكومية">
-                    <option>جامعة بغداد</option>
-                    <option>الجامعة المستنصرية</option>
-                    <option>جامعة البصرة</option>
-                    <option>جامعة الموصل</option>
-                    <option>الجامعة التكنولوجية</option>
-                    <option>جامعة الكوفة</option>
-                    <option>جامعة تكريت</option>
-                    <option>جامعة القادسية</option>
-                    <option>جامعة الانبار</option>
-                    <option>جامعة بابل</option>
-                    <option>جامعة النهرين</option>
-                    <option>جامعة ديالى</option>
-                    <option>جامعة كربلاء</option>
-                    <option>جامعة ذي قار</option>
-                    <option>جامعة كركوك</option>
-                    <option>جامعة واسط</option>
-                    <option>جامعة ميسان</option>
-                    <option>جامعة المثنى</option>
-                    <option>الجامعة العراقية</option>
-                    <option>جامعة سامراء</option>
-                    <option>جامعة القاسم الخضراء</option>
-                    <option>جامعة الفلوجة</option>
-                    <option>جامعة جابر بن حيان الطبية</option>
-                    <option>جامعة البصرة للنفط والغاز</option>
-                    <option>جامعة الكرخ للعلوم</option>
-                    <option>جامعة تكنولوجيا المعلومات والاتصالات</option>
-                    <option>جامعة نينوى</option>
-                    <option>جامعة الحمدانية</option>
-                    <option>جامعة تلعفر</option>
-                    <option>جامعة سومر</option>
-                    <option>جامعة ابن سينا للعلوم الطبية والصيدلانية</option>
+                <option value="" disabled selected>اختر الكلية أو المعهد...</option>
+                <optgroup label="أسماء الكليات الشائعة">
+                    <option>كلية التربية</option>
+                    <option>كلية التربية للعلوم الصرفة</option>
+                    <option>كلية التربية للعلوم الإنسانية</option>
+                    <option>كلية التربية للبنات</option>
+                    <option>كلية العلوم</option>
+                    <option>كلية الآداب</option>
+                    <option>كلية الهندسة</option>
+                    <option>كلية الطب</option>
+                    <option>كلية طب الأسنان</option>
+                    <option>كلية الصيدلة</option>
+                    <option>كلية التمريض</option>
+                    <option>كلية القانون</option>
+                    <option>كلية الإدارة والاقتصاد</option>
+                    <option>كلية الزراعة</option>
+                    <option>كلية الطب البيطري</option>
+                    <option>كلية التربية البدنية وعلوم الرياضة</option>
+                    <option>كلية الفنون الجميلة</option>
+                    <option>كلية اللغات</option>
+                    <option>كلية العلوم السياسية</option>
+                    <option>كلية الإعلام</option>
+                    <option>كلية العلوم الإسلامية</option>
+                    <option>كلية الآثار</option>
+                    <option>كلية التقنيات الطبية والصحية</option>
+                    <option>كلية التقنية الهندسية</option>
+                    <option>كلية التقنية الإدارية</option>
                 </optgroup>
-                <optgroup label="الجامعات التقنية">
-                    <option>الجامعة التقنية الوسطى</option>
-                    <option>الجامعة التقنية الشمالية</option>
-                    <option>الجامعة التقنية الجنوبية</option>
-                    <option>جامعة الفرات الاوسط التقنية</option>
-                </optgroup>
-                <optgroup label="المعاهد والجهات الأخرى">
-                    <option>هيئة التعليم التقني</option>
-                    <option>المعهد التقني / بغداد</option>
-                    <option>المعهد التقني / الموصل</option>
-                    <option>المعهد التقني / البصرة</option>
-                    <option>المعهد التقني / كركوك</option>
-                    <option>المعهد التقني / الناصرية</option>
-                    <option>المعهد التقني / النجف</option>
-                    <option>المعهد التقني / كربلاء</option>
-                    <option>المعهد التقني / بابل</option>
-                    <option>المعهد التقني / الكوت</option>
-                    <option>المعهد التقني / الديوانية</option>
-                    <option>المعهد التقني / العمارة</option>
-                    <option>المعهد التقني / السماوة</option>
-                    <option>المعهد التقني / بعقوبة</option>
-                    <option>المعهد التقني / الانبار</option>
-                    <option>المعهد التقني / المسيب</option>
+                <optgroup label="جهات أخرى">
+                    <option>الكلية التربوية المفتوحة</option>
                     <option>معهد المعلمين</option>
                     <option>معهد الفنون الجميلة</option>
                     <option>معهد الإدارة</option>
@@ -528,7 +501,7 @@
             <div class="input-field" style="display: none;"><label>تصنيف الخدمة</label><select id="serviceClass"><option value="" disabled selected>اختر...</option><option>5 سنوات او اقل</option><option>من 6 الى 10</option><option>من 11 الى 15</option><option>16 فاكثر</option></select></div>
             <div class="input-field"><label>تاريخ عودته للعمل</label><input type="date" id="returnDate"></div>
             <div class="input-field"><label>الحالة الاجتماعية</label><select id="maritalStatus"><option value="" disabled selected>الحالة...</option><option>اعزب</option><option>متزوج</option><option>مطلق</option><option>ارمل</option></select></div>
-            <div class="input-field"><label>الحالة الوظيفية</label><select id="status"><option value="" disabled selected>الحالة...</option><option>داخل قوة العمل</option><option>إجازة</option></select></div>
+            <div class="input-field"><label>الحالة الوظيفية</label><select id="status"><option value="" disabled selected>الحالة...</option><option>داخل قوة العمل</option><option>بعثة او زمالة دراسية</option><option>إجازة دراسية</option><option>إجازة مصاحبة</option><option>إجازة بدون راتب</option><option>إجازة مرضية طويلة</option><option>إجازة امومة</option><option>اجازة اعاله</option><option>منسب الى جهات اخرى</option><option>اجازة (4-5) سنوات</option></select></div>
             <div class="input-field"><label>الدورات</label><select id="courseParticipation"><option value="" disabled selected>اختر...</option><option>نعم</option><option>لا</option></select></div>
             <div class="input-field"><label>الملاحظات</label><input type="text" id="notes" placeholder="ملاحظات..."></div>
         </div>
@@ -705,6 +678,22 @@
             return; 
         }
 
+        // قيد: المدير موظف واحد فقط في الجدول
+        const jobTitle = document.getElementById('job').value;
+        if (jobTitle === 'مدير') {
+            const rows = document.querySelectorAll("#table tbody tr");
+            let managerExists = false;
+            rows.forEach(r => {
+                if (r.cells.length > 9 && r.cells[9].innerText.trim() === 'مدير') {
+                    managerExists = true;
+                }
+            });
+            if (managerExists) {
+                showModal('warning', 'تنبيه', 'لا يمكن إضافة أكثر من مدير واحد في الجدول.');
+                return;
+            }
+        }
+
         const tbody = document.querySelector("#table tbody");
         const emptyRow = document.getElementById('emptyRow');
         if(emptyRow) emptyRow.remove();
@@ -796,6 +785,22 @@
             const bYear = parseInt(row.cells[6].querySelector('input, select').value);
             const gYear = parseInt(row.cells[15].querySelector('input, select').value);
             const currentYear = new Date().getFullYear();
+
+            // قيد: المدير موظف واحد فقط في الجدول
+            const newJobTitle = row.cells[9].querySelector('select').value;
+            if (newJobTitle === 'مدير') {
+                const rows = document.querySelectorAll("#table tbody tr");
+                let managerExists = false;
+                rows.forEach(r => {
+                    if (r !== row && r.cells.length > 9 && r.cells[9].innerText.trim() === 'مدير') {
+                        managerExists = true;
+                    }
+                });
+                if (managerExists) {
+                    showModal('warning', 'تنبيه', 'لا يمكن تعيين أكثر من مدير واحد في الجدول.');
+                    return;
+                }
+            }
 
             if (bYear < 1940 || bYear > currentYear) {
                 row.cells[6].querySelector('input, select').classList.add('error-border');
