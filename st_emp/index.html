@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
     <style>
         :root {
@@ -143,13 +145,19 @@
             background: #eff6ff;
             border-radius: 10px;
             border: 2px dashed var(--primary);
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
         }
 
-        .school-header-input label { font-weight: 700; color: var(--primary); min-width: 100px; }
-        .school-header-input input { flex-grow: 1; border: 1px solid #bfdbfe; font-weight: bold; }
+        .header-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-input-group label { font-weight: 700; color: var(--primary); min-width: 110px; font-size: 14px; }
+        .header-input-group input { flex-grow: 1; border: 1px solid #bfdbfe; font-weight: bold; padding: 8px; border-radius: 6px; }
 
         .error-border {
             border: 2px solid var(--danger) !important;
@@ -443,8 +451,18 @@
 
     <div class="card" id="inputCard">
         <div class="school-header-input">
-            <label><i class="fas fa-school"></i> اسم المدرسة:</label>
-            <input id="schoolName" type="text" placeholder="اكتب اسم المدرسة هنا...">
+            <div class="header-input-group">
+                <label><i class="fas fa-school"></i> اسم المدرسة:</label>
+                <input id="schoolName" type="text" placeholder="اكتب اسم المدرسة هنا...">
+            </div>
+            <div class="header-input-group">
+                <label><i class="fas fa-hashtag"></i> الرقم الاحصائي:</label>
+                <input id="statisticalNumber" type="text" maxlength="7" inputmode="numeric" placeholder="الرقم الاحصائي للمدرسة...">
+            </div>
+            <div class="header-input-group">
+                <label><i class="fas fa-mobile-alt"></i> موبايل المدير:</label>
+                <input id="managerMobile" type="text" maxlength="11" inputmode="tel" placeholder="رقم موبايل مدير المدرسة...">
+            </div>
         </div>
 
         <div class="input-grid">
@@ -454,7 +472,7 @@
             <div class="input-field"><label>الجنس</label><select id="gender"><option value="" disabled selected>اختر...</option><option>ذكر</option><option>انثى</option></select></div>
             <div class="input-field"><label>سنة التولد</label><input type="number" id="birthYear" placeholder="مثلاً: 1985"></div>
             <div class="input-field" style="display: none;"><label>الفئة العمرية</label><select id="ageClass"><option value="" disabled selected>اختر...</option><option>اقل من 30</option><option>من 30 الى 39</option><option>من 40 الى 49</option><option>من 50 الى 59</option><option>60 فاكثر</option></select></div>
-            <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معاون</option><option>مدرس</option><option>مرشد</option><option>موظف اداري</option><option>محاسب</option><option>كاتب</option><option>مساعد مختبر</option><option>امين مكتبة</option><option>موظف خدمات</option><option>حارس</option><option>سائق</option><option>فلاح</option></select></div>
+            <div class="input-field"><label>العنوان الوظيفي</label><select id="job"><option value="" disabled selected>اختر...</option><option>مدير</option><option>معاون</option><option>مدرس</option><option>معلم</option><option>مرشد</option><option>موظف اداري</option><option>محاسب</option><option>كاتب</option><option>مساعد مختبر</option><option>امين مكتبة</option><option>موظف خدمات</option><option>حارس</option><option>سائق</option><option>فلاح</option></select></div>
             <div class="input-field"><label>الراتب الاسمي</label><select id="salary"><option value="" disabled selected>اختر...</option></select></div>
             <div class="input-field" style="display: none;"><label>الدرجة</label><select id="grade"><option value="" disabled selected>اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
             <div class="input-field"><label>الكلية او المعهد</label><select id="college">
@@ -495,11 +513,11 @@
                 </optgroup>
             </select></div>
             <div class="input-field"><label>الشهادة</label><select id="degree"><option value="" disabled selected>الشهادة...</option><option>دورات تربوية</option><option>دبلوم تعليمي</option><option>دبلوم فنون جميلة</option><option>دبلوم عام</option><option>بكالوريوس تعليمي</option><option>بكالوريوس عام</option><option>دبلوم عالي</option><option>ماجستير</option><option>دكتوراه</option><option>اخرى</option></select></div>
-            <div class="input-field"><label>الاختصاص</label><select id="specialty"><option value="" disabled selected>الاختصاص...</option><option>التربية الاسلامية</option><option>اللغة العربية</option><option>اللغة الانكليزية</option><option>اللغة الكردية</option><option>الرياضيات</option><option>العلوم</option><option>الكيمياء</option><option>الفيزياء</option><option>الاجتماعيات</option><option>التاريخ</option><option>الجغرافية</option><option>اقتصاد منزلي</option><option>تربية خاصة</option><option>علم نفس</option><option>تربية فنية</option><option>تربية رياضية</option><option>حاسوب</option><option>اللغة التركمانية</option><option>اللغة السريانية</option><option>عام</option><option>اخرى</option></select></div>
+            <div class="input-field"><label>الاختصاص الدقيق الذي تخرج منه</label><select id="specialty"><option value="" disabled selected>الاختصاص...</option><option>التربية الاسلامية</option><option>اللغة العربية</option><option>اللغة الانكليزية</option><option>اللغة الكردية</option><option>الرياضيات</option><option>العلوم</option><option>الكيمياء</option><option>الفيزياء</option><option>الاجتماعيات</option><option>التاريخ</option><option>الجغرافية</option><option>اقتصاد منزلي</option><option>تربية خاصة</option><option>علم نفس</option><option>تربية فنية</option><option>تربية رياضية</option><option>حاسوب</option><option>اللغة التركمانية</option><option>اللغة السريانية</option><option>عام</option><option>اخرى</option></select></div>
             <div class="input-field"><label>سنة التخرج</label><input type="number" id="gradYear" placeholder="مثلاً: 2010"></div>
-            <div class="input-field"><label>تاريخ التعيين لأول مرة</label><input type="date" id="hireDate"></div>
+            <div class="input-field"><label>تاريخ التعيين لأول مرة</label><input type="text" id="hireDate" placeholder="dd/mm/yyyy"></div>
             <div class="input-field" style="display: none;"><label>تصنيف الخدمة</label><select id="serviceClass"><option value="" disabled selected>اختر...</option><option>5 سنوات او اقل</option><option>من 6 الى 10</option><option>من 11 الى 15</option><option>16 فاكثر</option></select></div>
-            <div class="input-field"><label>تاريخ عودته للعمل</label><input type="date" id="returnDate"></div>
+            <div class="input-field"><label>تاريخ عودته للعمل</label><input type="text" id="returnDate" placeholder="dd/mm/yyyy"></div>
             <div class="input-field"><label>الحالة الاجتماعية</label><select id="maritalStatus"><option value="" disabled selected>الحالة...</option><option>اعزب</option><option>متزوج</option><option>مطلق</option><option>ارمل</option></select></div>
             <div class="input-field"><label>الحالة الوظيفية</label><select id="status"><option value="" disabled selected>الحالة...</option><option>داخل قوة العمل</option><option>بعثة او زمالة دراسية</option><option>إجازة دراسية</option><option>إجازة مصاحبة</option><option>إجازة بدون راتب</option><option>إجازة مرضية طويلة</option><option>إجازة امومة</option><option>اجازة اعاله</option><option>منسب الى جهات اخرى</option><option>اجازة (4-5) سنوات</option></select></div>
             <div class="input-field"><label>الدورات</label><select id="courseParticipation"><option value="" disabled selected>اختر...</option><option>نعم</option><option>لا</option></select></div>
@@ -509,7 +527,11 @@
     </div>
 
     <div class="print-only-header">
-        <div class="header-right">اسم المدرسة: <span id="printSchoolName"></span></div>
+        <div class="header-right">
+            اسم المدرسة: <span id="printSchoolName"></span><br>
+            الرقم الاحصائي: <span id="printStatisticalNumber"></span><br>
+            موبايل المدير: <span id="printManagerMobile"></span>
+        </div>
         <div class="header-center"><img src="images/Logo big.png" alt="Logo" class="header-logo"></div>
         <div class="header-left">المديرية العامة للتربية في محافظة النجف الأشرف<br>قسم التخطيط التربوي/شعبة الاحصاء</div>
     </div>
@@ -570,7 +592,7 @@
 <div id="loading"><div class="loader"></div><p>جاري المعالجة...</p></div>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbzXAMHWauusImbl1hQUwHujCdtRiAXLSi2LvbL98FW7nVxCES_ZE5lVxW4nJIWwkl9V/exec";
+    const API = "https://script.google.com/macros/s/AKfycbwgoDFfLaKfjf3lc8P-aXbHsEuq0nY4KttBOZmPpg-fCG3Wm_WtUGPfritzmzJox0qW/exec";
 
     function showModal(type, title, message, onConfirm = null) {
         const overlay = document.getElementById('modalOverlay');
@@ -621,6 +643,58 @@
     }
 
 
+    const jobMapping = {
+        "تدريسي": ["مدير", "معاون", "مدرس","معلم", "مرشد"],
+        "وظيفي": ["موظف اداري", "محاسب", "كاتب", "مساعد مختبر", "امين مكتبة", "موظف خدمات", "حارس", "سائق", "فلاح"]
+    };
+
+    const degreeSpecialtyMapping = {
+        "دبلوم فنون جميلة": ["تربية فنية", "اخرى"],
+        "دبلوم تعليمي": ["التربية الاسلامية", "اللغة العربية", "الرياضيات", "العلوم", "الاجتماعيات", "تربية فنية", "تربية رياضية", "اللغة الانكليزية", "عام", "اخرى"],
+        "دورات تربوية": ["عام", "اخرى"]
+    };
+
+    let allSpecialties = [];
+
+    function updateJobSelect(staffType, jobSelect) {
+        const currentJob = jobSelect.value;
+        jobSelect.innerHTML = '<option value="" disabled selected>اختر...</option>';
+        if (jobMapping[staffType]) {
+            jobMapping[staffType].forEach(title => {
+                const opt = document.createElement('option');
+                opt.value = title;
+                opt.innerText = title;
+                jobSelect.appendChild(opt);
+            });
+        }
+        const options = Array.from(jobSelect.options);
+        if (options.some(opt => opt.value === currentJob)) {
+            jobSelect.value = currentJob;
+        }
+    }
+
+    function updateSpecialtySelect(degree, specialtySelect) {
+        const currentSpecialty = specialtySelect.value;
+        specialtySelect.innerHTML = '<option value="" disabled selected>الاختصاص...</option>';
+        
+        let allowedSpecialties = allSpecialties;
+        if (degreeSpecialtyMapping[degree]) {
+            allowedSpecialties = degreeSpecialtyMapping[degree];
+        }
+
+        allowedSpecialties.forEach(spec => {
+            const opt = document.createElement('option');
+            opt.value = spec;
+            opt.innerText = spec;
+            specialtySelect.appendChild(opt);
+        });
+
+        const options = Array.from(specialtySelect.options);
+        if (options.some(opt => opt.value === currentSpecialty)) {
+            specialtySelect.value = currentSpecialty;
+        }
+    }
+
     function calculateAgeClass(age) {
         if (age < 30) return "اقل من 30";
         if (age <= 39) return "من 30 الى 39";
@@ -639,10 +713,35 @@
     function addRow() {
         const ids = ['name', 'motherName', 'staffType', 'gender', 'birthYear', 'job', 'salary', 'grade', 'college', 'degree', 'specialty', 'gradYear', 'hireDate', 'returnDate', 'maritalStatus', 'status', 'courseParticipation', 'notes'];
         let valid = true;
+        
         const schoolInput = document.getElementById('schoolName');
+        const statisticalInput = document.getElementById('statisticalNumber');
+        const mobileInput = document.getElementById('managerMobile');
 
         if(!schoolInput.value.trim()) { schoolInput.classList.add('error-border'); valid = false; }
         schoolInput.oninput = () => schoolInput.classList.remove('error-border');
+
+        if(!statisticalInput.value.trim()) { statisticalInput.classList.add('error-border'); valid = false; }
+        statisticalInput.oninput = () => statisticalInput.classList.remove('error-border');
+
+        if(!mobileInput.value.trim()) { mobileInput.classList.add('error-border'); valid = false; }
+        mobileInput.oninput = () => mobileInput.classList.remove('error-border');
+
+        // التحقق من صحة الرقم الاحصائي والموبايل
+        const statVal = statisticalInput.value.trim();
+        const mobileVal = mobileInput.value.trim();
+
+        if (statVal && !/^\d{7}$/.test(statVal)) {
+            statisticalInput.classList.add('error-border');
+            showModal('warning', 'تنبيه', 'الرقم الاحصائي يجب أن يتكون من 7 أرقام فقط.');
+            return;
+        }
+
+        if (mobileVal && !/^07\d{9}$/.test(mobileVal)) {
+            mobileInput.classList.add('error-border');
+            showModal('warning', 'تنبيه', 'رقم الموبايل يجب أن يبدأ بـ 07 ويتكون من 11 رقماً.');
+            return;
+        }
 
         const vals = ids.map(id => {
             const el = document.getElementById(id);
@@ -704,7 +803,11 @@
 
         // حساب سنوات الخدمة
         const hireDateVal = document.getElementById('hireDate').value;
-        const serviceYears = hireDateVal ? (currentYear - new Date(hireDateVal).getFullYear()) : 0;
+        let serviceYears = 0;
+        if (hireDateVal) {
+            const year = hireDateVal.includes('/') ? hireDateVal.split('/')[2] : new Date(hireDateVal).getFullYear();
+            serviceYears = currentYear - parseInt(year);
+        }
 
         const row = tbody.insertRow();
         
@@ -771,13 +874,39 @@
                 let currentVal = row.cells[colIdx].innerText;
                 // الحقول التي تستخدم input
                 if ([2, 3, 6, 15, 16, 19, 23].includes(colIdx)) {
-                    let type = (colIdx === 6 || colIdx === 15) ? "number" : (colIdx === 16 || colIdx === 19) ? "date" : "text";
+                    let type = (colIdx === 6 || colIdx === 15) ? "number" : "text";
                     row.cells[colIdx].innerHTML = `<input type="${type}" class="table-input" value="${currentVal}">`;
+                    if (colIdx === 16 || colIdx === 19) {
+                        flatpickr(row.cells[colIdx].querySelector('input'), { dateFormat: "d/m/Y", allowInput: true });
+                    }
                 } else {
                     // الحقول التي تستخدم select
-                    let options = document.getElementById(ids[i]).innerHTML;
-                    row.cells[colIdx].innerHTML = `<select class="table-input">${options}</select>`;
-                    row.cells[colIdx].querySelector('select').value = currentVal;
+                    if (colIdx === 9) { // العنوان الوظيفي
+                        const staffTypeSelectInRow = row.cells[4].querySelector('select');
+                        const currentStaffType = staffTypeSelectInRow ? staffTypeSelectInRow.value : row.cells[4].innerText;
+                        row.cells[colIdx].innerHTML = `<select class="table-input"></select>`;
+                        const jobSelectInRow = row.cells[colIdx].querySelector('select');
+                        updateJobSelect(currentStaffType, jobSelectInRow);
+                        jobSelectInRow.value = currentVal;
+                    } else {
+                        let options = document.getElementById(ids[i]).innerHTML;
+                        row.cells[colIdx].innerHTML = `<select class="table-input">${options}</select>`;
+                        const selectEl = row.cells[colIdx].querySelector('select');
+                        selectEl.value = currentVal;
+
+                        if (colIdx === 4) { // نوع الكادر
+                            selectEl.onchange = () => {
+                                const jobSelectInRow = row.cells[9].querySelector('select');
+                                if (jobSelectInRow) updateJobSelect(selectEl.value, jobSelectInRow);
+                            };
+                        }
+                        if (colIdx === 13) { // الشهادة
+                            selectEl.onchange = () => {
+                                const specialtySelectInRow = row.cells[14].querySelector('select');
+                                if (specialtySelectInRow) updateSpecialtySelect(selectEl.value, specialtySelectInRow);
+                            };
+                        }
+                    }
                 }
             });
         } else {
@@ -832,7 +961,11 @@
             row.cells[8].innerText = calculateAgeClass(age);
 
             const hireDateVal = row.cells[16].innerText;
-            const serviceYears = hireDateVal ? (currentYear - new Date(hireDateVal).getFullYear()) : 0;
+            let serviceYears = 0;
+            if (hireDateVal) {
+                const year = hireDateVal.includes('/') ? hireDateVal.split('/')[2] : new Date(hireDateVal).getFullYear();
+                serviceYears = currentYear - parseInt(year);
+            }
             row.cells[17].innerText = serviceYears;
             row.cells[18].innerText = calculateServiceClass(serviceYears);
         }
@@ -849,21 +982,45 @@
     function confirmSend() {
         const rows = document.querySelectorAll("#table tbody tr:not(.empty-state-row)");
         const school = document.getElementById("schoolName").value;
-        if (rows.length === 0 || !school) { 
+        const statistical = document.getElementById("statisticalNumber").value;
+        const mobile = document.getElementById("managerMobile").value;
+
+        if (rows.length === 0 || !school || !statistical || !mobile) { 
             showModal('warning', 'تنبيه', 'يرجى ملء البيانات وإضافة موظف واحد على الأقل.'); 
             return; 
         }
+
+        if (!/^\d{7}$/.test(statistical.trim())) {
+            document.getElementById("statisticalNumber").classList.add('error-border');
+            showModal('warning', 'تنبيه', 'الرقم الاحصائي يجب أن يتكون من 7 أرقام فقط.');
+            return;
+        }
+
+        if (!/^07\d{9}$/.test(mobile.trim())) {
+            document.getElementById("managerMobile").classList.add('error-border');
+            showModal('warning', 'تنبيه', 'رقم الموبايل يجب أن يبدأ بـ 07 ويتكون من 11 رقماً.');
+            return;
+        }
+
         showModal('warning', 'تأكيد', 'هل أنت متأكد من إرسال البيانات؟ سيتم قفل الاستمارة بعد ذلك.', sendAll);
     }
 
     async function sendAll() {
         const rows = document.querySelectorAll("#table tbody tr:not(.empty-state-row)");
         const schoolInput = document.getElementById("schoolName");
+        const statisticalInput = document.getElementById("statisticalNumber");
+        const mobileInput = document.getElementById("managerMobile");
+        
         const school = schoolInput.value;
+        const statistical = statisticalInput.value;
+        const mobile = mobileInput.value;
         
         document.getElementById("loading").style.display = "block";
         document.getElementById("overlay").style.display = "block";
+        
         document.getElementById("printSchoolName").innerText = school;
+        document.getElementById("printStatisticalNumber").innerText = statistical;
+        document.getElementById("printManagerMobile").innerText = mobile;
 
         const employees = Array.from(rows).map(r => ({
             id: r.cells[1].innerText,
@@ -897,14 +1054,19 @@
                 method: "POST", 
                 mode: 'no-cors', 
                 headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify({ school, employees }) 
+                body: JSON.stringify({ school, statistical, mobile, employees }) 
             });
             
             document.getElementById("sendBtn").style.display = "none";
             document.getElementById("printBtn").style.display = "inline-flex";
             
             schoolInput.disabled = true;
+            statisticalInput.disabled = true;
+            mobileInput.disabled = true;
+            
             schoolInput.style.backgroundColor = "#f1f5f9";
+            statisticalInput.style.backgroundColor = "#f1f5f9";
+            mobileInput.style.backgroundColor = "#f1f5f9";
             
             document.querySelectorAll('.no-print').forEach(el => el.style.display = 'none');
             document.getElementById('inputCard').style.display = 'none';
@@ -1134,6 +1296,24 @@
                 gradeSelect.value = selectedOpt.dataset.grade;
             }
         };
+
+        // تحديث خيارات العنوان الوظيفي بناءً على نوع الكادر
+        const staffTypeSelect = document.getElementById('staffType');
+        const jobSelect = document.getElementById('job');
+        staffTypeSelect.onchange = () => updateJobSelect(staffTypeSelect.value, jobSelect);
+
+        // حفظ قائمة الاختصاصات الكاملة وتحديثها بناءً على الشهادة
+        const degreeSelect = document.getElementById('degree');
+        const specialtySelect = document.getElementById('specialty');
+        allSpecialties = Array.from(specialtySelect.options)
+            .filter(opt => opt.value !== "")
+            .map(opt => opt.value);
+            
+        degreeSelect.onchange = () => updateSpecialtySelect(degreeSelect.value, specialtySelect);
+
+        // تهيئة منتقي التاريخ
+        flatpickr("#hireDate", { dateFormat: "d/m/Y", allowInput: true });
+        flatpickr("#returnDate", { dateFormat: "d/m/Y", allowInput: true });
     };
 </script>
 
