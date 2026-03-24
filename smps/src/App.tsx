@@ -14,6 +14,7 @@ import {
   query, 
   orderBy, 
   getDocFromServer,
+  getDocs,
   Timestamp
 } from 'firebase/firestore';
 import { onAuthStateChanged, User } from 'firebase/auth';
@@ -32,7 +33,8 @@ import {
   X,
   CheckCircle2,
   AlertCircle,
-  FileDown
+  FileDown,
+  RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 // @ts-ignore
@@ -130,47 +132,34 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // --- Connection Test ---
-
-  useEffect(() => {
-    async function testConnection() {
-      try {
-        await getDocFromServer(doc(db, 'test', 'connection'));
-      } catch (error) {
-        if(error instanceof Error && error.message.includes('the client is offline')) {
-          console.error("Please check your Firebase configuration.");
-        }
-      }
-    }
-    testConnection();
-  }, []);
-
   // --- Data Fetching ---
 
-  useEffect(() => {
-    if (!isAuthReady || !user) {
-      setEmployees([]);
-      setLoading(false);
-      return;
-    }
-
+  const fetchEmployees = async () => {
+    if (!user) return;
     setLoading(true);
     const path = 'employees';
-    const q = query(collection(db, path), orderBy('createdAt', 'desc'));
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    try {
+      const q = query(collection(db, path), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
       const employeeList: Employee[] = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       } as Employee));
       setEmployees(employeeList);
-      setLoading(false);
-    }, (error) => {
+    } catch (error) {
       handleFirestoreError(error, OperationType.LIST, path);
+    } finally {
       setLoading(false);
-    });
+    }
+  };
 
-    return () => unsubscribe();
+  useEffect(() => {
+    if (isAuthReady && user) {
+      fetchEmployees();
+    } else {
+      setEmployees([]);
+      setLoading(false);
+    }
   }, [isAuthReady, user]);
 
   // --- Actions ---
@@ -187,19 +176,35 @@ export default function App() {
       if (editingEmployee) {
         // Update
         const employeeRef = doc(db, path, editingEmployee.id);
-        await updateDoc(employeeRef, {
+        const updatedData = {
           fullName: formData.fullName,
           placeOfBirth: formData.placeOfBirth,
           dateOfBirth: formData.dateOfBirth
-        });
+        };
+        await updateDoc(employeeRef, updatedData);
+        
+        // Update local state to save a "read" operation
+        setEmployees(prev => prev.map(emp => 
+          emp.id === editingEmployee.id ? { ...emp, ...updatedData } : emp
+        ));
+        
         setSuccess('تم تحديث بيانات الموظف بنجاح');
       } else {
         // Create
-        await addDoc(collection(db, path), {
+        const newEmployeeData = {
           ...formData,
           uid: user.uid,
           createdAt: new Date().toISOString()
-        });
+        };
+        const docRef = await addDoc(collection(db, path), newEmployeeData);
+        
+        // Update local state to save a "read" operation
+        const newEmployee: Employee = {
+          id: docRef.id,
+          ...newEmployeeData
+        };
+        setEmployees(prev => [newEmployee, ...prev]);
+        
         setSuccess('تمت إضافة الموظف بنجاح');
       }
       resetForm();
@@ -215,6 +220,10 @@ export default function App() {
     const path = 'employees';
     try {
       await deleteDoc(doc(db, path, id));
+      
+      // Update local state to save a "read" operation
+      setEmployees(prev => prev.filter(emp => emp.id !== id));
+      
       setSuccess('تم حذف الموظف بنجاح');
     } catch (err) {
       setError('حدث خطأ أثناء الحذف.');
@@ -367,6 +376,13 @@ export default function App() {
             />
           </div>
           <div className="flex flex-wrap gap-4">
+            <button 
+              onClick={fetchEmployees}
+              className="p-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-2xl transition-all shadow-sm"
+              title="تحديث البيانات"
+            >
+              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+            </button>
             <button 
               onClick={exportToPDF}
               disabled={filteredEmployees.length === 0}
