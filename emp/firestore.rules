@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: teachers
+    // Document ID: auto-generated
+    // Fields:
+    //   - name: string (required) - Full name of the teacher.
+    //   - email: string (optional) - Email address.
+    //   - phone: string (optional) - Phone number.
+    //   - subject: string (required) - The subject taught.
+    //   - school: string (required) - The school name.
+    //   - hireDate: string (optional) - Hire date (ISO 8601).
+    //   - status: string (optional) - 'active' or 'inactive'.
+    //   - uid: string (required) - Creator's UID.
+    //   - createdAt: timestamp (optional) - Creation time.
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.uid;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "mmh.mart@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidEmail(email) {
+      return email is string &&
+        email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidTeacher(data) {
+      return data.keys().hasAll(['name', 'subject', 'school', 'uid']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.subject is string && data.subject.size() > 0 && data.subject.size() < 50 &&
+             data.school is string && data.school.size() > 0 && data.school.size() < 100 &&
+             data.uid is string && data.uid == request.auth.uid &&
+             (!('email' in data) || isValidEmail(data.email)) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() < 20)) &&
+             (!('status' in data) || (data.status in ['active', 'inactive']));
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /teachers/{teacherId} {
+      allow read: if isAuthenticated() && (isDocOwner() || isAdmin());
+      allow create: if isAuthenticated() && isValidTeacher(request.resource.data);
+      allow update: if isAuthenticated() && (isDocOwner() || isAdmin()) &&
+                    isValidTeacher(request.resource.data) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isAuthenticated() && (isDocOwner() || isAdmin());
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
