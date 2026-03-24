@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "employee": {
+      "title": "Employee",
+      "description": "Information about an employee.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "The full name of the employee."
+        },
+        "placeOfBirth": {
+          "type": "string",
+          "description": "The place of birth of the employee."
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date",
+          "description": "The date of birth of the employee."
+        },
+        "uid": {
+          "type": "string",
+          "description": "The UID of the user who created this record."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the record was created."
+        }
+      },
+      "required": ["fullName", "placeOfBirth", "dateOfBirth", "uid", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/employees/{employeeId}": {
+      "schema": "employee",
+      "description": "Collection of employee records."
+    }
+  }
+}

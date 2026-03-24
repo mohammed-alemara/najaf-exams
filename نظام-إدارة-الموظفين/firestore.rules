@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: employees
+    // Document ID: auto-generated
+    // Fields:
+    //   - fullName: string (required, 1-100 chars)
+    //   - placeOfBirth: string (required, 1-100 chars)
+    //   - dateOfBirth: string (required, ISO 8601 format)
+    //   - uid: string (required, creator's UID)
+    //   - createdAt: string (required, ISO 8601 format)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "mmh.mart@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string &&
+        dateStr.matches("^\\d{4}-\\d{2}-\\d{2}.*");
+    }
+
+    function isValidEmployee(data) {
+      return hasRequiredFields(['fullName', 'placeOfBirth', 'dateOfBirth', 'uid', 'createdAt']) &&
+             hasOnlyAllowedFields(['fullName', 'placeOfBirth', 'dateOfBirth', 'uid', 'createdAt']) &&
+             data.fullName is string && data.fullName.size() > 0 && data.fullName.size() <= 100 &&
+             data.placeOfBirth is string && data.placeOfBirth.size() > 0 && data.placeOfBirth.size() <= 100 &&
+             isValidDateString(data.dateOfBirth) &&
+             data.uid is string && data.uid == request.auth.uid &&
+             isValidDateString(data.createdAt);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /employees/{employeeId} {
+      // Allow read if authenticated (admin or owner)
+      // For this app, we'll allow any authenticated user to read all employees if they are the admin
+      // or if we want a shared system. Let's stick to admin-only for now or shared if they are logged in.
+      allow read: if isAuthenticated();
+      
+      allow create: if isAuthenticated() && isValidEmployee(request.resource.data);
+      
+      allow update: if isAuthenticated() && isValidEmployee(request.resource.data) && 
+                    (isAdmin() || resource.data.uid == request.auth.uid);
+                    
+      allow delete: if isAuthenticated() && (isAdmin() || resource.data.uid == request.auth.uid);
+    }
+  }
+}
